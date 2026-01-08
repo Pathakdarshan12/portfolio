@@ -60,9 +60,14 @@ const Blog: React.FC = () => {
             key={post.id}
             className="flex flex-col bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden hover:shadow-xl transition-all group"
           >
-            <div className="h-48 bg-slate-50 dark:bg-slate-800 flex items-center justify-center border-b border-slate-200 dark:border-slate-800">
-               <Tag size={40} className="text-primary-500 opacity-20" />
-            </div>
+            <div className="h-48 bg-slate-50 dark:bg-slate-800 overflow-hidden border-b border-slate-200 dark:border-slate-800">
+                  <img
+                    src={post.preview_image}
+                    alt={post.title}
+                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                    loading="lazy"
+                  />
+                </div>
             <div className="p-8 flex-grow flex flex-col">
               <div className="flex items-center space-x-3 text-xs text-slate-500 mb-4">
                 <span className="flex items-center"><Calendar size={12} className="mr-1" /> {post.date}</span>

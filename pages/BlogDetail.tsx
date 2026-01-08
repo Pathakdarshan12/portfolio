@@ -3,6 +3,8 @@ import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, Calendar, Clock, Share2 } from 'lucide-react';
 import { BLOG_POSTS } from '../data';
+import avatar from '@/assets/icons/avatar.png';
+
 
 const BlogDetail: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -34,10 +36,16 @@ const BlogDetail: React.FC = () => {
           </h1>
           
           <div className="flex items-center space-x-4">
-            <img src="https://picsum.photos/seed/me/100/100" className="w-12 h-12 rounded-full border-2 border-primary-500 p-0.5" alt="Author" />
+            <div className="w-12 h-12 rounded-full border-2 border-primary-500 p-0.5">
+              <img
+                src={avatar}
+                alt="Author"
+                className="w-full h-full rounded-full object-cover"
+              />
+            </div>
             <div>
-              <div className="font-bold">Author Name</div>
-              <div className="text-sm text-slate-500">Senior Data Engineer</div>
+              <div className="font-bold">Darshan Pathak</div>
+              <div className="text-sm text-slate-500">Data Quality Analyst</div>
             </div>
           </div>
         </header>

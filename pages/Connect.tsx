@@ -19,7 +19,7 @@ const Connect: React.FC = () => {
               </div>
               <div>
                 <div className="text-sm text-slate-500 uppercase tracking-widest">Email</div>
-                <div className="text-lg font-bold">hello@datalifecycle.io</div>
+                <div className="text-lg font-bold">pathak12darshan@gmail.com</div>
               </div>
             </div>
             
@@ -29,7 +29,7 @@ const Connect: React.FC = () => {
               </div>
               <div>
                 <div className="text-sm text-slate-500 uppercase tracking-widest">LinkedIn</div>
-                <div className="text-lg font-bold">linkedin.com/in/datalifecycle</div>
+                <div className="text-lg font-bold">linkedin.com/in/pathakdarshan12</div>
               </div>
             </div>
 
@@ -39,7 +39,7 @@ const Connect: React.FC = () => {
               </div>
               <div>
                 <div className="text-sm text-slate-500 uppercase tracking-widest">GitHub</div>
-                <div className="text-lg font-bold">github.com/datalifecycle</div>
+                <div className="text-lg font-bold">github.com/Pathakdarshan12</div>
               </div>
             </div>
           </div>

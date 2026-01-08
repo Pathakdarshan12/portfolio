@@ -23,7 +23,7 @@ const Home: React.FC = () => {
           </h1>
           <p className="text-lg sm:text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto mb-10">
             Expertise in building scalable data architectures, ensuring data reliability through quality engineering, 
-            and delivering actionable insights via advanced analytics and data science.
+            and delivering actionable insights via advanced analytics and Machine Learning.
           </p>
           <div className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4">
             <Link 
@@ -46,10 +46,10 @@ const Home: React.FC = () => {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 py-8 px-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
           {[
-            { label: 'Data Ingested', value: '100+ TB' },
-            { label: 'ML Models', value: '50+' },
-            { label: 'Projects Done', value: '120+' },
-            { label: 'Data Reliability', value: '99.9%' },
+              { label: 'Production Pipelines', value: '15+' },
+              { label: 'Datasets Validated', value: '100+' },
+              { label: 'dbt Models', value: '80+' },
+              { label: 'Data Quality SLA', value: '95%+' },
           ].map((stat, i) => (
             <div key={i} className="text-center">
               <div className="text-2xl sm:text-3xl font-bold text-primary-500 mb-1">{stat.value}</div>
@@ -68,26 +68,26 @@ const Home: React.FC = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {[
-            { 
-              title: 'Data Engineering', 
-              icon: <Database className="text-blue-500" />, 
-              desc: 'High-performance pipelines, warehousing (Snowflake/BigQuery), and orchestration.' 
+            {
+              title: 'Data Engineering',
+              icon: <Database className="text-blue-500" />,
+              desc: 'Designing and maintaining reliable ETL/ELT pipelines, cloud data warehouses, and workflow orchestration.'
             },
-            { 
-              title: 'Quality Engineering', 
-              icon: <ShieldCheck className="text-emerald-500" />, 
-              desc: 'Automated testing frameworks, data contracts, and observability systems.' 
+            {
+              title: 'Data Quality',
+              icon: <ShieldCheck className="text-emerald-500" />,
+              desc: 'Implementing automated data validation, pipeline testing, and quality checks to prevent production issues.'
             },
-            { 
-              title: 'Analytics Engineering', 
-              icon: <Layers className="text-purple-500" />, 
-              desc: 'Modeling with dbt, semantic layers, and self-service BI governance.' 
+            {
+              title: 'Data Science',
+              icon: <Microscope className="text-rose-500" />,
+              desc: 'Applying statistical analysis and machine learning to extract insights and support data-driven decisions.'
             },
-            { 
-              title: 'Data Science', 
-              icon: <Microscope className="text-rose-500" />, 
-              desc: 'MLOps, statistical modeling, and predictive analytics for business impact.' 
-            },
+            {
+              title: 'Data Analytics',
+              icon: <Layers className="text-purple-500" />,
+              desc: 'Transforming raw data into analytics-ready models and dashboards for consistent business reporting.'
+            }
           ].map((skill, i) => (
             <div key={i} className="p-6 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-primary-500/50 transition-colors group">
               <div className="mb-4 p-3 w-fit rounded-lg bg-slate-50 dark:bg-slate-800 group-hover:scale-110 transition-transform">
@@ -161,9 +161,9 @@ const Home: React.FC = () => {
               to={`/blog/${post.slug}`}
               className="flex flex-col sm:flex-row bg-white dark:bg-slate-900 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 hover:shadow-xl transition-all p-2"
             >
-              <div className="sm:w-48 h-48 sm:h-auto bg-slate-100 dark:bg-slate-800 flex items-center justify-center p-8">
-                <Activity className="text-primary-500 w-12 h-12 opacity-50" />
-              </div>
+              <div className="sm:w-48 h-48 sm:h-auto bg-slate-100 dark:bg-slate-800 overflow-hidden rounded-xl">
+                  <img src={post.preview_image} alt={post.title} className="w-full h-full object-cover" loading="lazy"/>
+               </div>
               <div className="p-6 sm:flex-1">
                 <div className="flex items-center space-x-2 text-xs text-slate-500 mb-2">
                   <span>{post.date}</span>

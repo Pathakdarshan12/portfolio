@@ -1,9 +1,20 @@
-
 export enum Domain {
   DataEngineering = 'Data Engineering',
-  DataScience = 'Data Science',
-  AnalyticsEngineering = 'Analytics Engineering',
-  QualityEngineering = 'Quality Engineering'
+  DataScience = 'Data Quality',
+  AnalyticsEngineering = 'Data Science',
+  QualityEngineering = 'Data Analytics'
+}
+
+export interface Metric {
+  label: string;
+  value: string;
+  detail: string;
+  icon: string;
+}
+
+export interface TechCategory {
+  category: string;
+  tools: string[];
 }
 
 export interface Project {
@@ -15,9 +26,22 @@ export interface Project {
   tech: string[];
   image: string;
   featured: boolean;
-  metrics: string[];
+  metrics: string[]; // Legacy for backward compat
+  detailedMetrics?: Metric[];
   githubUrl?: string;
   demoUrl?: string;
+  problem?: string;
+  solution?: string;
+  approach?: string[];
+  techCategories?: TechCategory[];
+  implementationCode?: {
+    lang: string;
+    code: string;
+    title: string;
+  }[];
+  client?: string;
+  duration?: string;
+  role?: string;
 }
 
 export interface BlogPost {

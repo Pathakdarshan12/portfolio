@@ -6,6 +6,7 @@ import {
   Database, BarChart3, ShieldCheck, Microscope, 
   ArrowRight, Search
 } from 'lucide-react';
+import icon from '@/assets/icons/icon-light.ico';
 
 // Pages
 import Home from './pages/Home';
@@ -52,7 +53,11 @@ const App: React.FC = () => {
           <div className="flex justify-between h-16 items-center">
             <Link to="/" className="flex items-center space-x-2 group">
               <div className="w-8 h-8 bg-primary-500 rounded-lg flex items-center justify-center text-white font-bold group-hover:rotate-12 transition-transform text-xs">
-                DP
+                <img
+                    src={icon}
+                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                    loading="lazy"
+                  />
               </div>
               <span className="font-bold text-xl tracking-tight hidden sm:block">
                 Darshan<span className="text-primary-500">Pathak</span>
@@ -145,9 +150,9 @@ const App: React.FC = () => {
                 to quality assurance and predictive modeling.
               </p>
               <div className="flex space-x-4">
-                <a href="#" className="text-slate-400 hover:text-primary-500 transition-colors"><Github size={20} /></a>
-                <a href="#" className="text-slate-400 hover:text-primary-500 transition-colors"><Linkedin size={20} /></a>
-                <a href="#" className="text-slate-400 hover:text-primary-500 transition-colors"><Mail size={20} /></a>
+                <a href="https://github.com/Pathakdarshan12" className="text-slate-400 hover:text-primary-500 transition-colors"><Github size={20} /></a>
+                <a href="https://www.linkedin.com/in/pathakdarshan12" className="text-slate-400 hover:text-primary-500 transition-colors"><Linkedin size={20} /></a>
+                <a href="mailto:pathak12darshan@gmail.com" className="text-slate-400 hover:text-primary-500 transition-colors"><Mail size={20} /></a>
               </div>
             </div>
             
@@ -166,7 +171,6 @@ const App: React.FC = () => {
               <ul className="space-y-2 text-slate-600 dark:text-slate-400">
                 <li><Link to="/connect" className="hover:text-primary-500">Contact</Link></li>
                 <li><a href="#" className="hover:text-primary-500">RSS Feed</a></li>
-                <li><a href="#" className="hover:text-primary-500">Newsletter</a></li>
               </ul>
             </div>
           </div>

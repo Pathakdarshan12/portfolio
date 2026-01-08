@@ -3,25 +3,15 @@ import React from 'react';
 import { CheckCircle2, Award, GraduationCap, Briefcase, Focus } from 'lucide-react';
 
 const About: React.FC = () => {
-  const skills = [
-    {
-      domain: 'Data Engineering',
-      tools: ['Spark', 'Kafka', 'Airflow', 'Python', 'Go', 'Kubernetes', 'AWS', 'GCP']
-    },
-    {
-      domain: 'Analytics Engineering',
-      tools: ['dbt', 'Snowflake', 'BigQuery', 'SQL', 'Looker', 'Tableau', 'Fivetran']
-    },
-    {
-      domain: 'Data Quality & Testing',
-      tools: ['Great Expectations', 'Monte Carlo', 'dbt-tests', 'Soda', 'Elementary']
-    },
-    {
-      domain: 'Data Science',
-      tools: ['PyTorch', 'XGBoost', 'Pandas', 'MLflow', 'Docker', 'R']
-    }
-  ];
-
+    const skills = [
+        { domain: 'Data Engineering',
+            tools: [ 'Python', 'SQL', 'Snowflake', 'PySpark', 'Databricks', 'Apache Kafka', 'ETL / ELT Pipelines', 'Data Warehousing', 'Data Modeling', 'AWS (S3, Lambda)', 'Azure' ] },
+        { domain: 'Data Quality',
+            tools: [ 'Pytest-BDD', 'SQLAlchemy', 'Data Validation', 'Data Profiling', 'Great Expectations', 'Data Governance', 'Elementary' ] },
+        { domain: 'Data Science',
+            tools: [ 'Pandas', 'NumPy', 'Scikit-learn', 'TensorFlow', 'Keras', 'MLflow', 'GenAI / LLMs' ] },
+        { domain: 'Data Analytics',
+            tools: [ 'dbt', 'Analytical SQL', 'EDA', 'Statistical Analysis', 'Tableau', 'Power BI' ] }, ];
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20 space-y-20">
       {/* Intro */}
