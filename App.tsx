@@ -2,11 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import { Routes, Route, Link, useLocation } from 'react-router-dom';
 import { 
-  Menu, X, Sun, Moon, Github, Linkedin, Mail, 
-  Database, BarChart3, ShieldCheck, Microscope, 
-  ArrowRight, Search
+  Menu, X, Sun, Moon, Github, Linkedin, Mail
 } from 'lucide-react';
-import icon from '@/assets/icons/icon-light.ico';
 
 // Pages
 import Home from './pages/Home';
@@ -38,7 +35,7 @@ const App: React.FC = () => {
   }, [location]);
 
   const navLinks = [
-    { name: 'About', path: '/about' },
+    { name: 'About', path: '/' }, // Points to Home as it's the main narrative landing
     { name: 'Projects', path: '/projects' },
     { name: 'Case Studies', path: '/case-studies' },
     { name: 'Blog', path: '/blog' },
@@ -53,11 +50,7 @@ const App: React.FC = () => {
           <div className="flex justify-between h-16 items-center">
             <Link to="/" className="flex items-center space-x-2 group">
               <div className="w-8 h-8 bg-primary-500 rounded-lg flex items-center justify-center text-white font-bold group-hover:rotate-12 transition-transform text-xs">
-                <img
-                    src={icon}
-                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                    loading="lazy"
-                  />
+                DP
               </div>
               <span className="font-bold text-xl tracking-tight hidden sm:block">
                 Darshan<span className="text-primary-500">Pathak</span>
@@ -71,7 +64,7 @@ const App: React.FC = () => {
                   key={link.path}
                   to={link.path}
                   className={`text-sm font-medium transition-colors hover:text-primary-500 ${
-                    location.pathname.startsWith(link.path) ? 'text-primary-500' : 'text-slate-600 dark:text-slate-400'
+                    (link.path === '/' ? location.pathname === '/' : location.pathname.startsWith(link.path)) ? 'text-primary-500' : 'text-slate-600 dark:text-slate-400'
                   }`}
                 >
                   {link.name}
@@ -123,7 +116,7 @@ const App: React.FC = () => {
       <main className="flex-grow">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
+          <Route path="/about" element={<Home />} />
           <Route path="/projects" element={<Projects />} />
           <Route path="/projects/:slug" element={<ProjectDetail />} />
           <Route path="/case-studies" element={<CaseStudies />} />
@@ -146,20 +139,19 @@ const App: React.FC = () => {
                 <span className="font-bold text-lg">Darshan Pathak</span>
               </Link>
               <p className="text-slate-600 dark:text-slate-400 max-w-sm mb-6">
-                Bridging the gap across the complete data lifecycle—from ingestion and transformation 
-                to quality assurance and predictive modeling.
+                Bridging the gap across the complete data lifecycle.
               </p>
               <div className="flex space-x-4">
-                <a href="https://github.com/Pathakdarshan12" className="text-slate-400 hover:text-primary-500 transition-colors"><Github size={20} /></a>
-                <a href="https://www.linkedin.com/in/pathakdarshan12" className="text-slate-400 hover:text-primary-500 transition-colors"><Linkedin size={20} /></a>
-                <a href="mailto:pathak12darshan@gmail.com" className="text-slate-400 hover:text-primary-500 transition-colors"><Mail size={20} /></a>
+                <a href="#" className="text-slate-400 hover:text-primary-500 transition-colors"><Github size={20} /></a>
+                <a href="#" className="text-slate-400 hover:text-primary-500 transition-colors"><Linkedin size={20} /></a>
+                <a href="#" className="text-slate-400 hover:text-primary-500 transition-colors"><Mail size={20} /></a>
               </div>
             </div>
-            
+
             <div>
               <h4 className="font-bold mb-4">Explore</h4>
               <ul className="space-y-2 text-slate-600 dark:text-slate-400">
-                <li><Link to="/about" className="hover:text-primary-500">About</Link></li>
+                <li><Link to="/" className="hover:text-primary-500">About</Link></li>
                 <li><Link to="/projects" className="hover:text-primary-500">Projects</Link></li>
                 <li><Link to="/case-studies" className="hover:text-primary-500">Case Studies</Link></li>
                 <li><Link to="/blog" className="hover:text-primary-500">Blog</Link></li>
@@ -170,12 +162,11 @@ const App: React.FC = () => {
               <h4 className="font-bold mb-4">Connect</h4>
               <ul className="space-y-2 text-slate-600 dark:text-slate-400">
                 <li><Link to="/connect" className="hover:text-primary-500">Contact</Link></li>
-                <li><a href="#" className="hover:text-primary-500">RSS Feed</a></li>
               </ul>
             </div>
           </div>
           <div className="mt-12 pt-8 border-t border-slate-200 dark:border-slate-800 text-center text-slate-500 text-sm">
-            © {new Date().getFullYear()} Darshan Pathak. All rights reserved. Built with React & Tailwind.
+            © {new Date().getFullYear()} Darshan Pathak.
           </div>
         </div>
       </footer>

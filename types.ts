@@ -1,9 +1,12 @@
+
 export enum Domain {
   DataEngineering = 'Data Engineering',
-  DataScience = 'Data Quality',
-  AnalyticsEngineering = 'Data Science',
-  QualityEngineering = 'Data Analytics'
+  DataScience = 'Data Science',
+  AnalyticsEngineering = 'Analytics Engineering',
+  QualityEngineering = 'Quality Engineering'
 }
+
+export type ProjectStatus = 'Live Production' | 'In Development' | 'Case Study';
 
 export interface Metric {
   label: string;
@@ -26,7 +29,7 @@ export interface Project {
   tech: string[];
   image: string;
   featured: boolean;
-  metrics: string[]; // Legacy for backward compat
+  metrics: string[];
   detailedMetrics?: Metric[];
   githubUrl?: string;
   demoUrl?: string;
@@ -42,6 +45,10 @@ export interface Project {
   client?: string;
   duration?: string;
   role?: string;
+  status?: ProjectStatus;
+  views?: string;
+  likes?: string;
+  publishedDate?: string;
 }
 
 export interface BlogPost {
@@ -51,9 +58,18 @@ export interface BlogPost {
   date: string;
   category: string;
   excerpt: string;
-  content: string;
+  content: string; // Now a raw MDX string
   tags: string[];
   readingTime: string;
+  image: string;
+  featured?: boolean;
+  author: {
+    name: string;
+    role: string;
+    avatar: string;
+    twitter?: string;
+    linkedin?: string;
+  };
 }
 
 export interface CaseStudy {

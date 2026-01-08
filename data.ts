@@ -242,32 +242,47 @@ export const PROJECTS: Project[] = [
   }
 ];
 
+// Content has been moved to external .md files in the /posts/ directory
 export const BLOG_POSTS: BlogPost[] = [
   {
     id: 'b1',
-    slug: 'incremental-models-can-quietly-break-your-data',
-    title: "Incremental Models Can Quietly Break Your Data (Here's How to Fix It)",
-    preview_image: incremental_strategyImg,
-    date: '2026-01-07',
-    category: 'dbt / Analytics Engineering',
-    excerpt: "The worst data bugs are the ones you don't see coming — how to keep your dbt incremental models from silently corrupting your data.",
-    content: '', // TODO: paste full article content
-    tags: ['dbt', 'Incremental Models', 'Data Quality'],
-    readingTime: '7 min'
+    slug: 'modular-dbt-architectures-2024',
+    title: 'The Art of Modular dbt Architectures',
+    date: 'March 20, 2024',
+    category: 'Analytics Engineering',
+    readingTime: '10 min read',
+    featured: true,
+    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=1200',
+    author: {
+      name: 'Darshan Pathak',
+      role: 'Lead Data Architect',
+      avatar: 'https://picsum.photos/seed/dp88/200/200',
+      twitter: '#',
+      linkedin: '#'
+    },
+    excerpt: 'Modern data transformation requires more than just SQL. Learn how to apply software engineering principles to your dbt projects for ultimate scalability.',
+    tags: ['dbt', 'Architecture', 'SQL'],
+    content: '' // Fetched dynamically at runtime
   },
   {
     id: 'b2',
-    slug: 'building-a-unified-lambda-architecture-on-snowflake',
-    preview_image: datavelocityImg,
-    title: 'Building a Unified Lambda Architecture on Snowflake',
-    date: '2026-01-01',
-    category: 'Data Engineering',
-    excerpt: "How I built a Lambda Architecture that unifies batch and streaming without duplicating transformation logic.",
-    content: '', // TODO: paste full article content
-    tags: ['Snowflake', 'Lambda Architecture', 'Kafka'],
-    readingTime: '19 min'
+    slug: 'scaling-quality-with-elementary',
+    title: 'Scaling Quality with dbt & Elementary',
+    date: 'Feb 15, 2024',
+    category: 'Data Quality',
+    readingTime: '8 min read',
+    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1200',
+    author: {
+      name: 'Darshan Pathak',
+      role: 'Quality Lead',
+      avatar: 'https://picsum.photos/seed/dp88/200/200'
+    },
+    excerpt: 'Manual testing is a death sentence for data teams. Discover how to build a self-healing quality layer using Elementary and dbt.',
+    tags: ['Quality', 'Observability', 'dbt'],
+    content: '' // Fetched dynamically at runtime
   }
 ];
+
 
 export const CASE_STUDIES: CaseStudy[] = [
   {
