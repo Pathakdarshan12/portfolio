@@ -1,0 +1,8 @@
+
+{
+  "name": "Darshan Pathak Portfolio",
+  "description": "A comprehensive portfolio showcasing expertise in data science, analytics, quality engineering, and data engineering.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
