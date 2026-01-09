@@ -1,10 +1,8 @@
-
 import React, { useState, useEffect, useMemo } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
-// Added Mail to the imports
 import { 
   Calendar, Clock, ChevronRight, Info, 
   Copy, Check, ArrowUp, Zap, Activity,
@@ -73,12 +71,14 @@ const BlogDetail: React.FC = () => {
       setLoading(true);
       setError(false);
       try {
-        // FIX: Casting import.meta to any to resolve property 'env' does not exist error in certain TS environments
-        const baseUrl = (import.meta as any).env?.BASE_URL || '/';
-        const cleanBase = baseUrl.endsWith('/') ? baseUrl : `${baseUrl}/`;
-        const response = await fetch(`${cleanBase}posts/${slug}.md`);
+        // FIX: Use absolute path from public folder
+        // In production, Vite will resolve this correctly
+        const response = await fetch(`/portfolio/posts/${slug}.md`);
         
-        if (!response.ok) throw new Error(`Failed to load content: ${response.status}`);
+        if (!response.ok) {
+          console.error(`Failed to load: /portfolio/posts/${slug}.md - Status: ${response.status}`);
+          throw new Error(`Failed to load content: ${response.status}`);
+        }
         const rawText = await response.text();
         setContent(rawText);
       } catch (err) {

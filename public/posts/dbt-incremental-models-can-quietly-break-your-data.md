@@ -160,7 +160,7 @@ HAVING COUNT(*) > 1;
 
 If this returns any rows, your unique key isn't unique. Fix it before using incremental loading.
 
-For event data, use something like `event_id + timestamp + user_id`. For dimension tables, use your natural business key (customer_id, product_sku, etc).
+For event data, use something like event_id + timestamp + user_id. For dimension tables, use your natural business key (customer_id, product_sku, etc).
 
 ### Rule #5: Make Schema Changes Loud
 
