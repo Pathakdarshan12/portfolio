@@ -29,7 +29,7 @@ export interface Project {
   tech: string[];
   image: string;
   featured: boolean;
-  metrics: string[];
+  metrics: string[]; 
   detailedMetrics?: Metric[];
   githubUrl?: string;
   demoUrl?: string;
@@ -37,6 +37,7 @@ export interface Project {
   solution?: string;
   approach?: string[];
   techCategories?: TechCategory[];
+  architectureOverview?: string; // New: High level architecture description
   implementationCode?: {
     lang: string;
     code: string;
@@ -58,7 +59,7 @@ export interface BlogPost {
   date: string;
   category: string;
   excerpt: string;
-  content: string; // Standard Markdown string (usually empty if fetched externally from .md files)
+  content: string; 
   tags: string[];
   readingTime: string;
   image: string;
@@ -97,7 +98,7 @@ export interface Competency {
 export interface Expertise {
   title: string;
   mastery: 'EXPERT' | 'ADVANCED' | 'INTERMEDIATE';
-  iconName: string;
+  iconName: string; 
   gradient: string;
   competencies: Competency[];
   technologies: string[];

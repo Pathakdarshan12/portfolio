@@ -18,7 +18,7 @@ const statusColors: Record<string, string> = {
 
 const Projects: React.FC = () => {
   const [filter, setFilter] = useState<Domain | 'All'>('All');
-  const [sortBy, setSortBy] = useState<'latest' | 'popular' | 'alphabetical'>('latest');
+  const [sortBy, setSortBy] = useState<'latest' | 'alphabetical'>('latest');
 
   const filteredProjects = useMemo(() => {
     let result = PROJECTS.filter(p => {
@@ -26,9 +26,7 @@ const Projects: React.FC = () => {
       return matchesFilter;
     });
 
-    if (sortBy === 'popular') {
-      result.sort((a, b) => parseFloat(b.views || '0') - parseFloat(a.views || '0'));
-    } else if (sortBy === 'alphabetical') {
+    if (sortBy === 'alphabetical') {
       result.sort((a, b) => a.title.localeCompare(b.title));
     } else {
       result.sort((a, b) => b.id.localeCompare(a.id));
@@ -48,7 +46,7 @@ const Projects: React.FC = () => {
           <h1 className="text-5xl sm:text-6xl font-extrabold mb-6 tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-slate-900 via-primary-600 to-blue-500 dark:from-white dark:via-primary-400 dark:to-blue-400">
             Selected Work
           </h1>
-          <p className="text-lg text-slate-600 dark:text-slate-400 animate-in fade-in slide-in-from-bottom-2 duration-700">
+          <p className="text-lg text-slate-600 dark:text-slate-400">
             Exploring the intersection of data engineering, high-performance architecture, and business intelligence.
           </p>
         </header>
@@ -68,9 +66,6 @@ const Projects: React.FC = () => {
                 }`}
               >
                 {d}
-                {filter === d && (
-                  <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 bg-white rounded-full"></span>
-                )}
               </button>
             ))}
           </div>
@@ -87,7 +82,6 @@ const Projects: React.FC = () => {
                 className="w-full appearance-none bg-slate-100/50 dark:bg-slate-800/50 border border-transparent px-6 py-2 rounded-2xl outline-none text-sm font-bold pr-10 cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
               >
                 <option value="latest">Latest</option>
-                <option value="popular">Impact</option>
                 <option value="alphabetical">A-Z</option>
               </select>
               <ChevronDown size={14} className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none group-hover:text-primary-500 transition-colors" />
@@ -100,8 +94,7 @@ const Projects: React.FC = () => {
           {filteredProjects.map((project, index) => (
             <div
               key={project.id}
-              className="group relative flex flex-col bg-white dark:bg-slate-900 rounded-[2.5rem] overflow-hidden border border-slate-200 dark:border-slate-800 hover:border-primary-500/50 shadow-sm hover:shadow-2xl hover:shadow-primary-500/10 transition-all duration-500 hover:-translate-y-2 animate-in fade-in slide-in-from-bottom-8 fill-mode-both"
-              style={{ animationDelay: `${index * 100}ms` }}
+              className="group relative flex flex-col bg-white dark:bg-slate-900 rounded-[2.5rem] overflow-hidden border border-slate-200 dark:border-slate-800 hover:border-primary-500/50 shadow-sm hover:shadow-2xl hover:shadow-primary-500/10 transition-all duration-500 hover:-translate-y-2 animate-in fade-in"
             >
               {/* Image Container */}
               <div className="relative aspect-[16/9] overflow-hidden">
@@ -129,9 +122,6 @@ const Projects: React.FC = () => {
                       <a href={project.githubUrl} className="w-12 h-12 bg-white/10 backdrop-blur-md border border-white/20 rounded-xl flex items-center justify-center text-white hover:bg-primary-500 transition-colors">
                         <Github size={18} />
                       </a>
-                      <a href={project.demoUrl} className="w-12 h-12 bg-white/10 backdrop-blur-md border border-white/20 rounded-xl flex items-center justify-center text-white hover:bg-primary-500 transition-colors">
-                        <PlayCircle size={18} />
-                      </a>
                     </div>
                   </div>
                 </div>
@@ -156,7 +146,7 @@ const Projects: React.FC = () => {
                 {/* Tech Stack Pills */}
                 <div className="flex flex-wrap gap-2 mb-8">
                   {project.tech.map(t => (
-                    <span key={t} className="px-3 py-1 bg-slate-100 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 rounded-lg text-xs font-bold text-slate-500 group-hover:border-primary-500/20 transition-colors">
+                    <span key={t} className="px-3 py-1 bg-slate-100 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 rounded-lg text-xs font-bold text-slate-500">
                       {t}
                     </span>
                   ))}

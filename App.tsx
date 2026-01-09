@@ -49,6 +49,12 @@ const App: React.FC = () => {
     { name: 'Connect', path: '/connect' },
   ];
 
+  const socialLinks = [
+    { icon: Github, href: 'https://github.com/Pathakdarshan12' },
+    { icon: Linkedin, href: 'https://linkedin.com/in/pathakdarshan12' },
+    { icon: Mail, href: 'mailto:pathak12darshan@gmail.com' }
+  ];
+
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors duration-500">
       <ScrollToTop />
@@ -156,9 +162,9 @@ const App: React.FC = () => {
                 Engineering resilient data foundations and intelligence layers for high-growth enterprises.
               </p>
               <div className="flex space-x-4">
-                {[Github, Linkedin, Mail].map((Icon, i) => (
-                  <a key={i} href="#" className="w-12 h-12 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl flex items-center justify-center text-slate-400 hover:text-primary-500 hover:border-primary-500 transition-all group">
-                    <Icon size={20} className="group-hover:scale-110 transition-transform" />
+                {socialLinks.map((social, i) => (
+                  <a key={i} href={social.href} target="_blank" rel="noopener noreferrer" className="w-12 h-12 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl flex items-center justify-center text-slate-400 hover:text-primary-500 hover:border-primary-500 transition-all group">
+                    <social.icon size={20} className="group-hover:scale-110 transition-transform" />
                   </a>
                 ))}
               </div>
