@@ -149,53 +149,47 @@ const App: React.FC = () => {
         </Routes>
       </main>
 
+
       {/* Footer */}
-      <footer className="bg-slate-50 dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800/50 py-20 mt-20">
+      <footer className="bg-slate-100 dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-12 lg:gap-20">
-            <div className="md:col-span-5">
-              <Link to="/" className="flex items-center space-x-3 mb-8 group">
-                <div className="w-8 h-8 bg-primary-500 rounded-lg flex items-center justify-center text-white font-black text-xs">DP</div>
-                <span className="font-black text-xl tracking-tighter uppercase">Darshan Pathak</span>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div className="col-span-1 md:col-span-2">
+              <Link to="/" className="flex items-center space-x-2 mb-4">
+                <div className="w-6 h-6 bg-primary-500 rounded flex items-center justify-center text-white font-bold text-[10px]">
+                  DP
+                </div>
+                <span className="font-bold text-lg">Darshan Pathak</span>
               </Link>
-              <p className="text-slate-500 dark:text-slate-400 max-w-sm mb-10 leading-relaxed font-medium">
-                Engineering resilient data foundations and intelligence layers for high-growth enterprises.
+              <p className="text-slate-600 dark:text-slate-400 max-w-sm mb-6">
+                Bridging the gap across the complete data lifecycle—from ingestion and transformation
+                to quality assurance and predictive modeling.
               </p>
               <div className="flex space-x-4">
-                {socialLinks.map((social, i) => (
-                  <a key={i} href={social.href} target="_blank" rel="noopener noreferrer" className="w-12 h-12 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl flex items-center justify-center text-slate-400 hover:text-primary-500 hover:border-primary-500 transition-all group">
-                    <social.icon size={20} className="group-hover:scale-110 transition-transform" />
-                  </a>
-                ))}
+                <a href="https://github.com/Pathakdarshan12" className="text-slate-400 hover:text-primary-500 transition-colors"><Github size={20} /></a>
+                <a href="https://www.linkedin.com/in/pathakdarshan12" className="text-slate-400 hover:text-primary-500 transition-colors"><Linkedin size={20} /></a>
+                <a href="mailto:@gmail.com" className="text-slate-400 hover:text-primary-500 transition-colors"><Mail size={20} /></a>
               </div>
             </div>
 
-            <div className="md:col-span-2">
-              <h4 className="font-black text-xs uppercase tracking-widest mb-8 text-slate-400">Navigation</h4>
-              <ul className="space-y-4 text-sm font-bold">
+            <div>
+              <h4 className="font-bold mb-4">Explore</h4>
+              <ul className="space-y-2 text-slate-600 dark:text-slate-400">
                 <li><Link to="/projects" className="text-slate-500 hover:text-primary-500 transition-colors">Project Gallery</Link></li>
                 <li><Link to="/case-studies" className="text-slate-500 hover:text-primary-500 transition-colors">Case Narratives</Link></li>
                 <li><Link to="/blog" className="text-slate-500 hover:text-primary-500 transition-colors">Technical Blog</Link></li>
               </ul>
             </div>
 
-            <div className="md:col-span-5 flex flex-col items-start lg:items-end">
-              <div className="w-full max-w-sm">
-                <h4 className="font-black text-xs uppercase tracking-widest mb-8 text-slate-400">Join the Newsletter</h4>
-                <div className="flex p-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl shadow-sm">
-                   <input type="email" placeholder="Your Email" className="bg-transparent flex-1 px-4 outline-none text-sm font-medium" />
-                   <button className="px-6 py-3 bg-primary-500 text-white rounded-xl font-black text-xs hover:bg-primary-600 transition-all">Subscribe</button>
-                </div>
-              </div>
+            <div>
+              <h4 className="font-bold mb-4">Connect</h4>
+              <ul className="space-y-2 text-slate-600 dark:text-slate-400">
+                <li><Link to="/connect" className="hover:text-primary-500">Contact</Link></li>
+              </ul>
             </div>
           </div>
-          <div className="mt-20 pt-8 border-t border-slate-200 dark:border-slate-800/50 flex flex-col md:flex-row justify-between items-center gap-4 text-slate-400 text-[10px] font-black uppercase tracking-widest">
-            <div>© {new Date().getFullYear()} DARSHAN PATHAK ARCHITECTURE</div>
-            <div className="flex gap-8">
-               <a href="#" className="hover:text-primary-500">Privacy</a>
-               <a href="#" className="hover:text-primary-500">Ethics</a>
-               <a href="#" className="hover:text-primary-500">Open Source</a>
-            </div>
+          <div className="mt-12 pt-8 border-t border-slate-200 dark:border-slate-800 text-center text-slate-500 text-sm">
+            © {new Date().getFullYear()} Darshan Pathak. All rights reserved. Built with React & Tailwind.
           </div>
         </div>
       </footer>

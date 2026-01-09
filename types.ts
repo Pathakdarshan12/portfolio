@@ -78,6 +78,7 @@ export interface CaseStudy {
   slug: string;
   title: string;
   domain: Domain;
+  image?: string;
   summary?: string;
   description?: string;
   background?: string;

@@ -21,7 +21,7 @@ const Projects: React.FC = () => {
   const [sortBy, setSortBy] = useState<'latest' | 'alphabetical'>('latest');
 
   const filteredProjects = useMemo(() => {
-    let result = PROJECTS.filter(p => {
+    let result = [...PROJECTS].filter(p => {
       const matchesFilter = filter === 'All' || p.domain === filter;
       return matchesFilter;
     });
@@ -29,7 +29,12 @@ const Projects: React.FC = () => {
     if (sortBy === 'alphabetical') {
       result.sort((a, b) => a.title.localeCompare(b.title));
     } else {
-      result.sort((a, b) => b.id.localeCompare(a.id));
+      // Default latest sort by ID descending (p6, p5, p4...)
+      result.sort((a, b) => {
+        const idA = parseInt(a.id.replace('p', '')) || 0;
+        const idB = parseInt(b.id.replace('p', '')) || 0;
+        return idB - idA;
+      });
     }
 
     return result;

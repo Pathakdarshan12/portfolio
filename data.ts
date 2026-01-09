@@ -1,15 +1,26 @@
 
 import { Domain, Project, BlogPost, CaseStudy, Expertise } from './types';
+import isometrics from '@/assets/images/projects/isometrics_architecture.png';
+import datavelocity from '@/assets/images/projects/sp_etl_master.png';
+import road_accident from '@/assets/images/projects/Road_Accidents_Analysis.png';
+import itas from '@/assets/images/projects/itas.png';
+import netflix from '@/assets/images/projects/netflix.png';
+import classifier from '@/assets/images/projects/classification.png';
+import incremental_load from '@/assets/images/blogs/incremental_load/incremental_strategy.png';
+import customer_segmentation from '@/assets/images/case_study/customer_segmentation.png';
+import employee_churn from '@/assets/images/case_study/Employee_Churn_Prediction.png';
+import house_price from '@/assets/images/case_study/house_price.png';
+
 
 export const PROJECTS: Project[] = [
   {
-    id: 'p1',
+    id: 'p6',
     slug: 'isometrics-healthcare',
     title: 'IsoMetrics – Multi-Tenant Healthcare Analytics Platform',
     domain: Domain.AnalyticsEngineering,
     description: 'A multi-tenant healthcare analytics platform designed to demonstrate analytics engineering best practices including dimensional modeling, incremental transformations, data quality testing, and CI/CD using dbt and Snowflake.',
     tech: ['dbt', 'Snowflake', 'SQL', 'Python', 'Streamlit', 'GitHub Actions'],
-    image: 'https://raw.githubusercontent.com/Pathakdarshan12/Isometrics-Healthcare-Multi-Tenant-SaaS-Analytics-Platform/main/docs/IsoMetrics.png',
+    image: isometrics,
     featured: true,
     metrics: [
       'Isolated multi-tenant schemas',
@@ -51,13 +62,13 @@ export const PROJECTS: Project[] = [
     ]
   },
   {
-    id: 'p2',
+    id: 'p5',
     slug: 'data-velocity-lambda-platform',
     title: 'DataVelocity – Metadata-Driven Lambda Architecture',
     domain: Domain.DataEngineering,
     description: 'A metadata-driven data platform implementing batch and streaming ingestion patterns using Kafka and Snowflake, with a unified stored procedure transformation logic.',
     tech: ['Python', 'Apache Kafka', 'Snowflake', 'SQL', 'AWS S3', 'Docker'],
-    image: 'https://raw.githubusercontent.com/Pathakdarshan12/DataVelocity-metadata-driven-lambda-platform/main/datavelocity_unified_dashboard/dashboard.png',
+    image: datavelocity,
     featured: true,
     metrics: [
       '<15s Streaming Latency',
@@ -99,13 +110,13 @@ export const PROJECTS: Project[] = [
     ]
   },
   {
-    id: 'p3',
+    id: 'p4',
     slug: 'itas',
     title: 'iTAS – Intelligent Talent Acquisition System',
     domain: Domain.DataScience,
     description: 'AI-powered recruitment platform with resume parsing, skill extraction, and job matching built with a Django and Flask microservices architecture.',
     tech: ['Python', 'Django', 'Flask', 'spaCy', 'scikit-learn', 'MySQL', 'Bootstrap'],
-    image: 'https://raw.githubusercontent.com/Pathakdarshan12/iTAS/main/ScreenShots/Dashboard.png',
+    image: itas,
     featured: false,
     metrics: [
       'NLP Resume Parsing',
@@ -145,13 +156,13 @@ export const PROJECTS: Project[] = [
     ]
   },
   {
-    id: 'p4',
+    id: 'p3',
     slug: 'kidney-disease-classification',
     title: 'Kidney Disease Classification (MLOps)',
     domain: Domain.DataScience,
     description: 'End-to-end MLOps pipeline for kidney CT scan classification using VGG16. Implements experiment tracking with MLflow and data versioning with DVC.',
     tech: ['Python', 'TensorFlow', 'MLflow', 'DVC', 'Docker', 'AWS'],
-    image: 'https://raw.githubusercontent.com/Pathakdarshan12/Kidney_Disease_Classification_Using_MLflow_and_DVC/main/screenshots/webapp.png',
+    image: classifier,
     featured: false,
     metrics: [
       'VGG16 Transfer Learning',
@@ -191,13 +202,13 @@ export const PROJECTS: Project[] = [
     ]
   },
   {
-    id: 'p5',
+    id: 'p1',
     slug: 'road-accident-analysis-powerbi',
     title: 'Road Accident Analysis & Visualization',
     domain: Domain.AnalyticsEngineering,
     description: 'Interactive Power BI dashboard analyzing 307K records of UK road accidents. Features KPI tracking, YoY comparisons, and geographical trend analysis.',
     tech: ['Power BI', 'DAX', 'Power Query', 'Excel'],
-    image: 'https://raw.githubusercontent.com/Pathakdarshan12/Road_Accident_Analysis_Using_PowerBI/main/Road%20Accident%20Analysis%20Dashboard.jpg',
+    image: road_accident,
     featured: false,
     metrics: [
       '307K Records Analyzed',
@@ -233,6 +244,54 @@ export const PROJECTS: Project[] = [
         lang: 'dax',
         title: 'YoY Casualty Measure',
         code: `YoY Casualties = \nVAR CurrentYear = [Total Casualties]\nVAR PreviousYear = CALCULATE([Total Casualties], SAMEPERIODLASTYEAR('Calendar'[Date]))\nRETURN DIVIDE(CurrentYear - PreviousYear, PreviousYear, 0)`
+      }
+    ]
+  },
+{
+    id: 'p2',
+    slug: 'netflix-data-analysis',
+    title: 'Netflix Content & Trend Analysis',
+    domain: Domain.DataScience,
+    description: 'Comprehensive Exploratory Data Analysis (EDA) of the Netflix dataset using Python, uncovering content trends, rating distributions, and geographical concentrations over the last decade.',
+    tech: ['Python', 'Pandas', 'Seaborn', 'Matplotlib', 'NumPy'],
+    image: netflix,
+    featured: false,
+    metrics: [
+      '8,000+ Titles Analyzed',
+      'Cleaned Messy Categorical Data',
+      'Dynamic Content Visuals'
+    ],
+    detailedMetrics: [
+      { label: 'Scale', value: '8.8K Rows', detail: 'Comprehensive catalog analysis', icon: 'Database' },
+      { label: 'Visuals', value: '15+ Charts', detail: 'Statistical content distributions', icon: 'BarChart' },
+      { label: 'Core', value: 'Python', detail: 'Pandas & Seaborn backend', icon: 'Cpu' },
+      { label: 'Trends', value: '10+ Years', detail: 'Historical production analysis', icon: 'Activity' }
+    ],
+    githubUrl: 'https://github.com/Pathakdarshan12/Netflix_Data_Analysis',
+    role: 'Data Scientist',
+    status: 'Case Study',
+    publishedDate: '06-12-2025',
+    problem: 'Streaming services generate massive amounts of catalog data, but raw information lacks the visual context needed to identify production shifts, rating preferences, and content gaps across global markets.',
+    solution: 'Conducted a deep-dive EDA using Python. Cleaned multi-valued columns (Cast, Director), handled null values strategically, and generated high-impact visualizations to map Netflix\'s global growth and content strategy.',
+    architectureOverview: 'Standard Data Analytics Pipeline: Raw CSV Ingestion → Data Cleaning (Missing Value Imputation) → Feature Engineering (Date Extraction) → Statistical EDA → Visual Synthesis.',
+    approach: [
+      'Processed raw CSV data using Pandas for initial data profiling and null detection.',
+      'Split and normalized multi-valued categories like "Listed In" and "Cast" for granular analysis.',
+      'Utilized Matplotlib and Seaborn for multi-variate analysis of Ratings vs. Release Year.',
+      'Extracted insights on Netflix\'s content pivot from TV Shows to Movies over time.',
+      'Identified top content-producing countries through frequency distribution mapping.'
+    ],
+    techCategories: [
+      { category: 'Data Sources', tools: ['Netflix Titles CSV', 'Kaggle Dataset'] },
+      { category: 'Transformation', tools: ['Pandas', 'NumPy', 'Data Cleaning'] },
+      { category: 'Data Warehouse', tools: ['Python DataFrame', 'In-memory Processing'] },
+      { category: 'Visualization', tools: ['Seaborn', 'Matplotlib', 'Heatmaps'] }
+    ],
+    implementationCode: [
+      {
+        lang: 'python',
+        title: 'Categorical Distribution Analysis',
+        code: `import seaborn as sns\nimport matplotlib.pyplot as plt\n\n# Visualize TV Shows vs Movies\nsns.set(style="darkgrid")\nplt.figure(figsize=(10,6))\nax = sns.countplot(x="type", data=netflix_df, palette="Set2")\nplt.title("Distribution of Content on Netflix")\nplt.show()`
       }
     ]
   }
@@ -333,7 +392,7 @@ export const BLOG_POSTS: BlogPost[] = [
     category: 'Data Engineering',
     readingTime: '15 min read',
     featured: true,
-    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=1200',
+    image: datavelocity,
     author: {
       name: 'Darshan Pathak',
       role: 'Data Engineer',
@@ -352,7 +411,7 @@ export const BLOG_POSTS: BlogPost[] = [
     category: 'Data Engineering',
     readingTime: '8 min read',
     featured: false,
-    image: 'https://images.unsplash.com/photo-1591608971362-f08b2a09f91a?auto=format&fit=crop&q=80&w=1200',
+    image: incremental_load,
     author: {
       name: 'Darshan Pathak',
       role: 'Lead Data Architect',
@@ -370,6 +429,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     id: 'cs1',
     slug: 'customer-segmentation-analysis',
     title: 'Customer Segmentation & Association Analysis',
+    image: customer_segmentation,
     description:
       'A data analysis case study involving exploratory data analysis (EDA), dimensionality reduction (PCA), clustering to identify customer segments, and association rule mining to discover relationships between demographic and survey variables.',
     domain: Domain.DataScience,
@@ -395,6 +455,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     id: 'cs2',
     slug: 'employee-churn-prediction',
     title: 'Employee Churn Prediction with Machine Learning',
+    image: employee_churn,
     description:
       'A predictive modeling case study to forecast employee churn using machine learning. Includes dataset exploration, preprocessing, model building, evaluation, and exporting prediction results.',
     domain: Domain.DataScience,
@@ -418,6 +479,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     id: 'cs3',
     slug: 'house-price-prediction-app',
     title: 'House Price Prediction App (Machine Learning)',
+    image: house_price,
     description:
       'A machine learning-based web application that predicts house prices using an XGBoost regression model wrapped in a Streamlit interface, enabling user interaction with feature inputs to estimate property prices.',
     domain: Domain.DataScience,
