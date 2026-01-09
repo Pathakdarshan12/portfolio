@@ -11,6 +11,10 @@
         darkMode: 'class',
         theme: {
           extend: {
+            fontFamily: {
+              serif: ['Merriweather', 'serif'],
+              sans: ['Inter', 'sans-serif'],
+            },
             colors: {
               primary: {
                 50: '#f0f9ff',
@@ -40,7 +44,7 @@
       }
     </script>
     <style>
-      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap');
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700&family=Fira+Code:wght@400;500&display=swap');
       body {
         font-family: 'Inter', sans-serif;
         scroll-behavior: smooth;
@@ -55,20 +59,43 @@
       }
       .scrollbar-hide::-webkit-scrollbar { display: none; }
       .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
-      /* Prose Visual Tweaks */
-      .prose h2, .prose h3 { scroll-margin-top: 120px; }
-      .prose pre { background: transparent !important; padding: 0 !important; margin: 0 !important; }
-      .prose :where(code):not(:where([class~="not-prose"] *))::before,
-      .prose :where(code):not(:where([class~="not-prose"] *))::after { content: "" !important; }
+      .prose {
+        max-width: 720px !important;
+      }
+      .prose p {
+        font-family: 'Merriweather', serif;
+        font-size: 1.125rem;
+        line-height: 1.8;
+        margin-bottom: 2rem;
+      }
+      .dark .prose p {
+        color: #cbd5e1;
+      }
+      .prose h1, .prose h2, .prose h3, .prose h4 {
+        font-family: 'Inter', sans-serif;
+        letter-spacing: -0.02em;
+        font-weight: 800;
+      }
+      .prose blockquote {
+        font-family: 'Merriweather', serif;
+        font-style: italic;
+        border-left: 3px solid #0ea5e9;
+        padding-left: 1.5rem;
+        font-size: 1.25rem;
+        color: #64748b;
+      }
       .scroll-progress {
         position: fixed;
         top: 0;
         left: 0;
-        height: 4px;
-        background: #0ea5e9;
+        height: 2px;
+        background: #0f172a;
         z-index: 1000;
         width: 0%;
         transition: width 0.1s ease-out;
+      }
+      .dark .scroll-progress {
+        background: #38bdf8;
       }
     </style>
 
@@ -88,9 +115,9 @@
   }
 }
 </script>
-  <script type="module" crossorigin src="/portfolio_new/assets/index-B_SwejN4.js"></script>
+  <script type="module" crossorigin src="/portfolio_new/assets/index-ByOGZNkS.js"></script>
 </head>
-<body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 transition-colors duration-300 antialiased selection:bg-primary-500 selection:text-white">
+<body class="bg-white text-slate-900 dark:bg-slate-950 dark:text-slate-100 transition-colors duration-300 antialiased selection:bg-primary-500 selection:text-white">
     <div id="root"></div>
 </body>
 </html>
