@@ -58,7 +58,7 @@ export interface BlogPost {
   date: string;
   category: string;
   excerpt: string;
-  content: string; // Now a raw MDX string
+  content: string; // Standard Markdown string (usually empty if fetched externally from .md files)
   tags: string[];
   readingTime: string;
   image: string;
@@ -77,9 +77,28 @@ export interface CaseStudy {
   slug: string;
   title: string;
   domain: Domain;
-  summary: string;
-  background: string;
-  approach: string;
-  results: string[];
-  techStack: string[];
+  summary?: string;
+  description?: string;
+  background?: string;
+  approach?: string;
+  results?: string[];
+  keyFindings?: string[];
+  techStack?: string[];
+  technologies?: string[];
+  repoUrl?: string;
+  publishedDate?: string;
+}
+
+export interface Competency {
+  emoji: string;
+  text: string;
+}
+
+export interface Expertise {
+  title: string;
+  mastery: 'EXPERT' | 'ADVANCED' | 'INTERMEDIATE';
+  iconName: string;
+  gradient: string;
+  competencies: Competency[];
+  technologies: string[];
 }

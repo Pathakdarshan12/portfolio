@@ -1,249 +1,244 @@
-import { Domain, Project, BlogPost, CaseStudy } from './types';
-import isometrics_architecture from '@/assets/images/projects/isometrics_architecture.png';
-import datavelocity_proc from '@/assets/images/blogs/datavelocity/sp_etl_master.png';
-import datavelocity_ from '@/assets/images/blogs/datavelocity/sp_etl_master.png';
-import itas from '@/assets/images/projects/itas.png';
-import datavelocityImg from '@/assets/images/blogs/datavelocity/sp_etl_master.png';
-import incremental_strategyImg from '@/assets/images/blogs/incremental_load/incremental_strategy.png';
 
-export type Domain = 'data-engineering' | 'analytics' | 'machine-learning' | 'full-stack';
-
-export interface Metric {
-  label: string;
-  value: string;
-  detail: string;
-  icon: string;
-}
-
-export interface TechCategory {
-  category: string;
-  tools: string[];
-}
+import { Domain, Project, BlogPost, CaseStudy, Expertise } from './types';
 
 export const PROJECTS: Project[] = [
   {
-    id: '1',
-    slug: 'data-velocity-lambda-platform',
-    title: 'Data Velocity: Metadata-Driven Lambda Platform for Food Delivery at Scale',
-    domain: 'data-engineering',
-    description: 'Architected a unified Lambda architecture converging batch CSV ingestion and real-time Kafka streams, achieving sub-15-second end-to-end latency with metadata-driven data quality framework.',
-    tech: ['Snowflake', 'SQL', 'Python', 'Kafka', 'ETL', 'Data Modeling', 'AWS S3', 'Streamlit'],
-    image: datavelocityImg,
-    featured: true,
-    metrics: [
-      'Sub-15s latency (Kafka → Gold)',
-      '95%+ validation pass rate',
-      '~50k events/day processed',
-      '10× faster SCD Type 2'
-    ],
-    detailedMetrics: [
-      {
-        label: 'End-to-End Latency',
-        value: '<15s',
-        detail: 'Kafka to Gold layer processing time',
-        icon: 'zap'
-      },
-      {
-        label: 'Validation Pass Rate',
-        value: '95%+',
-        detail: 'Data quality framework success rate',
-        icon: 'check-circle'
-      },
-      {
-        label: 'Daily Event Volume',
-        value: '~50k',
-        detail: 'Food delivery events simulated per day',
-        icon: 'activity'
-      },
-      {
-        label: 'SCD Performance',
-        value: '10×',
-        detail: 'Faster using SHA2_HEX vs column comparison',
-        icon: 'trending-up'
-      }
-    ],
-    githubUrl: '#', // Replace with actual GitHub URL
-    problem: 'Food delivery platforms require processing both batch historical data and real-time streaming events across multiple entities (orders, customers, restaurants, deliveries). Traditional approaches often result in duplicate transformation logic, data quality issues, and inability to replay historical data beyond Kafka retention limits.',
-    solution: 'Designed a unified Lambda architecture with metadata-driven framework that converges batch CSV and Kafka streams at Bronze layer, implementing comprehensive data quality validations and enabling indefinite historical replay capabilities.',
-    approach: [
-      'Architected unified Lambda architecture eliminating duplicate transformation logic across 10+ entities',
-      'Designed metadata-driven data quality framework with four validation types (mandatory, value, lookup, duplicate)',
-      'Implemented hash-based SCD Type 2 using SHA2_HEX for 10× performance improvement',
-      'Built transactional Bronze loads with COMMIT/ROLLBACK control and INGEST_RUN_ID-based idempotency',
-      'Enabled indefinite historical replay from Bronze layer beyond Kafka retention limits',
-      'Supported schema evolution via metadata-driven column mapping for zero-code onboarding',
-      'Enforced data quality SLAs with configurable threshold-based downstream processing control',
-      'Developed Streamlit monitoring dashboard for real-time operational visibility'
-    ],
-    techCategories: [
-      {
-        category: 'Data Platform',
-        tools: ['Snowflake', 'AWS S3']
-      },
-      {
-        category: 'Stream Processing',
-        tools: ['Kafka']
-      },
-      {
-        category: 'Development',
-        tools: ['Python', 'SQL', 'ETL']
-      },
-      {
-        category: 'Visualization',
-        tools: ['Streamlit']
-      }
-    ],
-    role: 'Data Engineer',
-    duration: '3 months'
-  },
-  {
-    id: '2',
-    slug: 'isometrics-healthcare-analytics',
-    title: 'IsoMetrics-Healthcare: Multi-Tenant SaaS Analytics Platform',
-    domain: 'data-engineering',
-    description: 'Built enterprise-grade multi-tenant analytics platform simulating 200+ hospital tenants with row-level security, achieving 96% performance improvement through advanced optimization strategies.',
+    id: 'p1',
+    slug: 'isometrics-healthcare',
+    title: 'IsoMetrics – Multi-Tenant Healthcare Analytics Platform',
+    domain: Domain.AnalyticsEngineering,
+    description:
+      'A multi-tenant healthcare analytics platform designed to demonstrate analytics engineering best practices including dimensional modeling, incremental transformations, data quality testing, and CI/CD using dbt and Snowflake.',
     tech: ['dbt', 'Snowflake', 'SQL', 'Python', 'Streamlit', 'GitHub Actions'],
-    image: isometrics_architecture,
+    image:
+      'https://raw.githubusercontent.com/Pathakdarshan12/Isometrics-Healthcare-Multi-Tenant-SaaS-Analytics-Platform/main/docs/IsoMetrics.png',
     featured: true,
     metrics: [
-      '200+ hospital tenants',
-      '96% performance gain',
-      '100+ automated tests',
-      '2M+ records processed'
+      'Multi-tenant analytics design',
+      'Incremental dbt models',
+      'Automated data quality checks'
     ],
-    detailedMetrics: [
-      {
-        label: 'Hospital Tenants',
-        value: '200+',
-        detail: 'Multi-tenant simulation scale',
-        icon: 'building'
-      },
-      {
-        label: 'Performance Improvement',
-        value: '96%',
-        detail: 'Runtime reduced from 12min to 45s',
-        icon: 'trending-up'
-      },
-      {
-        label: 'Automated Tests',
-        value: '100+',
-        detail: 'dbt tests in CI/CD pipeline',
-        icon: 'check-square'
-      },
-      {
-        label: 'Records Processed',
-        value: '2M+',
-        detail: 'Synthetic healthcare records',
-        icon: 'database'
-      }
-    ],
-    githubUrl: '#', // Replace with actual GitHub URL
-    problem: 'Healthcare analytics platforms serving multiple hospital systems require strict data isolation, comprehensive quality testing, and efficient processing of large-scale patient data while maintaining sub-4-hour freshness SLAs and 99%+ quality thresholds.',
-    solution: 'Engineered a multi-tenant SaaS analytics platform with Snowflake row-level security, automated CI/CD validation, and optimized incremental processing strategies across 50+ dbt models with real-time monitoring and cost attribution.',
-    approach: [
-      'Built multi-tenant platform with Snowflake row-level security for 200+ hospital tenants',
-      'Developed 50+ dbt models across staging/intermediate/marts layers with incremental strategies',
-      'Implemented Type 2 SCD snapshots for provider/contract dimension tracking',
-      'Engineered CI/CD pipeline with pre-merge validation on isolated schemas',
-      'Created 100+ dbt tests (generic, singular, custom RLS macros) with automatic teardown',
-      'Achieved 96% performance improvement through clustering and partition pruning',
-      'Designed real-time SLA monitoring enforcing 4-hour freshness and >99% quality',
-      'Built Streamlit dashboard for pipeline health, quality metrics, and cost attribution'
-    ],
-    techCategories: [
-      {
-        category: 'Data Transformation',
-        tools: ['dbt', 'SQL']
-      },
-      {
-        category: 'Data Platform',
-        tools: ['Snowflake']
-      },
-      {
-        category: 'CI/CD',
-        tools: ['GitHub Actions']
-      },
-      {
-        category: 'Development',
-        tools: ['Python', 'Streamlit']
-      }
-    ],
-    role: 'Data Engineer',
-    duration: '4 months'
+    githubUrl:
+      'https://github.com/Pathakdarshan12/Isometrics-Healthcare-Multi-Tenant-SaaS-Analytics-Platform',
+    role: 'Analytics Engineer',
+    status: 'Case Study',
+    publishedDate: '2024'
   },
+
   {
-    id: '3',
-    slug: 'intelligent-talent-acquisition',
-    title: 'Intelligent Talent Acquisition System',
-    domain: 'machine-learning',
-    description: 'Automated resume parsing and job matching system using BERT transformers for precise candidate information extraction and intelligent skill-job matching with integrated job search capabilities.',
-    tech: ['Python', 'Django', 'MySQL', 'Gen AI', 'TensorFlow', 'HTML', 'CSS', 'JavaScript', 'BERT'],
-    image: itas,
+    id: 'p2',
+    slug: 'data-velocity-lambda-platform',
+    title: 'DataVelocity – Metadata-Driven Lambda Architecture',
+    domain: Domain.DataEngineering,
+    description:
+      'A metadata-driven data platform implementing batch and streaming ingestion patterns using Kafka and Snowflake, with a layered architecture and audit-friendly transformations.',
+    tech: ['Python', 'Apache Kafka', 'Snowflake', 'SQL', 'AWS S3'],
+    image:
+      'https://raw.githubusercontent.com/Pathakdarshan12/DataVelocity-metadata-driven-lambda-platform/main/datavelocity_unified_dashboard/dashboard.png',
+    featured: true,
+    metrics: [
+      'Batch and streaming ingestion',
+      'Metadata-driven pipeline design',
+      'Layered warehouse architecture'
+    ],
+    githubUrl:
+      'https://github.com/Pathakdarshan12/DataVelocity-metadata-driven-lambda-platform',
+    role: 'Data Engineer',
+    status: 'Case Study',
+    publishedDate: '2024'
+  },
+
+  {
+    id: 'p3',
+    slug: 'itas',
+    title: 'iTAS – Intelligent Talent Acquisition System',
+    domain: Domain.DataScience,
+    description:
+      'An academic project focused on building an intelligent talent acquisition system using machine learning techniques for resume parsing and candidate–job matching.',
+    tech: [
+      'Python',
+      'Django',
+      'Flask',
+      'TensorFlow',
+      'PyTorch',
+      'MySQL'
+    ],
+    image:
+      'https://raw.githubusercontent.com/Pathakdarshan12/iTAS/main/screenshots/preview.png',
     featured: false,
     metrics: [
-      'BERT-powered parsing',
-      'Automated job matching',
-      'Real-time job scraping',
-      'Full-stack interface'
+      'Resume parsing workflow',
+      'Skill matching logic',
+      'ML-based candidate analysis'
     ],
-    detailedMetrics: [
-      {
-        label: 'NLP Model',
-        value: 'BERT',
-        detail: 'Transformer-based extraction',
-        icon: 'cpu'
-      },
-      {
-        label: 'Automation',
-        value: 'End-to-End',
-        detail: 'Resume parsing to job matching',
-        icon: 'refresh-cw'
-      },
-      {
-        label: 'Job Search',
-        value: 'Real-time',
-        detail: 'Automated web scraping',
-        icon: 'search'
-      },
-      {
-        label: 'Interface',
-        value: 'Full-stack',
-        detail: 'Complete candidate/job management',
-        icon: 'layout'
-      }
+    githubUrl: 'https://github.com/Pathakdarshan12/iTAS',
+    role: 'ML / Full-Stack Developer',
+    status: 'In Development',
+    publishedDate: '2023'
+  },
+
+  {
+    id: 'p4',
+    slug: 'kidney-disease-classification',
+    title: 'Kidney Disease Classification using MLflow & DVC',
+    domain: Domain.DataScience,
+    description:
+      'A machine learning project demonstrating experiment tracking with MLflow and dataset versioning using DVC for kidney disease classification.',
+    tech: [
+      'Python',
+      'Flask',
+      'MLflow',
+      'DVC',
+      'TensorFlow',
+      'PyTorch',
+      'Docker'
     ],
-    githubUrl: '#', // Replace with actual GitHub URL
-    problem: 'Traditional talent acquisition processes involve manual resume screening, inefficient candidate-job matching, and time-consuming job search across multiple platforms, leading to slower hiring cycles and suboptimal matches.',
-    solution: 'Developed an intelligent system leveraging BERT transformers for automated resume parsing, AI-driven skill-job matching, and integrated job scraping functionality with a user-friendly management interface.',
-    approach: [
-      'Implemented BERT transformer for precise candidate information extraction from resumes',
-      'Built intelligent skill-job matching algorithm using TensorFlow',
-      'Developed automated job-search command for scraping matching job listings',
-      'Created Django-based backend with MySQL database for candidate and job data management',
-      'Designed intuitive full-stack interface for managing job postings and candidate profiles',
-      'Integrated Gen AI capabilities for enhanced matching accuracy'
+    image:
+      'https://raw.githubusercontent.com/Pathakdarshan12/Kidney_Disease_Classification_Using_MLflow_and_DVC/main/screenshots/preview.png',
+    featured: false,
+    metrics: [
+      'ML experiment tracking',
+      'Data version control',
+      'Model serving via Flask'
     ],
-    techCategories: [
-      {
-        category: 'Machine Learning',
-        tools: ['TensorFlow', 'Gen AI', 'BERT']
-      },
-      {
-        category: 'Backend',
-        tools: ['Python', 'Django', 'MySQL']
-      },
-      {
-        category: 'Frontend',
-        tools: ['HTML', 'CSS', 'JavaScript']
-      }
+    githubUrl:
+      'https://github.com/Pathakdarshan12/Kidney_Disease_Classification_Using_MLflow_and_DVC',
+    role: 'ML Engineer',
+    status: 'Case Study',
+    publishedDate: '2024'
+  },
+
+  {
+    id: 'p5',
+    slug: 'road-accident-analysis-powerbi',
+    title: 'Road Accident Analysis using Power BI',
+    domain: Domain.DataEngineering,
+    description:
+      'A data analysis and visualization project using Power BI to explore patterns and trends in road accident data.',
+    tech: ['Power BI', 'DAX'],
+    image:
+      'https://raw.githubusercontent.com/Pathakdarshan12/Road_Accident_Analysis_Using_PowerBI/main/assets/preview.png',
+    featured: false,
+    metrics: [
+      'Interactive dashboards',
+      'Exploratory analysis',
+      'Trend-based insights'
     ],
-    role: 'Full-stack ML Engineer',
-    duration: '2 months'
+    githubUrl:
+      'https://github.com/Pathakdarshan12/Road_Accident_Analysis_Using_PowerBI',
+    role: 'Data Analyst',
+    status: 'Case Study',
+    publishedDate: '2023'
   }
 ];
 
-// Content has been moved to external .md files in the /posts/ directory
+export const SKILLS = [
+  // Engineering - Blue
+  { name: 'Spark', domain: Domain.DataEngineering, mastery: 3, xp: '5y', icon: 'zap' },
+  { name: 'Kafka', domain: Domain.DataEngineering, mastery: 2, xp: '3y', icon: 'activity' },
+  { name: 'Airflow', domain: Domain.DataEngineering, mastery: 3, xp: '4y', icon: 'layers' },
+  { name: 'Python', domain: Domain.DataEngineering, mastery: 3, xp: '6y', icon: 'code' },
+  { name: 'AWS', domain: Domain.DataEngineering, mastery: 2, xp: '4y', icon: 'cloud' },
+
+  // Quality - Green
+  { name: 'dbt-tests', domain: Domain.QualityEngineering, mastery: 3, xp: '4y', icon: 'shield-check' },
+  { name: 'Great Expectations', domain: Domain.QualityEngineering, mastery: 2, xp: '2y', icon: 'check-circle' },
+  { name: 'Monte Carlo', domain: Domain.QualityEngineering, mastery: 2, xp: '2y', icon: 'microscope' },
+  { name: 'Elementary', domain: Domain.QualityEngineering, mastery: 3, xp: '3y', icon: 'search' },
+
+  // Analytics - Purple
+  { name: 'dbt', domain: Domain.AnalyticsEngineering, mastery: 3, xp: '5y', icon: 'database' },
+  { name: 'Snowflake', domain: Domain.AnalyticsEngineering, mastery: 3, xp: '4y', icon: 'box' },
+  { name: 'Looker', domain: Domain.AnalyticsEngineering, mastery: 2, xp: '3y', icon: 'bar-chart' },
+  { name: 'SQL', domain: Domain.AnalyticsEngineering, mastery: 3, xp: '6y', icon: 'terminal' },
+
+  // Science - Pink
+  { name: 'PyTorch', domain: Domain.DataScience, mastery: 2, xp: '3y', icon: 'brain' },
+  { name: 'XGBoost', domain: Domain.DataScience, mastery: 2, xp: '3y', icon: 'trending-up' },
+  { name: 'Pandas', domain: Domain.DataScience, mastery: 3, xp: '5y', icon: 'table' },
+  { name: 'MLflow', domain: Domain.DataScience, mastery: 2, xp: '2y', icon: 'git-branch' },
+];
+
+export const EXPERTISE_DATA: Expertise[] = [
+  {
+    title: 'Data Engineering',
+    mastery: 'EXPERT',
+    iconName: 'Database',
+    gradient: 'from-sky-500 to-blue-700',
+    competencies: [
+      { emoji: '🏗️', text: 'Pipeline Architecture & ETL/ELT Design' },
+      { emoji: '⚡', text: 'Real-time Stream Processing' },
+      { emoji: '☁️', text: 'Cloud Infrastructure & Orchestration' },
+      { emoji: '📊', text: 'Modern Data Warehousing' },
+      { emoji: '🔄', text: 'Workflow Automation' }
+    ],
+    technologies: ['Python', 'SQL', 'Java', 'PySpark', 'Kafka', 'Airflow', 'dbt', 'Databricks', 'Snowflake', 'AWS S3', 'Docker', 'GitHub']
+  },
+  {
+    title: 'Data Quality Engineering',
+    mastery: 'EXPERT',
+    iconName: 'Shield',
+    gradient: 'from-emerald-500 to-teal-700',
+    competencies: [
+      { emoji: '🛡️', text: 'Data Validation & Schema Enforcement' },
+      { emoji: '🧪', text: 'Automated Testing Frameworks' },
+      { emoji: '📊', text: 'Data Profiling & Health Monitoring' },
+      { emoji: '🔍', text: 'Quality Metrics & SLA Tracking' },
+      { emoji: '⚠️', text: 'Proactive Anomaly Detection' }
+    ],
+    technologies: ['Pytest-BDD', 'Great Expectations', 'dbt tests', 'Playwright', 'SQLAlchemy', 'Jenkins', 'GitHub Actions', 'Snowflake', 'PostgreSQL']
+  },
+  {
+    title: 'Data Analytics Engineering',
+    mastery: 'ADVANCED',
+    iconName: 'BarChart',
+    gradient: 'from-purple-500 to-indigo-700',
+    competencies: [
+      { emoji: '📐', text: 'Data Modeling & Dimensional Design' },
+      { emoji: '🔄', text: 'Transformation Pipeline Development' },
+      { emoji: '📊', text: 'BI & Self-Service Dashboards' },
+      { emoji: '☁️', text: 'Cloud Analytics Optimization' },
+      { emoji: '📈', text: 'Statistical Analysis & EDA' }
+    ],
+    technologies: ['dbt', 'SQL', 'PySpark', 'Power BI', 'Streamlit', 'Snowflake', 'Databricks', 'AWS', 'Azure', 'GitHub', 'Docker']
+  },
+  {
+    title: 'Data Science & ML',
+    mastery: 'ADVANCED',
+    iconName: 'Brain',
+    gradient: 'from-pink-500 to-rose-700',
+    competencies: [
+      { emoji: '🤖', text: 'Machine Learning Model Development' },
+      { emoji: '📊', text: 'Statistical Analysis & Testing' },
+      { emoji: '🔍', text: 'Exploratory Data Analysis' },
+      { emoji: '📈', text: 'Predictive Modeling & Forecasting' },
+      { emoji: '🛠️', text: 'Feature Engineering at Scale' }
+    ],
+    technologies: ['TensorFlow', 'Scikit-learn', 'Pandas', 'NumPy', 'PySpark', 'Databricks', 'Snowflake', 'Docker', 'GitHub', 'Streamlit']
+  }
+];
+
 export const BLOG_POSTS: BlogPost[] = [
+  {
+    id: 'b3',
+    slug: 'dbt-incremental-models-can-quietly-break-your-data',
+    title: 'dbt Incremental Models Can Quietly Break Your Data (Here\'s How to Fix It)',
+    date: 'Jan 07, 2026',
+    category: 'Data Engineering',
+    readingTime: '8 min read',
+    featured: true,
+    image: 'https://images.unsplash.com/photo-1591608971362-f08b2a09f91a?auto=format&fit=crop&q=80&w=1200',
+    author: {
+      name: 'Darshan Pathak',
+      role: 'Lead Data Architect',
+      avatar: 'https://picsum.photos/seed/dp88/200/200',
+      twitter: '#',
+      linkedin: '#'
+    },
+    excerpt: 'The worst data bugs are the ones you don\'t see coming. Learn how to keep your dbt incremental models from silently corrupting your warehouse.',
+    tags: ['dbt', 'Data Engineering', 'Quality'],
+    content: ''
+  },
   {
     id: 'b1',
     slug: 'modular-dbt-architectures-2024',
@@ -251,7 +246,7 @@ export const BLOG_POSTS: BlogPost[] = [
     date: 'March 20, 2024',
     category: 'Analytics Engineering',
     readingTime: '10 min read',
-    featured: true,
+    featured: false,
     image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=1200',
     author: {
       name: 'Darshan Pathak',
@@ -262,7 +257,7 @@ export const BLOG_POSTS: BlogPost[] = [
     },
     excerpt: 'Modern data transformation requires more than just SQL. Learn how to apply software engineering principles to your dbt projects for ultimate scalability.',
     tags: ['dbt', 'Architecture', 'SQL'],
-    content: '' // Fetched dynamically at runtime
+    content: ''
   },
   {
     id: 'b2',
@@ -279,21 +274,80 @@ export const BLOG_POSTS: BlogPost[] = [
     },
     excerpt: 'Manual testing is a death sentence for data teams. Discover how to build a self-healing quality layer using Elementary and dbt.',
     tags: ['Quality', 'Observability', 'dbt'],
-    content: '' // Fetched dynamically at runtime
+    content: ''
   }
 ];
-
 
 export const CASE_STUDIES: CaseStudy[] = [
   {
     id: 'cs1',
-    slug: 'modern-data-stack-migration',
-    title: 'Migrating Legacy On-Prem ETL to Modern Data Stack',
-    domain: Domain.DataEngineering,
-    summary: 'A 12-month transformation journey for a global retail brand.',
-    background: 'Client suffered from data silos and high maintenance costs of legacy Hadoop clusters.',
-    approach: 'Lift and shift strategy followed by progressive refinement using Airbyte, Snowflake, and dbt.',
-    results: ['Reduced monthly costs by 40%', 'Self-service analytics enabled for 200+ users'],
-    techStack: ['Snowflake', 'Airbyte', 'dbt', 'Terraform']
+    slug: 'customer-segmentation-analysis',
+    title: 'Customer Segmentation & Association Analysis',
+    description:
+      'A data analysis case study involving exploratory data analysis (EDA), dimensionality reduction (PCA), clustering to identify customer segments, and association rule mining to discover relationships between demographic and survey variables.',
+    domain: Domain.DataScience,
+    technologies: [
+      'Python',
+      'Pandas',
+      'NumPy',
+      'Matplotlib',
+      'Seaborn',
+      'Scikit-learn',
+      'PCA',
+      'Clustering'
+    ],
+    keyFindings: [
+      'Identified distinct customer segments via clustering',
+      'Uncovered demographic factors influencing behaviors',
+      'Association rules revealed relationships between key variables'
+    ],
+    repoUrl: 'https://github.com/Pathakdarshan12/Customer_Segmentation',
+    publishedDate: '2025'
+  },
+  {
+    id: 'cs2',
+    slug: 'employee-churn-prediction',
+    title: 'Employee Churn Prediction with Machine Learning',
+    description:
+      'A predictive modeling case study to forecast employee churn using machine learning. Includes dataset exploration, preprocessing, model building, evaluation, and exporting prediction results.',
+    domain: Domain.DataScience,
+    technologies: [
+      'Python',
+      'Pandas',
+      'NumPy',
+      'Matplotlib',
+      'Seaborn',
+      'Scikit-learn'
+    ],
+    keyFindings: [
+      'Explored employee dataset to understand churn drivers',
+      'Built and evaluated models with classification metrics',
+      'Exported churn predictions for analysis'
+    ],
+    repoUrl: 'https://github.com/Pathakdarshan12/Employee_Churn_Prediction',
+    publishedDate: '2025'
+  },
+  {
+    id: 'cs3',
+    slug: 'house-price-prediction-app',
+    title: 'House Price Prediction App (Machine Learning)',
+    description:
+      'A machine learning-based web application that predicts house prices using an XGBoost regression model wrapped in a Streamlit interface, enabling user interaction with feature inputs to estimate property prices.',
+    domain: Domain.DataScience,
+    technologies: [
+      'Python',
+      'Streamlit',
+      'Pandas',
+      'NumPy',
+      'XGBoost',
+      'Matplotlib'
+    ],
+    keyFindings: [
+      'Developed a web app for interactive price predictions',
+      'Applied regression modeling via XGBoost',
+      'Provided visualization support for predictive insights'
+    ],
+    repoUrl: 'https://github.com/Pathakdarshan12/House_Price_Prediction',
+    publishedDate: '2025'
   }
 ];
