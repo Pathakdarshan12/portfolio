@@ -7,8 +7,104 @@ import {
   GraduationCap, Briefcase, Focus, Globe,
   Code2, Terminal, Cpu, Zap, Activity,
   ChevronRight, Download, Camera, Coffee,
-  Gamepad2, Mountain, Quote
+  Gamepad2, Mountain, Quote,
+  FileText, Globe, Sparkles, Calendar, Clock
 } from 'lucide-react';
+
+import { motion } from 'framer-motion';
+import { PROJECTS, BLOG_POSTS, EXPERTISE_DATA } from '../data';
+
+const ExpertiseCard = ({
+  title,
+  mastery,
+  iconName,
+  gradient,
+  competencies,
+  technologies
+}: any) => {
+  const Icon = IconMap[iconName] || Activity;
+
+  return (
+    <motion.div
+      {...({
+        initial: { opacity: 0, scale: 0.95 },
+        whileInView: { opacity: 1, scale: 1 },
+        viewport: { once: true },
+        whileHover: { y: -8, transition: { duration: 0.3 } }
+      } as any)}
+      className={`group relative flex flex-col p-[2px] rounded-[2.5rem] bg-gradient-to-br ${gradient} shadow-2xl h-full overflow-hidden`}
+    >
+      {/* Glow Ambient Layer */}
+      <div className="absolute inset-0 bg-slate-900/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+
+      {/* Inner Card Container */}
+      <div className="flex-grow flex flex-col p-8 lg:p-12 rounded-[2.4rem] bg-white/95 dark:bg-slate-950/80 backdrop-blur-3xl border border-white/10 dark:border-white/5 text-slate-900 dark:text-white relative z-10">
+
+        {/* Header Section */}
+        <div className="flex justify-between items-start mb-10">
+          <div className="relative">
+            <div className={`absolute inset-0 bg-gradient-to-br ${gradient} blur-2xl rounded-full scale-150 opacity-0 group-hover:opacity-30 transition-opacity duration-500`}></div>
+            <div className={`relative p-5 bg-gradient-to-br ${gradient} rounded-[1.5rem] text-white shadow-2xl group-hover:scale-110 transition-transform duration-500`}>
+              <Icon size={32} />
+            </div>
+          </div>
+          <div className="flex flex-col items-end">
+            <span className={`px-4 py-1.5 bg-gradient-to-br ${gradient} text-white rounded-full text-[10px] font-black uppercase tracking-[0.2em] shadow-lg shadow-primary-500/10`}>
+              {mastery}
+            </span>
+            <div className="mt-3 flex gap-1.5 px-2">
+              {[1, 2, 3].map((dot) => (
+                <div key={dot} className={`w-2 h-2 rounded-full transition-colors duration-500 ${mastery === 'EXPERT' ? 'bg-primary-500' : dot <= 2 ? 'bg-primary-500' : 'bg-slate-200 dark:bg-slate-800'}`}></div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Title */}
+        <h3 className="text-3xl lg:text-4xl font-black mb-10 tracking-tighter leading-none group-hover:translate-x-1 transition-transform duration-300">
+          {title}
+        </h3>
+
+        {/* Competencies Section */}
+        <div className="space-y-4 mb-12 flex-grow">
+          <h4 className="text-[11px] font-black uppercase tracking-[0.3em] text-slate-400 dark:text-white/30 mb-5">Core Competencies</h4>
+          <div className="grid grid-cols-1 gap-3.5">
+            {competencies.map((item: any, i: number) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, x: -10 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ delay: i * 0.05 }}
+                className="flex items-center gap-4 p-4 rounded-[1.25rem] bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-white/5 hover:bg-slate-100 dark:hover:bg-white/10 hover:border-primary-500/20 transition-all cursor-default group/item"
+              >
+                <span className="text-2xl group-hover/item:scale-125 transition-transform duration-300">{item.emoji}</span>
+                <span className="text-sm font-bold tracking-tight text-slate-700 dark:text-white/90">{item.text}</span>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+
+        {/* Tech Ecosystem */}
+        <div>
+          <h4 className="text-[11px] font-black uppercase tracking-[0.3em] text-slate-400 dark:text-white/30 mb-6">Tech Ecosystem</h4>
+          <div className="flex flex-wrap gap-2.5">
+            {technologies.map((tech: string) => (
+              <span
+                key={tech}
+                className="px-4 py-2.5 bg-slate-100 dark:bg-white/5 hover:bg-primary-500 hover:text-white border border-slate-200 dark:border-white/10 rounded-[1rem] text-[11px] font-black tracking-tight transition-all duration-300 cursor-default hover:scale-105"
+              >
+                {tech}
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Futuristic Scanlines */}
+      <div className="absolute inset-0 pointer-events-none bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:100%_8px] opacity-10 dark:opacity-20 group-hover:opacity-30 transition-opacity"></div>
+    </motion.div>
+  );
+};
 
 const About: React.FC = () => {
   const [activeStage, setActiveStage] = useState<number | null>(null);
@@ -253,55 +349,6 @@ const About: React.FC = () => {
         </div>
       </section>
 
-      {/* 4. Skills Matrix (T-Shaped Visualization) */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
-          <div>
-            <h2 className="text-sm font-bold uppercase tracking-[0.3em] text-primary-500 mb-4">Technical Depth</h2>
-            <h3 className="text-4xl font-bold mb-8">The T-Shaped Expert</h3>
-            <p className="text-lg text-slate-600 dark:text-slate-400 mb-10">
-              My expertise isn't just broad—it's deep. I maintain vertical mastery in engineering while possessing the cross-functional breadth to lead analytics and science initiatives.
-            </p>
-            <div className="space-y-8">
-              {skillDepths.map((skill, i) => (
-                <div key={i} className="space-y-3">
-                  <div className="flex justify-between items-end">
-                    <span className="font-bold text-slate-800 dark:text-slate-200">{skill.name}</span>
-                    <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">{skill.level}% Depth</span>
-                  </div>
-                  <div className="h-4 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
-                    <div
-                      className={`h-full ${skill.color} rounded-full transition-all duration-1000 ease-out`}
-                      style={{ width: `${skill.level}%` }}
-                    ></div>
-                  </div>
-                  <div className="flex flex-wrap gap-2">
-                    {skill.sub.map(s => (
-                      <span key={s} className="text-[10px] font-bold text-slate-400 uppercase tracking-tight">• {s}</span>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="grid grid-cols-2 gap-4">
-             {[
-               { icon: Terminal, title: 'DevOps/CI-CD', desc: 'Docker, K8s, GitHub Actions' },
-               { icon: Code2, title: 'Programming', desc: 'Python, SQL, Rust, Go' },
-               { icon: Activity, title: 'Observability', desc: 'Elementary, Grafana, Datadog' },
-               { icon: Zap, title: 'Optimization', desc: 'Query Tuning, Cost Reduction' },
-             ].map((s, i) => (
-               <div key={i} className="p-8 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl hover:border-primary-500/50 transition-all group">
-                 <s.icon className="text-primary-500 mb-4 group-hover:scale-110 transition-transform" size={32} />
-                 <h4 className="font-bold mb-2">{s.title}</h4>
-                 <p className="text-xs text-slate-500">{s.desc}</p>
-               </div>
-             ))}
-          </div>
-        </div>
-      </section>
-
       {/* 5. Professional Journey */}
       <section className="bg-slate-100 dark:bg-slate-900/50 py-32 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -376,6 +423,54 @@ const About: React.FC = () => {
         </div>
       </section>
 
+{/* SECTION 4: Latest Insights (Blog) */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32">
+        <div className="text-center mb-20">
+          <h2 className="text-sm font-bold uppercase tracking-[0.3em] text-primary-500 mb-4">Insights</h2>
+          <h3 className="text-4xl font-bold">Latest Writings</h3>
+        </div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {BLOG_POSTS.slice(0, 2).map((post) => (
+            <Link key={post.id} to={`/blog/${post.slug}`} className="group p-8 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-[2.5rem] hover:shadow-2xl transition-all flex flex-col md:flex-row gap-8">
+              <div className="md:w-32 md:h-32 bg-primary-500/10 rounded-3xl flex items-center justify-center shrink-0">
+                 <Activity className="text-primary-500 opacity-50" size={40} />
+              </div>
+              <div className="flex-1">
+                 <div className="flex items-center gap-3 text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-4">
+                   <Calendar size={12} /> {post.date}
+                   <span className="text-primary-500">{post.category}</span>
+                 </div>
+                 <h4 className="text-2xl font-bold mb-4 group-hover:text-primary-500 transition-colors leading-tight">{post.title}</h4>
+                 <p className="text-slate-500 dark:text-slate-400 text-sm line-clamp-2 leading-relaxed">{post.excerpt}</p>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+        {/* SECTION 9: Education */}
+        <section className="bg-slate-50 dark:bg-slate-900/30 py-32">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-16">
+              <h2 className="text-sm font-bold uppercase tracking-[0.3em] text-primary-500 mb-4">Academic</h2>
+              <h3 className="text-4xl font-bold">Foundation</h3>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-4xl mx-auto">
+              {[
+                { title: 'M.S. Data Science', sub: 'Stanford University • 2018', icon: GraduationCap, focus: 'ML & Deep Learning' },
+                { title: 'B.S. Computer Science', sub: 'UC Berkeley • 2016', icon: Code2, focus: 'Distributed Systems' }
+              ].map((edu, i) => (
+                <div key={i} className="group p-8 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-[2.5rem] shadow-sm hover:shadow-xl transition-all">
+                  <edu.icon className="text-primary-500 mb-6" size={32} />
+                  <h4 className="text-xl font-bold mb-1">{edu.title}</h4>
+                  <p className="text-sm text-slate-500 mb-4">{edu.sub}</p>
+                  <p className="text-xs font-black uppercase tracking-widest text-slate-400">Focus: {edu.focus}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
       {/* 6. Beyond the Data */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
@@ -423,41 +518,29 @@ const About: React.FC = () => {
         </div>
       </section>
 
-      {/* 7. Focus & Vision */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 border-t border-slate-200 dark:border-slate-800">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-           <div className="p-10 bg-gradient-to-br from-primary-500 to-blue-600 rounded-[2.5rem] text-white shadow-2xl shadow-primary-500/20">
-              <h4 className="text-2xl font-bold mb-8 flex items-center">
-                 <Focus className="mr-3" /> Currently Exploring
-              </h4>
-              <ul className="space-y-4">
-                 {[
-                   'LLM Observability and Evaluation Frameworks',
-                   'Real-time Data Quality Assertion at the Source',
-                   'Serverless Data Processing with Rust',
-                   'Data Mesh Architectures for Global Enterprise'
-                 ].map((f, i) => (
-                    <li key={i} className="flex items-center space-x-3 p-3 bg-white/10 rounded-xl">
-                       <CheckCircle2 size={18} />
-                       <span className="font-medium">{f}</span>
-                    </li>
-                 ))}
-              </ul>
-           </div>
-
-           <div className="p-10 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-[2.5rem] shadow-sm">
-              <h4 className="text-2xl font-bold mb-8 flex items-center">
-                 <Globe className="mr-3 text-primary-500" /> Open to Partnerships
-              </h4>
-              <p className="text-slate-600 dark:text-slate-400 mb-8">
-                 I'm currently evaluating high-impact opportunities in technical leadership, architectural consulting, and strategic data engineering roles.
-              </p>
-              <Link to="/connect" className="w-full py-4 bg-slate-900 dark:bg-slate-800 text-white rounded-2xl font-bold flex items-center justify-center hover:bg-slate-800 dark:hover:bg-slate-700 transition-colors">
-                 Let's Talk <ArrowRight className="ml-2" size={18} />
-              </Link>
-           </div>
-        </div>
-      </section>
+      {/* SECTION 10: Final CTA */}
+        <section className="bg-slate-950 text-white py-32 relative overflow-hidden">
+          <div className="max-w-4xl mx-auto px-4 text-center">
+            <h2 className="text-4xl sm:text-6xl font-extrabold mb-8 tracking-tighter">
+              Let's Build Something <br/>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-400 to-blue-400">Exceptional</span>
+            </h2>
+            <div className="flex flex-wrap justify-center gap-6 mb-16">
+              <a href="mailto:your@email.com" className="p-6 bg-white/5 border border-white/10 rounded-3xl hover:bg-primary-500 transition-all group">
+                <FileText size={32} />
+              </a>
+              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="p-6 bg-white/5 border border-white/10 rounded-3xl hover:bg-blue-600 transition-all group">
+                <Globe size={32} />
+              </a>
+              <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="p-6 bg-white/5 border border-white/10 rounded-3xl hover:bg-slate-800 transition-all group">
+                <Code2 size={32} />
+              </a>
+            </div>
+            <Link to="/connect" className="text-primary-400 font-bold text-lg hover:underline underline-offset-8">
+              Or fill out the contact form <ArrowRight className="inline-block ml-2" size={20} />
+            </Link>
+          </div>
+        </section>
     </div>
   );
 };
