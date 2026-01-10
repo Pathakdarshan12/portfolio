@@ -37,8 +37,8 @@ export interface Project {
   detailedMetrics?: Metric[];
   githubUrl?: string;
   demoUrl?: string;
-  problem?: string;
-  solution?: string;
+  problem?: string[];
+  solution?: string[];
   approach?: string[];
   techCategories?: TechCategory[];
   architectureOverview?: string;

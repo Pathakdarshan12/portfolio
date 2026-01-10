@@ -49,6 +49,37 @@ const ProjectDetail: React.FC = () => {
     setTimeout(() => setCopiedCodeId(null), 2000);
   };
 
+  const renderContentList = (items: string[] | undefined) => {
+    if (!items) return null;
+    return (
+      <div className="space-y-4 text-lg text-slate-600 dark:text-slate-400 leading-relaxed font-medium">
+        {items.map((item, idx) => {
+          const isBullet = item.trim().startsWith('•') || item.trim().startsWith('-');
+          const isHeader = item.trim().endsWith(':') && item.length < 100;
+
+          if (isHeader) {
+            return (
+              <h4 key={idx} className="font-bold text-slate-900 dark:text-white pt-2 text-xl">
+                {item}
+              </h4>
+            );
+          }
+
+          if (isBullet) {
+            return (
+              <div key={idx} className="flex items-start gap-3 pl-2">
+                <div className="mt-2.5 w-1.5 h-1.5 rounded-full bg-primary-500 shrink-0"></div>
+                <span>{item.replace(/^[•-]\s*/, '')}</span>
+              </div>
+            );
+          }
+
+          return <p key={idx}>{item}</p>;
+        })}
+      </div>
+    );
+  };
+
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 animate-fade-in">
       <section className="relative pt-12 pb-32 overflow-hidden bg-slate-900 text-white">
@@ -136,18 +167,14 @@ const ProjectDetail: React.FC = () => {
                         <div className="p-2 rounded-lg bg-rose-500/10 text-rose-500"><Target size={24} /></div>
                         <h2 className="text-2xl font-black uppercase tracking-tight">The Problem</h2>
                       </div>
-                      <p className="text-lg text-slate-600 dark:text-slate-400 leading-relaxed font-medium">
-                        {project.problem}
-                      </p>
+                      {renderContentList(project.problem)}
                     </section>
                     <section>
                       <div className="flex items-center space-x-3 mb-6">
                         <div className="p-2 rounded-lg bg-emerald-500/10 text-emerald-500"><Zap size={24} /></div>
                         <h2 className="text-2xl font-black uppercase tracking-tight">The Solution</h2>
                       </div>
-                      <p className="text-lg text-slate-600 dark:text-slate-400 leading-relaxed font-medium">
-                        {project.solution}
-                      </p>
+                      {renderContentList(project.solution)}
                     </section>
                   </div>
                 </div>

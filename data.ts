@@ -1,3 +1,4 @@
+
 import { Domain, Project, CaseStudy, Expertise } from './types';
 
 // Using remote URLs for images to ensure availability without local assets
@@ -75,8 +76,34 @@ export const PROJECTS: Project[] = [
       }
     ],
     githubUrl: 'https://github.com/Pathakdarshan12/Isometrics-Healthcare-Multi-Tenant-SaaS-Analytics-Platform',
-    problem: 'Healthcare SaaS platforms face a critical challenge: delivering powerful analytics to 100+ hospital customers while ensuring absolute data isolation. A single data leak = $50K HIPAA fine per record.\n\nThe Multi-Tenant Dilemma:\n• Dedicated infrastructure per hospital = 10x cost overhead\n• Shared infrastructure without isolation = catastrophic HIPAA violation risk\n• Manual access controls = human error vulnerability\n• Application-level security = bypassed by SQL access\n• Inconsistent de-identification = compliance gaps\n\nPerformance at Scale:\n• 500K+ daily encounters across all tenants\n• Real-time analytics SLA (<2 hour freshness)\n• Complex clinical quality metrics (30-day readmissions, mortality rates)\n• Revenue cycle analytics (AR aging, collection rates)\n• Provider performance scorecards',
-    solution: 'Engineered a production-grade multi-tenant healthcare analytics platform using \nSnowflake Row-Level Security (RLS)\n as the enforcement mechanism—not application code. Built a complete dbt-driven transformation pipeline (Staging → Intermediate → Marts) with incremental processing, automated data quality checks, and comprehensive HIPAA compliance features.\n\nSecurity Architecture:\n• Database-enforced RLS policies on `hospital_id` column (not bypassable)\n• Dual-tier policies: `hospital_isolation_policy` + `phi_access_policy`\n• Break-glass access for admins with full audit logging\n• HIPAA Safe Harbor de-identification (3-digit ZIP, date truncation, hashed PII)\n\nPerformance Optimizations:\n• Incremental models with merge strategy (96% faster than full refresh)\n• Clustering by `(hospital_id, date)` for 80% query speedup\n• Materialized views for sub-second dashboard queries\n• Cost-optimized warehouse auto-suspend',
+    problem: [
+      'Healthcare SaaS platforms face a critical challenge: delivering powerful analytics to 100+ hospital customers while ensuring absolute data isolation. A single data leak = $50K HIPAA fine per record.',
+      'The Multi-Tenant Dilemma:',
+      '• Dedicated infrastructure per hospital = 10x cost overhead',
+      '• Shared infrastructure without isolation = catastrophic HIPAA violation risk',
+      '• Manual access controls = human error vulnerability',
+      '• Application-level security = bypassed by SQL access',
+      '• Inconsistent de-identification = compliance gaps',
+      'Performance at Scale:',
+      '• 500K+ daily encounters across all tenants',
+      '• Real-time analytics SLA (<2 hour freshness)',
+      '• Complex clinical quality metrics (30-day readmissions, mortality rates)',
+      '• Revenue cycle analytics (AR aging, collection rates)',
+      '• Provider performance scorecards'
+    ],
+    solution: [
+      'Engineered a production-grade multi-tenant healthcare analytics platform using Snowflake Row-Level Security (RLS) as the enforcement mechanism—not application code. Built a complete dbt-driven transformation pipeline (Staging → Intermediate → Marts) with incremental processing, automated data quality checks, and comprehensive HIPAA compliance features.',
+      'Security Architecture:',
+      '• Database-enforced RLS policies on `hospital_id` column (not bypassable)',
+      '• Dual-tier policies: `hospital_isolation_policy` + `phi_access_policy`',
+      '• Break-glass access for admins with full audit logging',
+      '• HIPAA Safe Harbor de-identification (3-digit ZIP, date truncation, hashed PII)',
+      'Performance Optimizations:',
+      '• Incremental models with merge strategy (96% faster than full refresh)',
+      '• Clustering by `(hospital_id, date)` for 80% query speedup',
+      '• Materialized views for sub-second dashboard queries',
+      '• Cost-optimized warehouse auto-suspend'
+    ],
     approach: [
       'Multi-Tenant Security Design: Implemented Snowflake Row-Level Security with two-tier policy architecture—`hospital_isolation_policy` for general isolation and `phi_access_policy` for PHI-containing tables. Used user-hospital mapping table instead of session variables for enterprise-grade access control with full audit trail.',
       'HIPAA-Compliant Data De-identification: Applied HIPAA Safe Harbor methodology in staging layer—truncated ZIP codes to 3 digits, removed direct identifiers (names, MRN), hashed SSN/phone/email with SHA-256, kept only year of birth for age calculations. Marked all PHI-containing models in dbt metadata.',
@@ -654,8 +681,19 @@ jobs:
       }
     ],
     githubUrl: 'https://github.com/Pathakdarshan12/DataVelocity-metadata-driven-lambda-platform',
-    problem: 'Food delivery platforms process data through dual paths: real-time Kafka streams (order events, deliveries) and daily batch files (customer data, menu updates). Maintaining separate transformation pipelines for batch vs streaming causes:\n\n• Logic drift between batch and stream layers\n• 2x maintenance overhead\n• Inconsistent SCD2 tracking\n• Manual error reconciliation\n• No unified observability',
-    solution: 'Engineered a unified metadata-driven Lambda Architecture where both Kafka streams and S3 batch files converge into a single Bronze layer. Created SP_ETL_MASTER—a universal stored procedure that processes both data paths using identical transformation logic pulled from metadata tables. This eliminates code duplication while maintaining <2min streaming latency and full batch processing capability.',
+    problem: [
+      'Food delivery platforms process data through dual paths: real-time Kafka streams (order events, deliveries) and daily batch files (customer data, menu updates). Maintaining separate transformation pipelines for batch vs streaming causes:',
+      '• Logic drift between batch and stream layers',
+      '• 2x maintenance overhead',
+      '• Inconsistent SCD2 tracking',
+      '• Manual error reconciliation',
+      '• No unified observability'
+    ],
+    solution: [
+      'Engineered a unified metadata-driven Lambda Architecture where both Kafka streams and S3 batch files converge into a single Bronze layer.',
+      'Created SP_ETL_MASTER—a universal stored procedure that processes both data paths using identical transformation logic pulled from metadata tables.',
+      'This eliminates code duplication while maintaining <2min streaming latency and full batch processing capability.'
+    ],
     approach: [
       'Designed 5-table metadata repository (FILE_FORMAT_MASTER, SOURCE_FILE_CONFIG, DATA_FIELD_MASTER, FILE_COLUMN_MAPPING, TARGET_TABLE_MAPPING) to eliminate hardcoded SQL and enable dynamic pipeline generation',
       'Built universal SP_ETL_MASTER orchestrator that executes Bronze→Silver→Gold transformations for both batch and streaming sources using metadata-driven SQL generation',
@@ -937,8 +975,19 @@ $$;`
       }
     ],
     githubUrl: 'https://github.com/Pathakdarshan12/iTAS',
-    problem: 'Traditional recruitment processes are time-consuming, biased, and inefficient:\n\n• Manual resume screening takes 23 minutes per candidate\n• Unconscious bias affects 75% of hiring decisions\n• Skills mismatch leads to 46% early employee turnover\n• Interview scheduling requires 15+ email exchanges\n• No predictive insights for workforce planning\n• Recruiters spend 80% time on administrative tasks',
-    solution: 'Built an end-to-end intelligent recruitment platform that automates the entire talent acquisition lifecycle using deep learning and machine learning. The system uses Transformer models (Gemma-7b) for accurate resume parsing, dynamic skill matching algorithms for candidate-job alignment, and predictive analytics for time-to-hire estimation, reducing manual effort by 60% while improving hire quality.',
+    problem: [
+      'Traditional recruitment processes are time-consuming, biased, and inefficient:',
+      '• Manual resume screening takes 23 minutes per candidate',
+      '• Unconscious bias affects 75% of hiring decisions',
+      '• Skills mismatch leads to 46% early employee turnover',
+      '• Interview scheduling requires 15+ email exchanges',
+      '• No predictive insights for workforce planning',
+      '• Recruiters spend 80% time on administrative tasks'
+    ],
+    solution: [
+      'Built an end-to-end intelligent recruitment platform that automates the entire talent acquisition lifecycle using deep learning and machine learning.',
+      'The system uses Transformer models (Gemma-7b) for accurate resume parsing, dynamic skill matching algorithms for candidate-job alignment, and predictive analytics for time-to-hire estimation, reducing manual effort by 60% while improving hire quality.'
+    ],
     approach: [
       'Implemented Transformer-based deep learning model (Gemma-7b from HuggingFace) for Named Entity Recognition (NER) to extract structured data from unstructured resumes including skills, education, experience, and certifications with 92%+ accuracy',
       'Developed dynamic skill matching engine using TF-IDF vectorization and cosine similarity algorithms to compute candidate-job compatibility scores, enabling automated ranking of applicants based on weighted skill requirements',
@@ -1492,8 +1541,12 @@ if __name__ == "__main__":
     role: 'Data Scientist',
     status: 'Case Study',
     publishedDate: '06-12-2025',
-    problem: 'Streaming services generate massive amounts of catalog data, but raw information lacks the visual context needed to identify production shifts, rating preferences, and content gaps across global markets.',
-    solution: 'Conducted a deep-dive EDA using Python. Cleaned multi-valued columns (Cast, Director), handled null values strategically, and generated high-impact visualizations to map Netflix\'s global growth and content strategy.',
+    problem: [
+      'Streaming services generate massive amounts of catalog data, but raw information lacks the visual context needed to identify production shifts, rating preferences, and content gaps across global markets.'
+    ],
+    solution: [
+      'Conducted a deep-dive EDA using Python. Cleaned multi-valued columns (Cast, Director), handled null values strategically, and generated high-impact visualizations to map Netflix\'s global growth and content strategy.'
+    ],
     architectureOverview: 'Standard Data Analytics Pipeline: Raw CSV Ingestion → Data Cleaning (Missing Value Imputation) → Feature Engineering (Date Extraction) → Statistical EDA → Visual Synthesis.',
     approach: [
       'Processed raw CSV data using Pandas for initial data profiling and null detection.',
