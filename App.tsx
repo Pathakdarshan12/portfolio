@@ -14,6 +14,8 @@ import CaseStudyDetail from './pages/CaseStudyDetail';
 import Blog from './pages/Blog';
 import BlogDetail from './pages/BlogDetail';
 import Connect from './pages/Connect';
+import icon_light from "@/assets/icons/icon-dark.png";
+import icon_dark from "@/assets/icons/icon-dark.png";
 
 // Helper to scroll to top on route change
 const ScrollToTop = () => {
@@ -64,9 +66,32 @@ const App: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-20 items-center">
             <Link to="/" className="flex items-center space-x-3 group">
-              <div className="w-10 h-10 bg-primary-500 rounded-xl flex items-center justify-center text-white font-black group-hover:rotate-12 transition-all shadow-lg shadow-primary-500/20">
-                DP
-              </div>
+              {/* Light theme logo */}
+                <img
+                  src= {icon_dark}
+                  alt="Logo"
+                  className="h-10 w-auto object-contain dark:hidden"
+                  onError={(e) => {
+                    e.currentTarget.style.display = 'none';
+                    e.currentTarget.nextElementSibling?.classList.remove('hidden');
+                  }}
+                />
+
+                {/* Dark theme logo */}
+                <img
+                  src= { icon_light }
+                  alt="Logo Dark"
+                  className="h-10 w-auto object-contain hidden dark:block"
+                  onError={(e) => {
+                    e.currentTarget.style.display = 'none';
+                    e.currentTarget.nextElementSibling?.classList.remove('hidden');
+                  }}
+                />
+
+                {/* Fallback */}
+                <div className="hidden w-10 h-10 bg-primary-500 rounded-xl flex items-center justify-center text-white font-black shadow-lg shadow-primary-500/20">
+                  DP
+                </div>
               <span className="font-black text-xl tracking-tighter hidden sm:block">
                 Darshan<span className="text-primary-500">Pathak</span>
               </span>
@@ -155,7 +180,31 @@ const App: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div className="col-span-1 md:col-span-2">
               <Link to="/" className="flex items-center space-x-2 mb-4">
-                <div className="w-6 h-6 bg-primary-500 rounded flex items-center justify-center text-white font-bold text-[10px]">
+              {/* Logo Image with Theme Adaptation */}
+              {/* Light theme logo */}
+                <img
+                  src= {icon_dark}
+                  alt="Logo"
+                  className="w-12 h-12 object-contain dark:hidden"
+                  onError={(e) => {
+                    e.currentTarget.style.display = 'none';
+                    e.currentTarget.nextElementSibling?.classList.remove('hidden');
+                  }}
+                />
+
+                {/* Dark theme logo */}
+                <img
+                  src= { icon_light }
+                  alt="Logo Dark"
+                  className="w-12 h-12 object-contain hidden dark:block"
+                  onError={(e) => {
+                    e.currentTarget.style.display = 'none';
+                    e.currentTarget.nextElementSibling?.classList.remove('hidden');
+                  }}
+                />
+
+                {/* Fallback */}
+                <div className="hidden w-10 h-10 bg-primary-500 rounded-xl flex items-center justify-center text-white font-black shadow-lg shadow-primary-500/20">
                   DP
                 </div>
                 <span className="font-bold text-lg">Darshan Pathak</span>
