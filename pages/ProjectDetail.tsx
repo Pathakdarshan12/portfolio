@@ -8,9 +8,12 @@ import {
   LayoutDashboard, GitBranch, Terminal, Trophy, ChevronRight,
   PlayCircle, Briefcase, Calendar, Users, Cpu, BarChart, CheckCircle,
   ArrowRight, Box, Server, Globe, Sparkles, Share2, Bookmark, MoreHorizontal,
-  ArrowUpRight, Monitor
+  ArrowUpRight, Monitor, Copy, Check
 } from 'lucide-react';
 import { PROJECTS } from '../data';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import ArchitectureFlow from '../components/ArchitectureFlow';
 
 const IconMap: Record<string, any> = {
   Zap, Activity, Database, Microscope, Search, ShieldCheck,
@@ -18,74 +21,10 @@ const IconMap: Record<string, any> = {
   Layers, LayoutDashboard, Cpu, BarChart, Monitor, Server, Box
 };
 
-const DataFlowDiagram = ({ techCategories }: { techCategories: any[] }) => {
-  const stages = [
-    { label: 'Sources', icon: Database, color: 'text-blue-500', bg: 'bg-blue-500/10', border: 'border-blue-500/20', category: 'Data Sources' },
-    { label: 'Processing', icon: Cpu, color: 'text-purple-500', bg: 'bg-purple-500/10', border: 'border-purple-500/20', category: 'Transformation' },
-    { label: 'Storage', icon: Server, color: 'text-emerald-500', bg: 'bg-emerald-500/10', border: 'border-emerald-500/20', category: 'Data Warehouse' },
-    { label: 'Insight', icon: Monitor, color: 'text-indigo-500', bg: 'bg-indigo-500/10', border: 'border-indigo-500/20', category: 'Visualization' }
-  ];
-
-  // Helper to find tools for a generic stage if the category names don't match perfectly
-  const getToolsForStage = (stageLabel: string) => {
-    const matched = techCategories.find(c =>
-      c.category.toLowerCase().includes(stageLabel.toLowerCase()) ||
-      (stageLabel === 'Sources' && c.category.toLowerCase().includes('ingestion')) ||
-      (stageLabel === 'Processing' && c.category.toLowerCase().includes('processing')) ||
-      (stageLabel === 'Storage' && c.category.toLowerCase().includes('warehouse'))
-    );
-    return matched ? matched.tools : [];
-  };
-
-  return (
-    <div className="relative py-12 px-4 overflow-hidden">
-      {/* Background Flow Animation Lines - Desktop Only */}
-      <div className="absolute top-1/2 left-0 w-full h-px bg-slate-200 dark:bg-slate-800 -translate-y-1/2 hidden md:block z-0">
-        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-transparent via-primary-500 to-transparent animate-[flow_3s_linear_infinite]" style={{ backgroundSize: '200% 100%' }}></div>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-8 relative z-10">
-        {stages.map((stage, i) => {
-          const tools = getToolsForStage(stage.label);
-          const Icon = stage.icon;
-          return (
-            <div key={stage.label} className="flex flex-col items-center">
-              <div className={`w-full p-6 rounded-[2rem] border-2 ${stage.bg} ${stage.border} backdrop-blur-md transition-all hover:scale-105 group`}>
-                <div className={`w-12 h-12 rounded-2xl ${stage.bg} ${stage.color} flex items-center justify-center mb-4 transition-transform group-hover:rotate-12`}>
-                  <Icon size={24} />
-                </div>
-                <h4 className="text-sm font-black uppercase tracking-widest mb-3 text-slate-900 dark:text-white">{stage.label}</h4>
-                <div className="flex flex-wrap gap-2 justify-center">
-                  {tools.length > 0 ? tools.slice(0, 3).map((t: string) => (
-                    <span key={t} className="text-[10px] font-bold px-2 py-1 bg-white/50 dark:bg-slate-900/50 rounded-md border border-slate-200 dark:border-slate-800 shadow-sm">{t}</span>
-                  )) : (
-                    <span className="text-[10px] font-bold px-2 py-1 opacity-40 italic">System Core</span>
-                  )}
-                </div>
-              </div>
-              {i < stages.length - 1 && (
-                <div className="md:hidden flex flex-col items-center py-4">
-                   <ArrowDownCircle className="text-slate-300 dark:text-slate-700" size={24} />
-                </div>
-              )}
-            </div>
-          );
-        })}
-      </div>
-
-      <style>{`
-        @keyframes flow {
-          0% { background-position: 200% 0; }
-          100% { background-position: -200% 0; }
-        }
-      `}</style>
-    </div>
-  );
-};
-
 const ProjectDetail: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
   const [activeTab, setActiveTab] = useState<'overview' | 'architecture' | 'implementation' | 'results'>('overview');
+  const [copiedCodeId, setCopiedCodeId] = useState<string | null>(null);
   const project = PROJECTS.find(p => p.slug === slug);
 
   if (!project) return (
@@ -104,6 +43,12 @@ const ProjectDetail: React.FC = () => {
     { id: 'results', label: 'Outcomes', icon: Trophy },
   ] as const;
 
+  const copyToClipboard = (text: string, id: string) => {
+    navigator.clipboard.writeText(text);
+    setCopiedCodeId(id);
+    setTimeout(() => setCopiedCodeId(null), 2000);
+  };
+
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 animate-fade-in">
       <section className="relative pt-12 pb-32 overflow-hidden bg-slate-900 text-white">
@@ -113,9 +58,13 @@ const ProjectDetail: React.FC = () => {
             Back to Projects
           </Link>
           <div className="max-w-4xl text-left">
-            <span className="inline-block px-4 py-1.5 rounded-full bg-primary-500/20 border border-primary-500/30 text-primary-400 text-xs font-bold uppercase tracking-widest mb-6">
-              {project.domain}
-            </span>
+            <div className="flex flex-wrap gap-2 mb-6">
+              {project.domains.map(d => (
+                <span key={d} className="inline-block px-4 py-1.5 rounded-full bg-primary-500/20 border border-primary-500/30 text-primary-400 text-xs font-bold uppercase tracking-widest">
+                  {d}
+                </span>
+              ))}
+            </div>
             <h1 className="text-5xl sm:text-7xl font-extrabold mb-8 leading-tight tracking-tight text-left">
               {project.title}
             </h1>
@@ -213,37 +162,13 @@ const ProjectDetail: React.FC = () => {
                         <h3 className="text-3xl font-black tracking-tight mb-2">Architecture Insight</h3>
                         <p className="text-slate-500 font-medium">Modular systems design with high-integrity data flow.</p>
                       </div>
-                      <div className="hidden lg:flex items-center gap-2 text-[10px] font-bold text-slate-400 uppercase tracking-widest">
-                        <Activity size={14} className="animate-pulse text-primary-500" /> System Active
+                      <div className="hidden lg:flex items-center gap-2 px-3 py-1 bg-emerald-500/10 border border-emerald-500/30 rounded-full">
+                        <Activity size={14} className="text-emerald-400 animate-pulse" />
+                        <span className="text-xs font-bold uppercase tracking-widest text-emerald-400">System Active</span>
                       </div>
                     </div>
 
-                    <DataFlowDiagram techCategories={project.techCategories || []} />
-                  </section>
-
-                  {/* Tech Stack Breakdown Section */}
-                  <section>
-                    <h3 className="text-2xl font-black mb-10 tracking-tight">Technology Stack</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                      {(project.techCategories || []).map((cat, i) => (
-                        <div key={cat.category} className="p-8 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-[2.5rem] shadow-sm hover:shadow-md transition-shadow">
-                          <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-primary-500 mb-6">{cat.category}</h4>
-                          <div className="flex flex-wrap gap-2.5">
-                            {cat.tools.map(tool => (
-                              <div key={tool} className="group relative">
-                                <span className="px-4 py-2 bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-xl text-[11px] font-black hover:border-primary-500 hover:text-primary-500 transition-all cursor-default block">
-                                  {tool}
-                                </span>
-                                {/* Mini Tooltip Mockup */}
-                                <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1 bg-slate-900 text-white text-[9px] font-bold rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
-                                  Integrated via {project.domain}
-                                </div>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      ))}
-                    </div>
+                    <ArchitectureFlow categories={project.techCategories || []} />
                   </section>
 
                   {/* Strategic Approach */}
@@ -292,14 +217,34 @@ const ProjectDetail: React.FC = () => {
                                     <Terminal size={16} className="text-primary-400" />
                                     <span className="text-xs font-black uppercase tracking-widest text-slate-400">{snippet.title}</span>
                                   </div>
-                                  <div className="flex gap-1.5">
-                                     <div className="w-2.5 h-2.5 rounded-full bg-slate-700"></div>
-                                     <div className="w-2.5 h-2.5 rounded-full bg-slate-700"></div>
-                                     <div className="w-2.5 h-2.5 rounded-full bg-slate-700"></div>
+                                  <div className="flex items-center gap-3">
+                                    <span className="text-[10px] font-black uppercase tracking-wider text-slate-500 bg-white/5 px-2 py-0.5 rounded">
+                                       {snippet.lang}
+                                    </span>
+                                    <button
+                                        onClick={() => copyToClipboard(snippet.code, `impl-${i}`)}
+                                        className="flex items-center gap-1.5 text-xs font-bold text-slate-400 hover:text-white transition-colors"
+                                    >
+                                        {copiedCodeId === `impl-${i}` ? <Check size={14} className="text-emerald-500" /> : <Copy size={14} />}
+                                    </button>
                                   </div>
                                </div>
-                               <div className="p-8 overflow-x-auto">
-                                  <pre className="font-mono text-sm leading-relaxed text-slate-300"><code>{snippet.code}</code></pre>
+                               <div className="text-sm font-mono leading-relaxed">
+                                  <SyntaxHighlighter
+                                      language={snippet.lang || 'text'}
+                                      style={vscDarkPlus}
+                                      customStyle={{
+                                          margin: 0,
+                                          padding: '2rem',
+                                          background: '#0f172a', // slate-900
+                                          fontSize: '0.9rem',
+                                          lineHeight: '1.6'
+                                      }}
+                                      wrapLines={true}
+                                      showLineNumbers={true}
+                                  >
+                                      {snippet.code}
+                                  </SyntaxHighlighter>
                                </div>
                             </div>
                          ))

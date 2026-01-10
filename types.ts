@@ -3,7 +3,8 @@ export enum Domain {
   DataEngineering = 'Data Engineering',
   DataScience = 'Data Science',
   AnalyticsEngineering = 'Analytics Engineering',
-  QualityEngineering = 'Quality Engineering'
+  QualityEngineering = 'Quality Engineering',
+  ArtificialIntelligence = 'Artificial Intelligence'
 }
 
 export type ProjectStatus = 'Live Production' | 'In Development' | 'Case Study';
@@ -18,18 +19,21 @@ export interface Metric {
 export interface TechCategory {
   category: string;
   tools: string[];
+  icon?: string;
+  color?: string;
+  description?: string;
 }
 
 export interface Project {
   id: string;
   slug: string;
   title: string;
-  domain: Domain;
+  domains: Domain[];
   description: string;
   tech: string[];
   image: string;
   featured: boolean;
-  metrics: string[]; 
+  metrics: string[];
   detailedMetrics?: Metric[];
   githubUrl?: string;
   demoUrl?: string;
@@ -105,7 +109,7 @@ export interface CaseStudy {
   id: string;
   slug: string;
   title: string;
-  domain: Domain;
+  domains: Domain[];
   image?: string;
   summary?: string;
   description?: string;

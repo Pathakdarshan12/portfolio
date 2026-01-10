@@ -22,7 +22,7 @@ const Projects: React.FC = () => {
 
   const filteredProjects = useMemo(() => {
     let result = [...PROJECTS].filter(p => {
-      const matchesFilter = filter === 'All' || p.domain === filter;
+      const matchesFilter = filter === 'All' || p.domains.includes(filter as Domain);
       return matchesFilter;
     });
 
@@ -134,10 +134,12 @@ const Projects: React.FC = () => {
 
               {/* Content Section */}
               <div className="p-8 flex-grow flex flex-col">
-                <div className="flex items-center justify-between mb-4">
-                  <span className="px-3 py-1 bg-primary-500/10 text-primary-500 rounded-lg text-[10px] font-extrabold uppercase tracking-widest border border-primary-500/20">
-                    {project.domain}
-                  </span>
+                <div className="flex flex-wrap items-center gap-2 mb-4">
+                  {project.domains.map(d => (
+                    <span key={d} className="px-3 py-1 bg-primary-500/10 text-primary-500 rounded-lg text-[10px] font-extrabold uppercase tracking-widest border border-primary-500/20">
+                      {d}
+                    </span>
+                  ))}
                 </div>
 
                 <h3 className="text-3xl font-bold mb-4 text-slate-900 dark:text-white group-hover:text-primary-500 transition-colors leading-tight">
