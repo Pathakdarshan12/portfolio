@@ -1,14 +1,11 @@
-
 import { Domain, Project, CaseStudy, Expertise } from './types';
-
-// Using remote URLs for images to ensure availability without local assets
-const isometrics = '@/assets/images/projects/isometrics_architecture.png';
-const datavelocity = '@/assets/images/blogs/datavelocity/sp_etl_master.png';
-const itas = '@/assets/images/projects/itas.png';
-const netflix = '@/assets/images/projects/netflix.png';
-const customer_segmentation = '@/assets/images/case_study/customer_segmentation.png';
-const employee_churn = '@/assets/images/case_study/Employee_Churn_Prediction.png';
-const house_price = '@/assets/images/case_study/house_price.png';
+import isometrics from '@/assets/images/projects/isometrics_architecture.png';
+import datavelocity from '@/assets/images/blogs/datavelocity/sp_etl_master.png';
+import itas from '@/assets/images/projects/itas.png';
+import netflix from '@/assets/images/projects/netflix.png';
+import customer_segmentation from '@/assets/images/case_study/customer_segmentation.png';
+import employee_churn from '@/assets/images/case_study/Employee_Churn_Prediction.png';
+import house_price from '@/assets/images/case_study/house_price.png';
 
 export const PROJECTS: Project[] = [
   {
