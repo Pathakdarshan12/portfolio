@@ -27,6 +27,38 @@ const IconMap: Record<string, any> = {
   ShieldCheck,
 };
 
+const experiences = [
+    {
+      role: 'Associate Data Quality Analyst',
+      company: 'IntegriChain',
+      period: 'Jan 2025 – Present',
+      location: 'Hybrid',
+      achievements: [
+        'Designed and operationalized an automated data quality testing framework for Snowflake ELT pipelines using Python (Pytest) and SQL.',
+        'Achieved 40% reduction in production data defects and 60% decrease in manual validation effort.',
+        'Conducted Snowflake reconciliation across pipeline stages, identifying and resolving data quality issues before production.',
+        'Collaborated with data engineering teams on dbt-based transformation workflows, validating incremental models, business rules, and data lineage.',
+        'Contributed to design discussions for data pipeline changes, providing validation strategies and risk assessments for schema and logic updates.',
+        'Ensured analytical correctness by reconciling Power BI metrics with Snowflake source data leveraging SQL-based rule checks.'
+      ],
+      tech: ["Snowflake", "dbt", "SQL", "Python", "PowerBI",],
+      annotation: "Focused on data quality engineering and automated validation"
+    },
+    {
+      role: 'Data Science Engineering Intern',
+      company: 'KodeZera',
+      period: 'Feb 2024 - Aug 2024',
+      location: 'Remote',
+      achievements: [
+        'Built and deployed scalable data pipelines for streamlined data ingestion, storage, and retrieval, improving data accessibility for ML model training.',
+        'Gained hands-on experience with prompt engineering and LLMs, developing NLP applications using GPT-based models for text classification.',
+        'Monitored model performance, performed testing and statistical analysis, and iterated on algorithms to improve accuracy and reliability.'
+      ],
+      tech: ["Python", "Pandas", "Scikit-learn", "SQL"],
+      annotation: "Hands-on experience with end-to-end data science workflows"
+    }
+  ];
+
 const ExpertiseCard = ({
   title,
   mastery,
@@ -493,34 +525,8 @@ const About: React.FC = () => {
           <div className="relative">
             {/* Timeline Line */}
             <div className="absolute left-8 top-0 h-full w-px bg-slate-200 dark:bg-slate-800 hidden md:block"></div>
-
             <div className="space-y-16">
-              {[
-                {
-                  role: "Associate Data Quality Analyst",
-                  company: "IntegriChain",
-                  period: "Jan 2025 – Present",
-                  desc: "Designed and maintained automated data quality validation frameworks across Snowflake-based analytics pipelines. Implemented dbt tests, Great Expectations, and CI-driven checks to ensure data reliability and compliance for enterprise healthcare datasets.",
-                  tech: [
-                    "Snowflake",
-                    "dbt",
-                    "SQL",
-                    "Python",
-                    "Great Expectations",
-                  ],
-                  annotation:
-                    "Focused on data quality engineering and automated validation",
-                },
-                {
-                  role: "Data Science Engineering Intern",
-                  company: "KodeZera",
-                  period: "2020 – 2022",
-                  desc: "Worked on data preprocessing, exploratory analysis, and machine learning model development. Supported analytics workflows and assisted in building data pipelines and model evaluation processes.",
-                  tech: ["Python", "Pandas", "Scikit-learn", "SQL"],
-                  annotation:
-                    "Hands-on experience with end-to-end data science workflows",
-                },
-              ].map((job, i) => (
+              {experiences.map((job, i) => (
                 <div key={i} className="relative md:pl-24 group">
                   {/* Point */}
                   <div className="absolute left-0 top-0 w-16 h-16 bg-white dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-800 rounded-2xl flex items-center justify-center shadow-lg group-hover:border-primary-500 group-hover:bg-primary-500 group-hover:text-white transition-all duration-300 hidden md:flex">
@@ -539,9 +545,6 @@ const About: React.FC = () => {
                         {job.period}
                       </span>
                     </div>
-                    <p className="text-slate-600 dark:text-slate-400 mb-8 leading-relaxed">
-                      {job.desc}
-                    </p>
 
                     <div className="flex flex-wrap gap-2 mb-8">
                       {job.tech.map((t) => (
@@ -553,6 +556,17 @@ const About: React.FC = () => {
                         </span>
                       ))}
                     </div>
+
+                    <ul className="space-y-3 mb-8">
+                {job.achievements.map((item, idx) => (
+                  <li key={idx} className="flex items-start">
+                    <span className="inline-block w-1.5 h-1.5 rounded-full bg-primary-500 mt-2 mr-3 flex-shrink-0"></span>
+                    <span className="text-slate-600 dark:text-slate-400 leading-relaxed">
+                      {item}
+                    </span>
+                  </li>
+                ))}
+              </ul>
 
                     <div className="flex items-center text-xs font-bold text-slate-400 uppercase tracking-widest p-4 bg-slate-50 dark:bg-slate-800/50 rounded-2xl border border-dashed border-slate-200 dark:border-slate-700">
                       <Focus size={14} className="mr-2 text-primary-500" />{" "}
