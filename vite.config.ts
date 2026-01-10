@@ -20,6 +20,17 @@ export default defineConfig(({ mode }) => {
         alias: {
           '@': path.resolve(__dirname, '.'),
         }
+      }, // ← ADDED COMMA HERE
+      build: {
+        rollupOptions: {
+          output: {
+            manualChunks: {
+              'react-vendor': ['react', 'react-dom', 'react-router-dom'],
+              'icons': ['lucide-react'],
+            }
+          }
+        },
+        chunkSizeWarningLimit: 10000,
       }
     };
 });

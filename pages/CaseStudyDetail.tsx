@@ -1,7 +1,6 @@
 
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
-// Added missing Calendar and CheckSquare imports
 import {
   ArrowLeft, CheckCircle, Database, BarChart, Server, Globe,
   ShieldCheck, Zap, Layers, Sparkles, ExternalLink, Github,
@@ -29,10 +28,19 @@ const CaseStudyDetail: React.FC = () => {
   const technologiesList = study.techStack || study.technologies || [];
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 pb-32 animate-fade-in">
-      {/* Hero Header */}
-      <section className="relative pt-24 pb-48 bg-slate-900 text-white overflow-hidden">
-        <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-primary-500/10 blur-[150px] rounded-full -translate-y-1/2 translate-x-1/2"></div>
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 pb-32 animate-fade-in text-left">
+      {/* Hero Header with Background Image */}
+      <section className="relative pt-24 pb-48 bg-slate-950 text-white overflow-hidden">
+        {study.image && (
+          <div className="absolute inset-0 z-0">
+            <img
+              src={study.image}
+              className="w-full h-full object-cover opacity-20 filter grayscale"
+              alt=""
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/80 to-slate-950/40"></div>
+          </div>
+        )}
 
         <div className="max-w-7xl mx-auto px-4 relative z-10">
           <Link

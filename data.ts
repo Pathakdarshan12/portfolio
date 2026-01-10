@@ -383,47 +383,6 @@ export const EXPERTISE_DATA: Expertise[] = [
   }
 ];
 
-export const BLOG_POSTS: BlogPost[] = [
-  {
-    id: 'b1',
-    slug: 'how-i-built-a-lambda-architecture',
-    title: 'How I built a Unified Lambda Architecture on Snowflake',
-    date: 'Jan 15, 2026',
-    category: 'Data Engineering',
-    readingTime: '15 min read',
-    featured: true,
-    image: datavelocity,
-    author: {
-      name: 'Darshan Pathak',
-      role: 'Data Engineer',
-      avatar: 'https://picsum.photos/seed/dp88/200/200',
-      linkedin: 'https://linkedin.com/in/pathakdarshan12'
-    },
-    excerpt: 'Building a production-grade platform that unifies batch file loads and real-time Kafka events through identical transformation logic.',
-    tags: ['Snowflake', 'Kafka', 'Data Engineering', 'Lambda Architecture'],
-    content: ''
-  },
-  {
-    id: 'b3',
-    slug: 'dbt-incremental-models-can-quietly-break-your-data',
-    title: 'dbt Incremental Models Can Quietly Break Your Data (Here\'s How to Fix It)',
-    date: 'Jan 07, 2026',
-    category: 'Data Engineering',
-    readingTime: '8 min read',
-    featured: false,
-    image: incremental_load,
-    author: {
-      name: 'Darshan Pathak',
-      role: 'Lead Data Architect',
-      avatar: 'https://picsum.photos/seed/dp88/200/200',
-      linkedin: 'https://linkedin.com/in/pathakdarshan12'
-    },
-    excerpt: 'The worst data bugs are the ones you don\'t see coming. Learn how to keep your dbt incremental models from silently corrupting your warehouse.',
-    tags: ['dbt', 'Data Engineering', 'Quality'],
-    content: ''
-  }
-];
-
 export const CASE_STUDIES: CaseStudy[] = [
   {
     id: 'cs1',

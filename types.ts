@@ -37,7 +37,7 @@ export interface Project {
   solution?: string;
   approach?: string[];
   techCategories?: TechCategory[];
-  architectureOverview?: string; // New: High level architecture description
+  architectureOverview?: string;
   implementationCode?: {
     lang: string;
     code: string;
@@ -52,6 +52,27 @@ export interface Project {
   publishedDate?: string;
 }
 
+// --- New Blog Types ---
+
+export type BlogSectionType =
+  | 'header'
+  | 'subheader'
+  | 'paragraph'
+  | 'image'
+  | 'code'
+  | 'list'
+  | 'quote'
+  | 'metrics'
+  | 'twoColumn'
+  | 'divider'
+  | 'callout';
+
+export interface BlogSection {
+  type: BlogSectionType;
+  content: any;
+  id?: string;
+}
+
 export interface BlogPost {
   id: string;
   slug: string;
@@ -59,7 +80,8 @@ export interface BlogPost {
   date: string;
   category: string;
   excerpt: string;
-  content: string; 
+  content: string; // Legacy Markdown fallback
+  structuredContent?: BlogSection[]; // New structured data
   tags: string[];
   readingTime: string;
   image: string;
@@ -68,9 +90,15 @@ export interface BlogPost {
     name: string;
     role: string;
     avatar: string;
+    bio?: string;
     twitter?: string;
     linkedin?: string;
   };
+  relatedPosts?: {
+    title: string;
+    slug: string;
+    image: string;
+  }[];
 }
 
 export interface CaseStudy {

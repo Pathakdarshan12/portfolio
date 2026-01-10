@@ -7,6 +7,8 @@ import {
 } from 'lucide-react';
 
 const FORM_ENDPOINT = "https://formspree.io/f/mzddpbgd";
+import profile from "@/assets/images/profile.png";
+
 
 const ContactCard = ({ icon: Icon, title, subtext, value, link, type }: any) => {
   const [copied, setCopied] = useState(false);
@@ -136,9 +138,9 @@ const Connect: React.FC = () => {
           <div className="lg:col-span-7 space-y-12 text-left">
             <div className="flex items-start gap-6">
               <div className="relative shrink-0">
-                <div className="w-20 h-20 rounded-full border-2 border-primary-500 p-1 bg-white dark:bg-slate-900">
+                <div className="w-20 h-20 rounded-full border-2 border-primary-500 p-1 bg-gradient-to-br from-blue-100 via-indigo-50 to-white dark:from-slate-800 dark:via-slate-900 dark:to-black">
                   <img
-                    src="https://picsum.photos/seed/dp-profile/200/200"
+                    src= { profile }
                     alt="Darshan Pathak"
                     className="w-full h-full object-cover rounded-full"
                   />

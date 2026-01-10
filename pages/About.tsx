@@ -1,43 +1,19 @@
 import {
-  GraduationCap,
-  Focus,
-  Code2,
-  Cpu,
-  Camera,
-  Coffee,
-  Gamepad2,
-  Mountain,
-  Quote,
-  Calendar,
-  Database,
-  ShieldCheck,
-  Layers,
-  Microscope,
-  ArrowRight,
-  Briefcase,
-  Zap,
-  Activity,
-  Download,
-  Linkedin,
-  Github,
-  ChevronRight,
-  ChevronLeft,
-  Mail,
-  Brain,
-  Sparkles,
-  Shield,
-  Code,
-  BookOpen,
-  PenTool,
+    GraduationCap, Focus, Code2, Cpu,
+    Camera, Coffee, Gamepad2, Mountain,
+    Quote, Calendar, Database, ShieldCheck,
+    Layers, Microscope, ArrowRight, Briefcase,
+    Zap, Activity, Download, Linkedin,
+    Github, ChevronRight, ChevronLeft, Mail,
+    Brain, Sparkles, Shield, Code, BookOpen, PenTool,
 } from "lucide-react";
 
 import { motion } from "framer-motion";
-import { PROJECTS, BLOG_POSTS, EXPERTISE_DATA } from "../data";
+import { PROJECTS, EXPERTISE_DATA } from "../data";
+import { BLOG_POSTS } from '../blog';
 import profile from "@/assets/images/profile.png";
-
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import {} from "lucide-react";
 
 const IconMap: Record<string, any> = {
   Database,
@@ -86,27 +62,6 @@ const ExpertiseCard = ({
               className={`relative p-5 bg-gradient-to-br ${gradient} rounded-[1.5rem] text-white shadow-2xl group-hover:scale-110 transition-transform duration-500`}
             >
               <Icon size={32} />
-            </div>
-          </div>
-          <div className="flex flex-col items-end">
-            <span
-              className={`px-4 py-1.5 bg-gradient-to-br ${gradient} text-white rounded-full text-[10px] font-black uppercase tracking-[0.2em] shadow-lg shadow-primary-500/10`}
-            >
-              {mastery}
-            </span>
-            <div className="mt-3 flex gap-1.5 px-2">
-              {[1, 2, 3].map((dot) => (
-                <div
-                  key={dot}
-                  className={`w-2 h-2 rounded-full transition-colors duration-500 ${
-                    mastery === "EXPERT"
-                      ? "bg-primary-500"
-                      : dot <= 2
-                      ? "bg-primary-500"
-                      : "bg-slate-200 dark:bg-slate-800"
-                  }`}
-                ></div>
-              ))}
             </div>
           </div>
         </div>
@@ -261,13 +216,18 @@ const About: React.FC = () => {
             <div className="lg:col-span-5 flex justify-center">
               <div className="relative">
                 <div className="absolute inset-0 bg-gradient-to-tr from-primary-500 to-purple-500 rounded-full blur-2xl opacity-20 animate-pulse"></div>
-                <div className="relative w-64 h-64 sm:w-80 sm:h-80 rounded-full border-4 border-white dark:border-slate-800 overflow-hidden shadow-2xl">
+                <div className="lg:col-span-5 flex justify-center relative">
+                <div className="relative group">
+                <div className="absolute inset-0 bg-primary-500/20 blur-[100px] animate-pulse"></div>
+                <div className="relative w-64 h-64 sm:w-96 sm:h-96 rounded-full border-1 border-white/5 overflow-hidden shadow-2xl transition-transform duration-700 group-hover:scale-105 bg-gradient-to-br from-blue-100 via-indigo-50 to-white dark:from-slate-800 dark:via-slate-900 dark:to-black">
                   <img
                     src={profile}
                     alt="Darshan Pathak"
                     className="w-full h-full object-cover"
                   />
                 </div>
+              </div>
+            </div>
                 {/* Floating Badges */}
                 <div className="absolute -top-4 -right-4 bg-white dark:bg-slate-900 p-4 rounded-2xl shadow-xl border border-slate-100 dark:border-slate-800 animate-bounce transition-all duration-1000">
                   <Cpu className="text-primary-500" size={24} />
@@ -444,6 +404,27 @@ const About: React.FC = () => {
                 {/* Visual Connector Dot */}
                 <div className="absolute top-1/2 -right-4 w-3 h-3 bg-white dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-800 rounded-full hidden lg:block translate-y-[-50%] group-hover:bg-primary-500 group-hover:border-primary-500 transition-colors"></div>
               </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 3. Technical Skills */}   
+      <section className="py-32 bg-slate-50 dark:bg-slate-950 relative overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="text-center mb-24 max-w-4xl mx-auto">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary-500/10 text-primary-600 dark:text-primary-400 text-xs font-black uppercase tracking-[0.3em] mb-8">
+              <Sparkles size={14} /> Full-Cycle Mastery
+            </div>
+            <h3 className="text-4xl lg:text-7xl font-black mb-10 tracking-tighter text-slate-900 dark:text-white leading-[0.9] text-center">
+              Architecting the <br/>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-500 via-blue-600 to-indigo-600">Data Universe</span>
+            </h3>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16">
+            {EXPERTISE_DATA.map((data, i) => (
+              <ExpertiseCard key={i} {...data} />
             ))}
           </div>
         </div>
