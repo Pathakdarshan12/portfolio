@@ -1569,90 +1569,82 @@ if __name__ == "__main__":
 ];
 
 export const SKILLS = [
-  // Engineering - Blue
-  { name: 'Spark', domain: Domain.DataEngineering, mastery: 3, xp: '5y', icon: 'Zap' },
-  { name: 'Kafka', domain: Domain.DataEngineering, mastery: 2, xp: '3y', icon: 'Activity' },
-  { name: 'Airflow', domain: Domain.DataEngineering, mastery: 3, xp: '4y', icon: 'Layers' },
-  { name: 'Python', domain: Domain.DataEngineering, mastery: 3, xp: '6y', icon: 'Code' },
-  { name: 'AWS', domain: Domain.DataEngineering, mastery: 2, xp: '4y', icon: 'Cloud' },
+  // Data Engineering
+  { name: 'Python', domain: Domain.DataEngineering, mastery: 3, xp: '1–2 yrs', icon: 'Code' },
+  { name: 'SQL', domain: Domain.DataEngineering, mastery: 3, xp: '1–2 yrs', icon: 'Terminal' },
+  { name: 'Snowflake', domain: Domain.DataEngineering, mastery: 2, xp: '1 yr', icon: 'Box' },
+  { name: 'Kafka', domain: Domain.DataEngineering, mastery: 2, xp: 'project-based', icon: 'Activity' },
+  { name: 'Airflow', domain: Domain.DataEngineering, mastery: 2, xp: 'learning + projects', icon: 'Layers' },
 
-  // Quality - Green
-  { name: 'dbt-tests', domain: Domain.QualityEngineering, mastery: 3, xp: '4y', icon: 'ShieldCheck' },
-  { name: 'Great Expectations', domain: Domain.QualityEngineering, mastery: 2, xp: '2y', icon: 'CheckSquare' },
-  { name: 'Monte Carlo', domain: Domain.QualityEngineering, mastery: 2, xp: '2y', icon: 'Microscope' },
-  { name: 'Elementary', domain: Domain.QualityEngineering, mastery: 3, xp: '3y', icon: 'Search' },
+  // Data Quality
+  { name: 'dbt tests', domain: Domain.QualityEngineering, mastery: 3, xp: '1 yr (work)', icon: 'ShieldCheck' },
+  { name: 'Great Expectations', domain: Domain.QualityEngineering, mastery: 2, xp: 'projects', icon: 'CheckSquare' },
+  { name: 'Elementary', domain: Domain.QualityEngineering, mastery: 2, xp: 'learning', icon: 'Search' },
 
-  // Analytics - Purple
-  { name: 'dbt', domain: Domain.AnalyticsEngineering, mastery: 3, xp: '5y', icon: 'Database' },
-  { name: 'Snowflake', domain: Domain.AnalyticsEngineering, mastery: 3, xp: '4y', icon: 'Box' },
-  { name: 'Looker', domain: Domain.AnalyticsEngineering, mastery: 2, xp: '3y', icon: 'BarChart' },
-  { name: 'SQL', domain: Domain.AnalyticsEngineering, mastery: 3, xp: '6y', icon: 'Terminal' },
+  // Analytics Engineering
+  { name: 'dbt', domain: Domain.AnalyticsEngineering, mastery: 3, xp: '1 yr', icon: 'Database' },
+  { name: 'Power BI', domain: Domain.AnalyticsEngineering, mastery: 2, xp: 'projects', icon: 'BarChart' },
 
-  // Science - Pink
-  { name: 'PyTorch', domain: Domain.DataScience, mastery: 2, xp: '3y', icon: 'Brain' },
-  { name: 'XGBoost', domain: Domain.DataScience, mastery: 2, xp: '3y', icon: 'TrendingUp' },
-  { name: 'Pandas', domain: Domain.DataScience, mastery: 3, xp: '5y', icon: 'Table' },
-  { name: 'MLflow', domain: Domain.DataScience, mastery: 2, xp: '2y', icon: 'GitBranch' },
+  // Data Science
+  { name: 'Pandas', domain: Domain.DataScience, mastery: 3, xp: '2 yrs', icon: 'Table' },
+  { name: 'Scikit-learn', domain: Domain.DataScience, mastery: 2, xp: 'internship + projects', icon: 'Brain' },
+  { name: 'MLflow', domain: Domain.DataScience, mastery: 2, xp: 'projects', icon: 'GitBranch' },
 ];
+
 
 export const EXPERTISE_DATA: Expertise[] = [
   {
     title: 'Data Engineering',
-    mastery: 'EXPERT',
+    mastery: 'INTERMEDIATE',
     iconName: 'Database',
     gradient: 'from-sky-500 to-blue-700',
     competencies: [
-      { emoji: '🏗️', text: 'Pipeline Architecture & ETL/ELT Design' },
-      { emoji: '⚡', text: 'Real-time Stream Processing' },
-      { emoji: '☁️', text: 'Cloud Infrastructure & Orchestration' },
-      { emoji: '📊', text: 'Modern Data Warehousing' },
-      { emoji: '🔄', text: 'Workflow Automation' }
+      { emoji: '🏗️', text: 'Building batch and streaming data pipelines' },
+      { emoji: '🔄', text: 'ELT workflows with dbt and SQL' },
+      { emoji: '☁️', text: 'Working with cloud data warehouses' },
+      { emoji: '⚙️', text: 'Pipeline debugging and optimization' }
     ],
-    technologies: ['Python', 'SQL', 'Java', 'PySpark', 'Kafka', 'Airflow', 'dbt', 'Databricks', 'Snowflake', 'AWS S3', 'Docker', 'GitHub']
+    technologies: ['Python', 'SQL', 'Kafka', 'Airflow', 'dbt', 'Snowflake', 'GitHub']
   },
   {
-    title: 'Data Quality Engineering',
-    mastery: 'EXPERT',
+    title: 'Data Quality',
+    mastery: 'INTERMEDIATE',
     iconName: 'Shield',
     gradient: 'from-emerald-500 to-teal-700',
     competencies: [
-      { emoji: '🛡️', text: 'Data Validation & Schema Enforcement' },
-      { emoji: '🧪', text: 'Automated Testing Frameworks' },
-      { emoji: '📊', text: 'Data Profiling & Health Monitoring' },
-      { emoji: '🔍', text: 'Quality Metrics & SLA Tracking' },
-      { emoji: '⚠️', text: 'Proactive Anomaly Detection' }
+      { emoji: '🛡️', text: 'Schema and data validation' },
+      { emoji: '🧪', text: 'Automated data tests' },
+      { emoji: '🔍', text: 'Data profiling and anomaly detection' },
+      { emoji: '📊', text: 'Monitoring data reliability' }
     ],
-    technologies: ['Pytest-BDD', 'Great Expectations', 'dbt tests', 'Playwright', 'SQLAlchemy', 'Jenkins', 'GitHub Actions', 'Snowflake', 'PostgreSQL']
+    technologies: ['dbt tests', 'Great Expectations', 'SQL', 'Snowflake', 'Python']
   },
   {
-    title: 'Data Analytics Engineering',
-    mastery: 'ADVANCED',
+    title: 'Analytics Engineering',
+    mastery: 'INTERMEDIATE',
     iconName: 'BarChart',
     gradient: 'from-purple-500 to-indigo-700',
     competencies: [
-      { emoji: '📐', text: 'Data Modeling & Dimensional Design' },
-      { emoji: '🔄', text: 'Transformation Pipeline Development' },
-      { emoji: '📊', text: 'BI & Self-Service Dashboards' },
-      { emoji: '☁️', text: 'Cloud Analytics Optimization' },
-      { emoji: '📈', text: 'Statistical Analysis & EDA' }
+      { emoji: '📐', text: 'Dimensional modeling' },
+      { emoji: '🔄', text: 'Transforming raw data into metrics' },
+      { emoji: '📊', text: 'Supporting BI and reporting layers' }
     ],
-    technologies: ['dbt', 'SQL', 'PySpark', 'Power BI', 'Streamlit', 'Snowflake', 'Databricks', 'AWS', 'Azure', 'GitHub', 'Docker']
+    technologies: ['dbt', 'SQL', 'Snowflake', 'Power BI']
   },
   {
-    title: 'Data Science & ML',
-    mastery: 'ADVANCED',
+    title: 'Data Science',
+    mastery: 'FOUNDATIONAL',
     iconName: 'Brain',
     gradient: 'from-pink-500 to-rose-700',
     competencies: [
-      { emoji: '🤖', text: 'Machine Learning Model Development' },
-      { emoji: '📊', text: 'Statistical Analysis & Testing' },
-      { emoji: '🔍', text: 'Exploratory Data Analysis' },
-      { emoji: '📈', text: 'Predictive Modeling & Forecasting' },
-      { emoji: '🛠️', text: 'Feature Engineering at Scale' }
+      { emoji: '🤖', text: 'Training and evaluating ML models' },
+      { emoji: '📊', text: 'Exploratory data analysis' },
+      { emoji: '🛠️', text: 'Feature engineering for ML' }
     ],
-    technologies: ['TensorFlow', 'Scikit-learn', 'Pandas', 'NumPy', 'PySpark', 'Databricks', 'Snowflake', 'Docker', 'GitHub', 'Streamlit']
+    technologies: ['Scikit-learn', 'Pandas', 'NumPy', 'MLflow', 'TensorFlow']
   }
 ];
+
 
 export const CASE_STUDIES: CaseStudy[] = [
   {

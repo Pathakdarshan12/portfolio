@@ -156,11 +156,12 @@ const About: React.FC = () => {
   const [activeStage, setActiveStage] = useState<number | null>(null);
   const [typedText, setTypedText] = useState("");
   const roles = [
-    "Data Engineer by craft",
-    "Quality Guardian by principle",
-    "Analytics Architect by design",
-    "Data Scientist by curiosity",
+  "Data Engineer working on ELT pipelines",
+  "Data Quality Analyst ensuring data correctness",
+  "Analytics Engineer modeling business metrics",
+  "Machine Learning practitioner experimenting with models",
   ];
+
   const [roleIndex, setRoleIndex] = useState(0);
 
   // Typewriter effect for roles
@@ -183,48 +184,47 @@ const About: React.FC = () => {
   }, [typedText, roleIndex]);
 
   const lifecycleStages = [
-    {
-      title: "Data Engineering",
-      icon: Database,
-      color: "from-blue-500 to-cyan-500",
-      description:
-        "I build and maintain data pipelines to ingest, transform, and store structured data for analytics use cases.",
-      tools: ["Python", "SQL", "Kafka", "Snowflake"],
-      impact: "Reliable batch and streaming data ingestion",
-      project: "DataVelocity Platform",
-    },
-    {
-      title: "Data Quality",
-      icon: ShieldCheck,
-      color: "from-emerald-500 to-teal-500",
-      description:
-        "I implement automated data quality checks to validate schema, freshness, and business rules across pipelines.",
-      tools: ["dbt tests", "Great Expectations", "Python"],
-      impact: "Improved data reliability through automated validation",
-      project: "Healthcare Analytics Quality Checks",
-    },
-    {
-      title: "Analytics Engineering",
-      icon: Layers,
-      color: "from-purple-500 to-indigo-500",
-      description:
-        "I model and transform raw data into analytics-ready tables using dimensional modeling best practices.",
-      tools: ["dbt", "Snowflake", "SQL"],
-      impact: "Consistent, analytics-ready datasets",
-      project: "IsoMetrics Healthcare Analytics",
-    },
-    {
-      title: "Data Science",
-      icon: Microscope,
-      color: "from-rose-500 to-pink-500",
-      description:
-        "I develop and evaluate machine learning models as part of academic and portfolio projects.",
-      tools: ["Python", "Scikit-learn", "PyTorch", "MLflow"],
-      impact: "Reproducible ML experiments and models",
-      project: "iTAS & ML Case Studies",
-    },
-  ];
-
+  {
+    title: "Data Engineering",
+    icon: Database,
+    color: "from-blue-500 to-cyan-500",
+    description:
+      "Worked on building and maintaining data pipelines to ingest, transform, and load structured data for analytics and ML use cases.",
+    tools: ["Python", "SQL", "Kafka", "Snowflake"],
+    impact: "Built pipelines for batch and streaming data flows",
+    project: "DataVelocity Platform",
+  },
+  {
+    title: "Data Quality",
+    icon: ShieldCheck,
+    color: "from-emerald-500 to-teal-500",
+    description:
+      "Implemented automated data checks to validate schema, freshness, and business rules across transformation pipelines.",
+    tools: ["dbt tests", "Great Expectations", "Python"],
+    impact: "Reduced data issues through automated validation",
+    project: "Healthcare Analytics Quality Checks",
+  },
+  {
+    title: "Analytics Engineering",
+    icon: Layers,
+    color: "from-purple-500 to-indigo-500",
+    description:
+      "Built analytics-ready tables by transforming raw data using dimensional modeling and dbt workflows.",
+    tools: ["dbt", "Snowflake", "SQL"],
+    impact: "Created consistent datasets for reporting and analysis",
+    project: "IsoMetrics Healthcare Analytics",
+  },
+  {
+    title: "Data Science",
+    icon: Microscope,
+    color: "from-rose-500 to-pink-500",
+    description:
+      "Developed and evaluated machine learning models through internship and portfolio projects.",
+    tools: ["Python", "Scikit-learn", "PyTorch", "MLflow"],
+    impact: "Trained and tracked reproducible ML experiments",
+    project: "iTAS & ML Case Studies",
+  },
+];
   return (
     <div className="bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
       {/* 1. Hero Section */}
@@ -291,11 +291,12 @@ const About: React.FC = () => {
               </div>
 
               <p className="text-lg text-slate-600 dark:text-slate-400 leading-relaxed max-w-2xl">
-                Bridging the gap across the complete data lifecycle—from
-                ingestion and transformation to quality assurance and predictive
-                modeling. I specialize in turning complex raw data into
-                reliable, high-performance engines for business insight.
-              </p>
+                I work across data engineering, data quality, and analytics to build
+                pipelines that teams can trust. With a background in data science and
+                hands-on experience validating production data on Snowflake and dbt,
+                I focus on making raw data usable, accurate, and ready for decisions.
+               </p>
+
 
               <div className="flex flex-wrap gap-4">
                 <Link
@@ -463,54 +464,55 @@ const About: React.FC = () => {
       </section>
 
       {/* 3. My Philosophy */}
-      <section className="bg-slate-900 text-white py-32 overflow-hidden relative">
-        <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
-          <div className="absolute top-[-10%] left-[10%] w-[40%] h-[40%] bg-primary-500 blur-[150px] rounded-full"></div>
-        </div>
-
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-          <Quote
-            className="mx-auto text-primary-500 mb-12 opacity-50"
-            size={60}
-          />
-          <h2 className="text-3xl sm:text-5xl font-extrabold leading-tight mb-16 tracking-tight">
-            "Most people specialize in one part of the data stack. I chose to{" "}
-            <span className="text-primary-400">master the entire journey</span>
-            —because the best insights come from understanding every stage, from
-            ingestion to insight."
-          </h2>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
-            {[
-              {
-                title: "Engineering Foundation",
-                text: "Without solid pipelines, there's no data to analyze. Infrastructure is the bedrock.",
-              },
-              {
-                title: "Quality First",
-                text: "Bad data equals bad decisions. I treat data like production code—tested and observed.",
-              },
-              {
-                title: "End-to-End Thinking",
-                text: "I design systems thinking about the entire lifecycle, ensuring seamless transitions.",
-              },
-            ].map((p, i) => (
-              <div
-                key={i}
-                className="p-8 bg-white/5 border border-white/10 rounded-3xl backdrop-blur-sm"
-              >
-                <div className="w-10 h-10 bg-primary-500/20 rounded-xl flex items-center justify-center mb-6">
-                  <div className="w-2 h-2 bg-primary-500 rounded-full"></div>
-                </div>
-                <h4 className="font-bold text-lg mb-3">{p.title}</h4>
-                <p className="text-sm text-slate-400 leading-relaxed">
-                  {p.text}
-                </p>
-              </div>
-            ))}
+        <section className="bg-slate-900 text-white py-32 overflow-hidden relative">
+          <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
+            <div className="absolute top-[-10%] left-[10%] w-[40%] h-[40%] bg-primary-500 blur-[150px] rounded-full"></div>
           </div>
-        </div>
-      </section>
+
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            <Quote
+              className="mx-auto text-primary-500 mb-12 opacity-50"
+              size={60}
+            />
+
+            <h2 className="text-3xl sm:text-5xl font-extrabold leading-tight mb-16 tracking-tight">
+              "Working across data science, data quality, and data engineering taught me
+              that most data problems don’t start in dashboards — they start in pipelines.
+              That’s why I focus on how data moves from source to decision."
+            </h2>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
+              {[
+                {
+                  title: "Reliable Pipelines",
+                  text: "I focus on building data pipelines that move data correctly and consistently from raw sources into analytics and ML workflows.",
+                },
+                {
+                  title: "Quality Built In",
+                  text: "My experience in data quality helps me catch issues in schema, freshness, and logic before they reach dashboards or models.",
+                },
+                {
+                  title: "End-to-End Perspective",
+                  text: "Because I’ve worked with data from ingestion to modeling and analysis, I design systems that actually support real business use cases.",
+                },
+              ].map((p, i) => (
+                <div
+                  key={i}
+                  className="p-8 bg-white/5 border border-white/10 rounded-3xl backdrop-blur-sm"
+                >
+                  <div className="w-10 h-10 bg-primary-500/20 rounded-xl flex items-center justify-center mb-6">
+                    <div className="w-2 h-2 bg-primary-500 rounded-full"></div>
+                  </div>
+                  <h4 className="font-bold text-lg mb-3">{p.title}</h4>
+                  <p className="text-sm text-slate-400 leading-relaxed">
+                    {p.text}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
 
       {/* 5. Professional Journey */}
       <section className="bg-slate-100 dark:bg-slate-900/50 py-32 overflow-hidden">
