@@ -1,5 +1,6 @@
 import { BlogPost } from './types';
 import { datavelocityImages } from '@/assets/images/blogs/datavelocity'
+import { incrementalloadImages } from '@/assets/images/blogs/incremental_load'
 import avatar from '@/assets/icons/avatar.png'
 
 export const BLOG_POSTS: BlogPost[] = [
@@ -202,12 +203,14 @@ export const BLOG_POSTS: BlogPost[] = [
         { type: 'subheader', content: 'Option 2: Incremental (The Fast Way)' },
         { type: 'list', content: { ordered: false, items: ['Only copy the new orders since yesterday', 'Much faster, uses less resources', 'But... what if you miss something?'] } },
 
+        { type: 'image', content: { src: incrementalloadImages.incremental_strategy, alt: 'Incremental Statergy' } },
         { type: 'header', id: 'why-good', content: 'Why Incremental Models Look So Good' },
         { type: 'paragraph', content: 'When you first learn about incremental models, they seem amazing. Instead of rebuilding entire tables every time, you only process new data. Your pipelines run faster. Your cloud costs drop. Everyone\'s happy.' },
         { type: 'code', content: { language: 'sql', code: `{{ config(\n    materialized='incremental',\n    unique_key='order_id'\n) }}\n\nselect * from {{ source('raw', 'orders') }}\n\n{% if is_incremental() %}\n    where created_at >= (select max(created_at) from {{ this }})\n{% endif %}` } },
         { type: 'paragraph', content: "But here's the catch: When it breaks, it breaks silently." },
 
         { type: 'header', id: 'failures', content: 'Four Ways Incremental Models Fail Silently' },
+        { type: 'image', content: { src: incrementalloadImages.incremental_load, alt: 'Incremental Models' } },
 
         // 1. Schema Changes
         { type: 'subheader', id: 'schema', content: "1. Schema Changes You Don't Notice" },

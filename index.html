@@ -6,6 +6,20 @@
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/icon-light.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Darshan Pathak </title>
+
+    <!-- Google Analytics (GA4) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-R3YEMZSSSH"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      // Config with send_page_view: false because we handle it manually in React
+      gtag('config', 'G-YOUR_MEASUREMENT_ID', {
+        send_page_view: false
+      });
+    </script>
+
     <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
     <script>
       tailwind.config = {
