@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
+import { GoogleAnalytics } from './components/GoogleAnalytics';
 import { Routes, Route, Link, useLocation } from 'react-router-dom';
 import { 
   Menu, X, Sun, Moon, Github, Linkedin, Mail
@@ -16,6 +17,7 @@ import BlogDetail from './pages/BlogDetail';
 import Connect from './pages/Connect';
 import icon_light from "@/assets/icons/icon-dark.png";
 import icon_dark from "@/assets/icons/icon-dark.png";
+
 
 // Helper to scroll to top on route change
 const ScrollToTop = () => {
