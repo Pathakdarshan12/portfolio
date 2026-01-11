@@ -12,7 +12,7 @@ export const PROJECTS: Project[] = [
     id: 'p6',
     slug: 'isometrics-healthcare-multi-tenant-analytics',
     title: 'IsoMetrics Healthcare – HIPAA-Compliant Multi-Tenant Analytics Platform',
-    domains: [Domain.DataEngineering],
+    domains: [Domain.DataEngineering, Domain.AnalyticsEngineering],
     description: 'Production-grade multi-tenant healthcare analytics platform serving 100+ hospitals on shared infrastructure with HIPAA-compliant row-level security, processing 500K+ daily encounters with 99.8% data quality pass rate.',
     tech: ['dbt', 'Snowflake', 'Python', 'SQL', 'Docker', 'GitHub Actions', 'Streamlit'],
     image: isometrics,
@@ -621,15 +621,15 @@ jobs:
       }
     ],
     duration: '4 months',
-    role: 'Lead Analytics Engineer',
-    status: 'Live Production',
-    publishedDate: '2024-01'
+    role: 'Data Quality Analyst',
+    status: 'In Development',
+    publishedDate: 'Jan 2026'
   },
   {
     id: 'p5',
     slug: 'data-velocity-lambda-platform',
     title: 'DataVelocity – Metadata-Driven Lambda Architecture',
-    domains: [Domain.DataEngineering],
+    domains: [Domain.DataEngineering, Domain.AnalyticsEngineering],
     description: 'Production-grade metadata-driven data platform implementing unified batch and streaming ingestion with Kafka, Snowflake, and automated SCD Type 2 tracking across 2M+ daily orders.',
     tech: ['Python', 'Apache Kafka', 'Snowflake', 'SQL', 'Docker', 'Streamlit', 'Snowpipe Streaming'],
     image: datavelocity,
@@ -915,9 +915,9 @@ $$;`
       }
     ],
     duration: '3 months',
-    role: 'Lead Data Engineer',
+    role: 'Data Quality Analyst',
     status: 'Live Production',
-    publishedDate: '2024-01'
+    publishedDate: 'Dec 2025'
   },
   {
     id: 'p3',
@@ -1509,16 +1509,16 @@ if __name__ == "__main__":
       }
     ],
     duration: '6 months',
-    role: 'Lead AI Engineer & Full-Stack Developer',
+    role: 'Student',
     status: 'Live Production',
     client: 'PCCOE Nigadi, Pune (Academic Project)',
-    publishedDate: '2024-05'
+    publishedDate: 'Aug 2024'
   },
   {
     id: 'p4',
     slug: 'netflix-data-analysis',
     title: 'Netflix Content & Trend Analysis',
-    domains: [Domain.DataScience],
+    domains: [Domain.DataScience, Domain.AnalyticsEngineering, Domain.DataEngineering],
     description: 'Comprehensive Exploratory Data Analysis (EDA) of the Netflix dataset using Python, uncovering content trends, rating distributions, and geographical concentrations over the last decade.',
     tech: ['Python', 'Pandas', 'Seaborn', 'Matplotlib', 'NumPy'],
     image: netflix,
@@ -1535,9 +1535,9 @@ if __name__ == "__main__":
       { label: 'Trends', value: '10+ Years', detail: 'Historical production analysis', icon: 'Activity' }
     ],
     githubUrl: 'https://github.com/Pathakdarshan12/Netflix_Data_Analysis',
-    role: 'Data Scientist',
-    status: 'Case Study',
-    publishedDate: '06-12-2025',
+    role: 'Data Quality Analyst',
+    status: 'Live Production',
+    publishedDate: 'Dec 2025',
     problem: [
       'Streaming services generate massive amounts of catalog data, but raw information lacks the visual context needed to identify production shifts, rating preferences, and content gaps across global markets.'
     ],
@@ -1651,7 +1651,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     id: 'cs1',
     slug: 'customer-segmentation-analysis',
     title: 'Customer Segmentation & Association Analysis',
-    image: customer_segmentation,
+    image: 'https://www.marketingevolution.com/hs-fs/hubfs/customer-segmentation.jpg?width=1100&name=customer-segmentation.jpg',
     description:
       'A data analysis case study involving exploratory data analysis (EDA), dimensionality reduction (PCA), clustering to identify customer segments, and association rule mining to discover relationships between demographic and survey variables.',
     domains: [Domain.DataScience],
@@ -1671,13 +1671,13 @@ export const CASE_STUDIES: CaseStudy[] = [
       'Association rules revealed relationships between key variables'
     ],
     repoUrl: 'https://github.com/Pathakdarshan12/Customer_Segmentation',
-    publishedDate: '2025'
+    publishedDate: 'July 2024'
   },
   {
     id: 'cs2',
     slug: 'employee-churn-prediction',
     title: 'Employee Churn Prediction with Machine Learning',
-    image: employee_churn,
+    image: 'https://www.barcinno.com/wp-content/uploads/2015/04/Employee-churn.jpg',
     description:
       'A predictive modeling case study to forecast employee churn using machine learning. Includes dataset exploration, preprocessing, model building, evaluation, and exporting prediction results.',
     domains: [Domain.DataScience],
@@ -1695,13 +1695,13 @@ export const CASE_STUDIES: CaseStudy[] = [
       'Exported churn predictions for analysis'
     ],
     repoUrl: 'https://github.com/Pathakdarshan12/Employee_Churn_Prediction',
-    publishedDate: '2025'
+    publishedDate: 'May 2024'
   },
   {
     id: 'cs3',
     slug: 'house-price-prediction-app',
     title: 'House Price Prediction App (Machine Learning)',
-    image: house_price,
+    image: 'https://www.keytel.in/blog/wp-content/uploads/2024/04/Latest-Property-Price-in-Greater-Noida.jpg',
     description:
       'A machine learning-based web application that predicts house prices using an XGBoost regression model wrapped in a Streamlit interface, enabling user interaction with feature inputs to estimate property prices.',
     domains: [Domain.DataScience],
@@ -1719,6 +1719,6 @@ export const CASE_STUDIES: CaseStudy[] = [
       'Provided visualization support for predictive insights'
     ],
     repoUrl: 'https://github.com/Pathakdarshan12/House_Price_Prediction',
-    publishedDate: '2025'
+    publishedDate: 'Sep 2024'
   }
 ];

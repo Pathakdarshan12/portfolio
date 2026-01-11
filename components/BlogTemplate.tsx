@@ -3,7 +3,8 @@ import React, { useState, useEffect } from 'react';
 import { 
   Calendar, Clock, Copy, Check, Share2, Bookmark, 
   ArrowUp, Linkedin, Twitter, Facebook, Link as LinkIcon,
-  ChevronRight, ArrowLeft, Terminal
+  ChevronRight, ArrowLeft, Terminal, List, X,
+  Maximize2, Minimize2, PanelRightOpen, PanelRightClose
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { BlogSection, BlogPost } from '../types';
@@ -19,6 +20,10 @@ const BlogTemplate: React.FC<BlogTemplateProps> = ({
   const [activeId, setActiveId] = useState<string>('');
   const [copiedCodeId, setCopiedCodeId] = useState<string | null>(null);
 
+  // New State for View Controls
+  const [isWide, setIsWide] = useState(false);
+  const [isTocOpen, setIsTocOpen] = useState(false);
+
   // Scroll Progress & Active Table of Contents
   useEffect(() => {
     const handleScroll = () => {
@@ -33,7 +38,8 @@ const BlogTemplate: React.FC<BlogTemplateProps> = ({
           const element = document.getElementById(header.id);
           if (element) {
             const rect = element.getBoundingClientRect();
-            if (rect.top >= 0 && rect.top < 300) {
+            // Expanded detection range
+            if (rect.top >= 0 && rect.top < 400) {
               setActiveId(header.id);
             }
           }
@@ -50,15 +56,38 @@ const BlogTemplate: React.FC<BlogTemplateProps> = ({
     setTimeout(() => setCopiedCodeId(null), 2000);
   };
 
+  // Smooth scroll with offset for fixed headers
+  const scrollToElement = (id: string) => {
+    const element = document.getElementById(id);
+    if (element) {
+      const offset = 120; // Height of fixed header + padding
+      const bodyRect = document.body.getBoundingClientRect().top;
+      const elementRect = element.getBoundingClientRect().top;
+      const elementPosition = elementRect - bodyRect;
+      const offsetPosition = elementPosition - offset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+      setActiveId(id);
+
+      // On mobile, close TOC after clicking
+      if (window.innerWidth < 1024) {
+        setIsTocOpen(false);
+      }
+    }
+  };
+
   const renderSection = (section: BlogSection, index: number) => {
     switch (section.type) {
       case 'header':
         return (
           <h2 id={section.id} className="text-3xl font-bold text-slate-900 dark:text-white mt-16 mb-6 scroll-mt-32 group flex items-center gap-2">
             {section.content}
-            <a href={`#${section.id}`} className="opacity-0 group-hover:opacity-100 transition-opacity text-primary-500">
+            <button onClick={() => section.id && scrollToElement(section.id)} className="opacity-0 group-hover:opacity-100 transition-opacity text-primary-500 cursor-pointer">
               <LinkIcon size={20} />
-            </a>
+            </button>
           </h2>
         );
       case 'subheader':
@@ -69,7 +98,7 @@ const BlogTemplate: React.FC<BlogTemplateProps> = ({
         );
       case 'paragraph':
         return (
-          <p className="text-lg text-slate-700 dark:text-slate-300 leading-relaxed mb-8 font-serif max-w-prose">
+          <p className="text-lg text-slate-700 dark:text-slate-300 leading-relaxed mb-8 font-serif">
             {section.content}
           </p>
         );
@@ -77,7 +106,6 @@ const BlogTemplate: React.FC<BlogTemplateProps> = ({
         return (
           <figure className="my-12 group">
             <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-900">
-              {/* Optional: Add a subtle overlay or effect */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-10"></div>
 
               <img
@@ -99,7 +127,6 @@ const BlogTemplate: React.FC<BlogTemplateProps> = ({
         const codeId = `code-${index}`;
         return (
           <div className="relative group my-10 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-xl bg-[#1e1e1e]">
-            {/* Terminal Header */}
             <div className="flex items-center justify-between px-4 py-3 bg-[#252526] border-b border-[#333]">
                 <div className="flex items-center gap-4">
                     <div className="flex gap-1.5">
@@ -141,7 +168,7 @@ const BlogTemplate: React.FC<BlogTemplateProps> = ({
                     customStyle={{
                         margin: 0,
                         padding: '1.5rem',
-                        background: '#1e1e1e', // Matches container bg
+                        background: '#1e1e1e',
                         fontSize: '0.9rem',
                         lineHeight: '1.6'
                     }}
@@ -174,7 +201,7 @@ const BlogTemplate: React.FC<BlogTemplateProps> = ({
           default: 'border-primary-500 bg-slate-50 dark:bg-slate-800/50 text-slate-600 dark:text-slate-300'
         };
         const theme = colors[section.content.type as keyof typeof colors] || colors.default;
-        
+
         return (
           <blockquote className={`my-12 p-8 rounded-r-2xl border-l-4 ${theme}`}>
             <p className="text-xl italic font-serif mb-4">"{section.content.text}"</p>
@@ -202,7 +229,7 @@ const BlogTemplate: React.FC<BlogTemplateProps> = ({
       case 'callout':
         return (
             <div className={`my-10 p-6 rounded-xl border flex items-start gap-4 ${
-                section.content.color === 'blue' ? 'bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800' : 
+                section.content.color === 'blue' ? 'bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800' :
                 section.content.color === 'rose' ? 'bg-rose-50 dark:bg-rose-900/20 border-rose-200 dark:border-rose-800' :
                 'bg-slate-50 dark:bg-slate-900/50 border-slate-200 dark:border-slate-800'
             }`}>
@@ -225,6 +252,8 @@ const BlogTemplate: React.FC<BlogTemplateProps> = ({
     }
   };
 
+  const headers = structuredContent.filter(s => s.type === 'header' || s.type === 'subheader');
+
   return (
     <div className="min-h-screen bg-white dark:bg-slate-950 transition-colors duration-500">
       {/* Progress Bar */}
@@ -246,7 +275,7 @@ const BlogTemplate: React.FC<BlogTemplateProps> = ({
           <img src={image} className="w-full h-full object-cover grayscale" alt="" />
           <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-slate-950/80 to-slate-950"></div>
         </div>
-        <div className="max-w-[720px] mx-auto px-6 relative z-10 text-left">
+        <div className={`mx-auto px-6 relative z-10 text-left transition-all duration-500 ${isWide ? 'max-w-7xl' : 'max-w-[800px]'}`}>
           <div className="inline-flex items-center gap-2 px-2.5 py-1 bg-white/10 border border-white/10 rounded text-primary-400 text-[9px] font-black uppercase tracking-widest mb-8 backdrop-blur-md">
             {category}
           </div>
@@ -268,14 +297,17 @@ const BlogTemplate: React.FC<BlogTemplateProps> = ({
       </header>
 
       {/* Main Content Layout */}
-      <main className="max-w-[1440px] mx-auto px-6 relative z-10 -mt-20 grid grid-cols-1 lg:grid-cols-12 gap-12">
-        {/* Left Sidebar (Desktop) - Empty or Share */}
-        <div className="hidden lg:block lg:col-span-2">
-           {/* Placeholder for future side widgets */}
-        </div>
-
-        {/* Center Content */}
-        <article className="lg:col-span-8 bg-white dark:bg-slate-950 p-8 md:p-14 rounded-3xl shadow-2xl shadow-slate-950/5 border border-slate-100 dark:border-slate-800/50">
+      <main className="relative z-10 -mt-20 pb-32">
+        {/* Dynamic Container Width based on isWide state */}
+        <article
+          className={`
+            mx-auto px-6 md:px-14 py-12 md:py-20
+            bg-white dark:bg-slate-950
+            rounded-3xl shadow-2xl shadow-slate-950/5 border border-slate-100 dark:border-slate-800/50
+            transition-all duration-500 ease-in-out
+            ${isWide ? 'max-w-[90rem]' : 'max-w-4xl'}
+          `}
+        >
           {structuredContent.map((section, index) => (
             <div key={index}>
               {renderSection(section, index)}
@@ -298,40 +330,86 @@ const BlogTemplate: React.FC<BlogTemplateProps> = ({
             </div>
           </div>
         </article>
-
-        {/* Right Sidebar - Table of Contents */}
-        <aside className="hidden xl:block xl:col-span-2 relative">
-          <div className="sticky top-32">
-            <h4 className="text-xs font-black uppercase tracking-widest text-slate-400 mb-6">Table of Contents</h4>
-            <ul className="space-y-3 border-l-2 border-slate-100 dark:border-slate-800">
-              {structuredContent
-                .filter(s => s.type === 'header' || s.type === 'subheader')
-                .map((header, i) => (
-                  <li key={i} className={`pl-4 ${header.type === 'subheader' ? 'ml-2' : ''}`}>
-                    <a 
-                      href={`#${header.id}`}
-                      className={`text-sm transition-colors block py-1 ${
-                        activeId === header.id 
-                          ? 'text-primary-500 font-bold -ml-[18px] border-l-2 border-primary-500 pl-[14px]' 
-                          : 'text-slate-500 hover:text-slate-900 dark:hover:text-white'
-                      }`}
-                    >
-                      {header.content}
-                    </a>
-                  </li>
-                ))}
-            </ul>
-          </div>
-        </aside>
       </main>
 
-      {/* Scroll to Top */}
-      <button 
-        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} 
-        className={`fixed bottom-8 right-8 w-12 h-12 bg-primary-500 text-white rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 z-50 ${scrollProgress > 10 ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'}`}
+      {/* Collapsible TOC Drawer */}
+      <div
+        className={`fixed inset-y-0 right-0 z-50 w-80 bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl border-l border-slate-200 dark:border-slate-800 shadow-2xl transform transition-transform duration-300 ease-in-out ${isTocOpen ? 'translate-x-0' : 'translate-x-full'}`}
       >
-        <ArrowUp size={20} />
-      </button>
+        <div className="h-full flex flex-col p-6">
+          <div className="flex items-center justify-between mb-8">
+            <h4 className="text-sm font-black uppercase tracking-widest text-slate-400">Table of Contents</h4>
+            <button
+              onClick={() => setIsTocOpen(false)}
+              className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg text-slate-500 transition-colors"
+            >
+              <X size={20} />
+            </button>
+          </div>
+          <div className="flex-1 overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-slate-200 dark:scrollbar-thumb-slate-800">
+            <ul className="space-y-4 border-l-2 border-slate-100 dark:border-slate-800 ml-2">
+              {headers.map((header, i) => (
+                <li key={i} className={`pl-4 ${header.type === 'subheader' ? 'ml-4' : ''}`}>
+                  <button
+                    onClick={() => header.id && scrollToElement(header.id)}
+                    className={`text-sm text-left transition-colors block py-1 leading-relaxed ${
+                      activeId === header.id
+                        ? 'text-primary-500 font-bold -ml-[18px] border-l-2 border-primary-500 pl-[14px]'
+                        : 'text-slate-500 hover:text-slate-900 dark:hover:text-white'
+                    }`}
+                  >
+                    {header.content}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      {/* Overlay for Mobile TOC */}
+      {isTocOpen && (
+        <div
+          className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40 lg:hidden"
+          onClick={() => setIsTocOpen(false)}
+        />
+      )}
+
+      {/* Floating Control Bar (Bottom Right) */}
+      <div className="fixed bottom-8 right-8 z-50 flex flex-col gap-3">
+        {/* Toggle TOC */}
+        <button
+          onClick={() => setIsTocOpen(!isTocOpen)}
+          className={`w-12 h-12 rounded-full shadow-lg flex items-center justify-center transition-all duration-300 ${
+            isTocOpen
+            ? 'bg-primary-500 text-white'
+            : 'bg-white dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:text-primary-500'
+          }`}
+          title="Table of Contents"
+        >
+          {isTocOpen ? <PanelRightClose size={20} /> : <PanelRightOpen size={20} />}
+        </button>
+
+        {/* Toggle Width */}
+        <button
+          onClick={() => setIsWide(!isWide)}
+          className="w-12 h-12 bg-white dark:bg-slate-800 text-slate-500 dark:text-slate-400 rounded-full shadow-lg flex items-center justify-center hover:text-primary-500 transition-all duration-300"
+          title={isWide ? "Focus View" : "Wide View"}
+        >
+          {isWide ? <Minimize2 size={20} /> : <Maximize2 size={20} />}
+        </button>
+
+        {/* Scroll to Top */}
+        <button
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          className={`w-12 h-12 bg-primary-500 text-white rounded-full shadow-lg flex items-center justify-center transition-all duration-300 ${
+            scrollProgress > 5 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none'
+          }`}
+          title="Scroll to Top"
+        >
+          <ArrowUp size={20} />
+        </button>
+      </div>
     </div>
   );
 };

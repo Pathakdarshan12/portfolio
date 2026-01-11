@@ -46,8 +46,8 @@ const App: React.FC = () => {
   const navLinks = [
     { name: 'About', path: '/' },
     { name: 'Projects', path: '/projects' },
-    { name: 'Case Studies', path: '/case-studies' },
     { name: 'Blog', path: '/blog' },
+    { name: 'Case Studies', path: '/case-studies' },
     { name: 'Connect', path: '/connect' },
   ];
 
@@ -224,7 +224,7 @@ const App: React.FC = () => {
               <h4 className="font-bold mb-4">Explore</h4>
               <ul className="space-y-2 text-slate-600 dark:text-slate-400">
                 <li><Link to="/projects" className="text-slate-500 hover:text-primary-500 transition-colors">Project Gallery</Link></li>
-                <li><Link to="/case-studies" className="text-slate-500 hover:text-primary-500 transition-colors">Case Narratives</Link></li>
+                <li><Link to="/case-studies" className="text-slate-500 hover:text-primary-500 transition-colors">Case Studies</Link></li>
                 <li><Link to="/blog" className="text-slate-500 hover:text-primary-500 transition-colors">Technical Blog</Link></li>
               </ul>
             </div>

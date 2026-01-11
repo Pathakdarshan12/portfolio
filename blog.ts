@@ -1,96 +1,178 @@
-
 import { BlogPost } from './types';
+import { datavelocityImages } from '@/assets/images/blogs/datavelocity'
+import avatar from '@/assets/icons/avatar.png'
 
 export const BLOG_POSTS: BlogPost[] = [
   {
     id: 'b1',
     slug: 'how-i-built-a-lambda-architecture',
-    title: 'Building a Unified Lambda Architecture with Snowflake & Kafka',
-    date: 'March 15, 2024',
+    title: 'How I built a Lambda Architecture that unifies batch and streaming without duplicating transformation logic',
+    date: 'January 1, 2026',
     category: 'Data Engineering',
-    excerpt: 'Deep dive into architecting a single source of truth for both streaming and batch data using metadata-driven patterns.',
+    excerpt: 'Building a Unified Lambda Architecture on Snowflake. I built a unified data platform that processes file batch loads AND real-time Kafka events through identical transformation logic.',
     content: 'Legacy markdown fallback...',
-    tags: ['Snowflake', 'Kafka', 'Architecture'],
-    readingTime: '12 min',
-    image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&q=80&w=1200',
+    tags: ['snowflake', 'kafka', 'data-engineering', 'lambda-architecture', 'streaming'],
+    readingTime: '15 min',
+    image: datavelocityImages.architecture,
     featured: true,
     author: {
       name: 'Darshan Pathak',
       role: 'Data Architect',
-      avatar: 'https://picsum.photos/seed/dp-profile/200/200',
+      avatar: avatar,
       linkedin: 'https://linkedin.com/in/pathakdarshan12'
     },
     structuredContent: [
+        { type: 'callout', content: {
+            title: 'TL;DR',
+            text: 'I built a unified data platform that processes file batch loads AND real-time Kafka events through identical transformation logic. Same validation rules. Same SCD Type 2 procedures. Same quality gates. One codebase. No logic duplication.',
+            icon: '💡',
+            color: 'blue'
+        }},
         { type: 'header', id: 'problem', content: 'The Problem Nobody Talks About' },
         { type: 'paragraph', content: 'Most data platforms force you to choose: batch OR streaming. Build both, and you maintain two codebases. That\'s where pipelines break in production.' },
         { type: 'paragraph', content: 'Lambda architectures promise the best of both worlds but usually deliver twice the complexity. Batch procedures and streaming queries drift apart. Quality checks become inconsistent. When a delivery status changes in Kafka, it needs the exact same validation as a CSV upload - except most teams implement it twice and watch them diverge over six months.' },
-        { type: 'quote', content: { text: 'I spent three months solving this exact problem.', type: 'info' } },
+        { type: 'paragraph', content: 'I spent three months solving this exact problem.' },
         { type: 'paragraph', content: 'The result? DataVelocity - a production-grade platform that processes CSV batch loads AND real-time Kafka events through the same medallion architecture (Bronze → Silver → Gold). Same validation rules. Same SCD Type 2 logic. Same quality gates. One codebase.' },
 
+        { type: 'header', id: 'built', content: 'What I Actually Built' },
+        { type: 'paragraph', content: 'DataVelocity is a unified data platform handling food delivery transactions across 10+ entities (customers, orders, deliveries, restaurants, menu items, locations) with:' },
+        { type: 'list', content: { ordered: false, items: [
+            'Full historical tracking (SCD Type 2)',
+            'Real-time event processing (< 15 second latency)',
+            'Zero tolerance for data quality issues (95%+ validation pass rate)',
+            'Complete observability (every record traceable)',
+            '~95% of transient operational failures self-heal via retries'
+        ]}},
+        { type: 'image', content: { src: datavelocityImages.architecture, alt: 'Architecture Diagram' } },
+        { type: 'image', content: { src: datavelocityImages.sp_etl_master, alt: 'SP ETL Master Flow' } },
+
         { type: 'header', id: 'architecture', content: 'The Three-Layer Architecture' },
+
         { type: 'subheader', id: 'layer1', content: 'Layer 1: Dual Ingestion (Batch + Speed)' },
+        { type: 'image', content: { src: datavelocityImages.Snowpipe_kafka_connect, alt: 'Snowpipe and Kafka Connect' } },
+        { type: 'paragraph', content: 'Batch path: CSV files → S3 → Snowflake Stage → Bronze tables' },
+        { type: 'paragraph', content: 'Speed path: Kafka events → Snowpipe Streaming → Landing tables (BRONZE.*_STREAM) → Snowflake Streams (CDC) → Bronze tables' },
         { type: 'paragraph', content: 'Critical insight: Both paths converge at Bronze. From that point forward, they use identical stored procedures. Not "similar." Not "mostly the same." Literally the exact same SQL code.' },
         { type: 'code', content: {
             language: 'sql',
             title: 'Unified Task Execution',
-            code: `CREATE TASK TASK_ORDERS_STREAM_TO_GOLD
-WAREHOUSE = ADHOC_WH
-SCHEDULE = '2 MINUTE'
-WHEN SYSTEM$STREAM_HAS_DATA('STREAM_ORDERS_CHANGES')
-AS CALL SP_ETL_MASTER('ORDER_PIPELINE_STREAM', NULL);`
+            code: `CREATE TASK TASK_ORDERS_STREAM_TO_GOLD\nWAREHOUSE = ADHOC_WH\nSCHEDULE = '2 MINUTE'\nWHEN SYSTEM$STREAM_HAS_DATA('STREAM_ORDERS_CHANGES')\nAS CALL SP_ETL_MASTER('ORDER_PIPELINE_STREAM', NULL);`
         }},
 
         { type: 'subheader', id: 'layer2', content: 'Layer 2: Medallion Transformation' },
-        { type: 'list', content: {
-            ordered: false,
-            items: [
-                'Bronze Layer: Raw data with minimal transformation, preserving original values for replay.',
-                'Silver Layer: MERGE-based upserts using business keys with centralized validation.',
-                'Gold Layer: Dimensional models with SCD Type 2 and Fact tables.'
-            ]
-        }},
+        { type: 'image', content: { src: datavelocityImages.medalion_architecture, alt: 'Medallion Architecture' } },
+        { type: 'list', content: { ordered: false, items: [
+            'Bronze Layer: Raw data with minimal transformation, preserving original values for replay.',
+            'Silver Layer: MERGE-based upserts using business keys with centralized validation.',
+            'Gold Layer: Dimensional models with SCD Type 2 and Fact tables.',
+            'Analytics Layer: 20+ denormalized mart views for reporting.'
+        ]}},
+
+        { type: 'subheader', id: 'layer3', content: 'Layer 3: Observability & Orchestration' },
+        { type: 'paragraph', content: 'Master orchestrator SP_ETL_MASTER coordinates all three layers with full transaction management, real-time SLA tracking, and complete audit trails.' },
+        { type: 'image', content: { src: datavelocityImages.observation_layer, alt: 'Observation Layer' } },
 
         { type: 'header', id: 'decisions', content: 'Five Engineering Decisions That Made This Work' },
-        { type: 'callout', content: {
-            title: 'Decision #1: Dual-Stage Streaming',
-            text: 'Most architectures push Kafka events directly into transformation logic. I used lightweight landing tables + CDC streams to decouple ingestion from business logic.',
-            icon: '⚡',
-            color: 'blue'
-        }},
-        { type: 'paragraph', content: 'This approach resulted in sub-5-second ingestion latency while allowing streaming and batch to use identical procedures from Bronze onwards.' },
+        { type: 'image', content: { src: datavelocityImages.decisions, alt: 'Engineering Decisions Overview' } },
 
+        { type: 'subheader', content: 'Decision #1: Dual-Stage Streaming with Unified Bronze' },
+        { type: 'paragraph', content: 'Most streaming architectures push Kafka events directly into transformation logic. That creates coupling. My approach: Lightweight landing tables for ingestion, then CDC to Bronze.' },
         { type: 'code', content: {
             language: 'sql',
             title: 'CDC Capture Stream',
-            code: `-- Landing table (Snowpipe Streaming writes here)
-CREATE TABLE BRONZE.ORDERS_STREAM (
-    RECORD_METADATA VARIANT,  -- Kafka offset, partition
-    RECORD_CONTENT VARIANT,   -- Raw event payload
-    INGESTED_AT TIMESTAMP_TZ,
-    BATCH_ID VARCHAR(36)
-);
-
--- CDC captures changes for downstream processing
-CREATE STREAM STREAM_ORDERS_CHANGES ON TABLE ORDERS_STREAM;`
+            code: `-- Landing table (Snowpipe Streaming writes here)\nCREATE TABLE BRONZE.ORDERS_STREAM (\n    RECORD_METADATA VARIANT,  -- Kafka offset, partition\n    RECORD_CONTENT VARIANT,   -- Raw event payload\n    INGESTED_AT TIMESTAMP_TZ,\n    BATCH_ID VARCHAR(36)\n);\n\n-- CDC captures changes\nCREATE STREAM STREAM_ORDERS_CHANGES ON TABLE ORDERS_STREAM;`
         }},
+        { type: 'image', content: { src: datavelocityImages.CDC, alt: 'CDC Architecture' } },
+        { type: 'paragraph', content: 'The result: Sub-5-second ingestion latency. From Bronze onwards, streaming and batch use identical procedures.' },
 
-        { type: 'callout', content: {
-            title: 'Decision #2: Metadata-Driven Validation',
-            text: 'Hardcoding rules is a death trap. I implemented a configuration-driven framework where adding a validation rule is just an INSERT statement.',
-            icon: '🛡️',
-            color: 'green'
+        { type: 'subheader', content: 'Decision #2: Metadata-Driven Validation Framework' },
+        { type: 'paragraph', content: 'Hardcoding validation rules is a death trap. I implemented a configuration-driven framework where adding a new rule is just an INSERT statement.' },
+        { type: 'code', content: {
+            language: 'sql',
+            title: 'Validation Config',
+            code: `INSERT INTO COMMON.DQ_CONFIG VALUES (\n    'DQ_ORDER_MAN_ORDER_ID',      -- Rule name\n    'BRONZE.ORDER_BRZ',           -- Table to validate\n    'MANDATORY_CHECK',            -- Validation type\n    'ORDER_ID',                   -- Column to check\n    'ORDER_ID IS NOT NULL',       -- Validation logic\n    'Order ID is mandatory'       -- Error message\n);`
         }},
+        { type: 'image', content: { src: datavelocityImages.dq_validation, alt: 'Data Quality Types' } },
+        { type: 'paragraph', content: 'Five validation types supported: Mandatory, Value, Lookup, Duplicate, and Custom checks.' },
 
+        { type: 'subheader', content: 'Decision #3: Hash-Based SCD Type 2' },
+        { type: 'paragraph', content: 'Traditional SCD Type 2 compares columns one by one. At streaming speeds, this kills performance. My optimization: Compute hash once, compare once.' },
+        { type: 'code', content: {
+            language: 'sql',
+            title: 'Hash-Based Comparison',
+            code: `SHA2_HEX(CONCAT_WS('|',\n    COALESCE(src.name, ''),\n    COALESCE(src.email, ''),\n    COALESCE(src.phone, '')\n)) AS CURRENT_HASH`
+        }},
+        { type: 'image', content: { src: datavelocityImages.hash_based_scd_type_2, alt: 'Hash Based SCD2' } },
+
+        { type: 'subheader', content: 'Decision #4: Transactional Bronze with Indefinite Replay' },
+        { type: 'paragraph', content: 'Kafka\'s retention is finite. Bronze tables should be immutable and retained forever. I store both transformed and raw values for indefinite replayability.' },
+
+        { type: 'subheader', content: 'Decision #5: Unified Status Tracking' },
+        { type: 'paragraph', content: 'My design tracks every status transition regardless of source (CSV or Kafka) in a dedicated history table.' },
+        { type: 'image', content: { src: datavelocityImages.status_tracking, alt: 'Status Tracking' } },
+
+        { type: 'header', id: 'outcomes', content: 'What This Architecture Delivered' },
         { type: 'metrics', content: [
             { label: 'Latency', value: '< 15s', icon: '⚡' },
             { label: 'Code Reuse', value: '100%', icon: '♻️' },
             { label: 'Data Quality', value: '95%+', icon: '✅' }
         ]},
+        { type: 'list', content: { ordered: false, items: [
+            'No logic duplication - One SP handles both CSV and Kafka',
+            '~2 second batch processing - 5,000 records through all layers',
+            '100% traceability - Every record tracked via INGEST_RUN_ID',
+            'Indefinite replay - Bronze retained forever'
+        ]}},
 
-        { type: 'header', id: 'outcome', content: 'What This Architecture Delivered' },
-        { type: 'paragraph', content: 'This project demonstrates that you can unify batch and streaming without sacrificing performance. By using hash-based SCD2 and explicit staging tables, we achieved production-grade reliability with a single codebase.' },
-        { type: 'divider', content: { style: 'stars' } },
-        { type: 'paragraph', content: 'If you are building data platforms and dealing with Lambda Architecture complexity, lets connect.' }
+        { type: 'header', id: 'advanced', content: 'Advanced Features' },
+        { type: 'image', content: { src: datavelocityImages.advanced_features, alt: 'Advanced Features' } },
+
+        { type: 'subheader', content: 'Feature #1: Metadata-Driven Ingestion' },
+        { type: 'paragraph', content: 'Adding a new entity means inserting configuration rows - no code required.' },
+        { type: 'image', content: { src: datavelocityImages.metadata_tables, alt: 'Metadata Tables' } },
+
+        { type: 'subheader', content: 'Feature #2: Advanced Monitoring & SLA Tracking' },
+        { type: 'paragraph', content: 'Comprehensive monitoring framework with SLA tracking and automated alerting.' },
+        { type: 'image', content: { src: datavelocityImages.sla_complience, alt: 'SLA Compliance' } },
+        { type: 'image', content: { src: datavelocityImages.alert, alt: 'Alerts' } },
+
+        { type: 'subheader', content: 'Feature #3: Auto-Recovery' },
+        { type: 'paragraph', content: 'Intelligent retry logic with exponential backoff and Dead Letter Queues.' },
+        { type: 'image', content: { src: datavelocityImages.dead_letter_queue, alt: 'Dead Letter Queue' } },
+
+        { type: 'subheader', content: 'Feature #4: Dashboard & Analytics' },
+        { type: 'image', content: { src: datavelocityImages.pipeline_overview, alt: 'Pipeline Overview' } },
+        { type: 'twoColumn', content: {
+            left: { type: 'image', content: { src: datavelocityImages.customer_pipeline_overview, alt: 'Customer Overview' } },
+            right: { type: 'image', content: { src: datavelocityImages.revenue_analytics, alt: 'Revenue Analytics' } }
+        }},
+
+        { type: 'header', id: 'tech', content: 'Tech Stack' },
+        { type: 'image', content: { src: datavelocityImages.core_technology, alt: 'Core Tech' } },
+        { type: 'list', content: { ordered: false, items: [
+            'Data Warehouse: Snowflake (Multi-cluster compute)',
+            'Streaming: Apache Kafka 3.x + Snowpipe Streaming',
+            'Orchestration: Snowflake Native (Streams + Tasks)',
+            'Development: SQL, Python, Streamlit'
+        ]}},
+
+        { type: 'header', id: 'learned', content: 'What I Learned (The Hard Way)' },
+        { type: 'list', content: { ordered: true, items: [
+            'Lambda Architecture isn\'t about two pipelines. It\'s about unified transformation logic.',
+            'SCD Type 2 at streaming speeds requires surgical optimization.',
+            'Data Quality can\'t be an afterthought.',
+            'Observability is non-negotiable.'
+        ]}},
+
+        { type: 'header', id: 'connect', content: 'Let\'s Connect' },
+        { type: 'paragraph', content: 'If you\'re building data platforms, dealing with Lambda Architecture complexity, or evaluating engineering candidates, I\'d love to discuss.' },
+        { type: 'callout', content: {
+            title: 'Explore the Code',
+            text: 'The full implementation is available on GitHub.',
+            icon: '💻',
+            color: 'blue'
+        }},
+        { type: 'paragraph', content: 'Check out the repo: https://github.com/Pathakdarshan12/DataVelocity-metadata-driven-lambda-platform' }
     ]
   },
   {
@@ -104,11 +186,11 @@ CREATE STREAM STREAM_ORDERS_CHANGES ON TABLE ORDERS_STREAM;`
     tags: ['dbt', 'Snowflake', 'SaaS'],
     readingTime: '8 min',
     image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1200',
-    featured: true,
+    featured: false,
     author: {
       name: 'Darshan Pathak',
-      role: 'Data Quality Analyst',
-      avatar: 'https://picsum.photos/seed/dp-profile/200/200',
+      role: 'Analytics Engineer',
+      avatar: avatar,
       linkedin: 'https://linkedin.com/in/pathakdarshan12'
     },
     structuredContent: [
