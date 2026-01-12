@@ -18,7 +18,7 @@ export const BLOG_POSTS: BlogPost[] = [
     featured: true,
     author: {
       name: 'Darshan Pathak',
-      role: 'Data Architect',
+      role: 'Data Quality Analyst',
       avatar: avatar,
       linkedin: 'https://linkedin.com/in/pathakdarshan12'
     },
@@ -180,7 +180,7 @@ export const BLOG_POSTS: BlogPost[] = [
     id: 'b2',
     slug: 'dbt-incremental-models-can-quietly-break-your-data',
     title: 'dbt Incremental Models Can Quietly Break Your Data',
-    date: 'February 28, 2024',
+    date: 'January 07, 2026',
     category: 'Analytics Engineering',
     excerpt: 'Strategies for managing isolated client data while maintaining a dry codebase in large scale Snowflake deployments.',
     content: 'Full content here...',
@@ -190,7 +190,7 @@ export const BLOG_POSTS: BlogPost[] = [
     featured: false,
     author: {
       name: 'Darshan Pathak',
-      role: 'Analytics Engineer',
+      role: 'Data Quality Analyst',
       avatar: avatar,
       linkedin: 'https://linkedin.com/in/pathakdarshan12'
     },

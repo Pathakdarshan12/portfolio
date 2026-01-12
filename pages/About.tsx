@@ -627,36 +627,59 @@ const About: React.FC = () => {
             <h3 className="text-4xl font-bold">Foundation</h3>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-5xl mx-auto">
             {[
               {
-                title: "M.Sc. Data Science",
-                sub: "Postgraduate Degree",
+                title: "Master of Computer Application (MCA)",
+                field: "Computer Science",
+                college: "Pimpri Chinchwad College of Engineering",
+                year: "2023 – 2025",
+                cgpa: "9.23 / 10",
                 icon: GraduationCap,
-                focus: "Machine Learning, Data Analytics, Statistics",
+                focus: "Data Engineering, Machine Learning, Analytics Systems",
               },
               {
-                title: "Bachelor’s Degree in Engineering",
-                sub: "Undergraduate Degree",
+                title: "Bachelor of Science",
+                field: "Computer Science",
+                college: "Kaveri College",
+                year: "2020 – 2023",
+                cgpa: "8.92 / 10",
                 icon: Code2,
-                focus: "Computer Science & Software Fundamentals",
+                focus: "Algorithms, Databases, Programming Fundamentals",
               },
             ].map((edu, i) => (
               <div
                 key={i}
-                className="group p-8 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-[2.5rem] shadow-sm hover:shadow-xl transition-all"
+                className="group p-10 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-[2.5rem] shadow-sm hover:shadow-xl transition-all"
               >
-                <edu.icon className="text-primary-500 mb-6" size={32} />
+                <edu.icon className="text-primary-500 mb-6" size={36} />
+
                 <h4 className="text-xl font-bold mb-1">{edu.title}</h4>
-                <p className="text-sm text-slate-500 mb-4">{edu.sub}</p>
-                <p className="text-xs font-black uppercase tracking-widest text-slate-400">
-                  Focus: {edu.focus}
+                <p className="text-sm text-slate-500 mb-2">{edu.field}</p>
+
+                <p className="text-sm font-medium text-slate-700 dark:text-slate-300">
+                  {edu.college}
                 </p>
+
+                <div className="flex justify-between items-center mt-4 text-sm text-slate-500">
+                  <span>{edu.year}</span>
+                  <span className="font-bold text-primary-500">{edu.cgpa}</span>
+                </div>
+
+                <div className="mt-6 pt-6 border-t border-slate-200 dark:border-slate-800">
+                  <p className="text-xs font-black uppercase tracking-widest text-slate-400">
+                    Focus
+                  </p>
+                  <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">
+                    {edu.focus}
+                  </p>
+                </div>
               </div>
             ))}
           </div>
         </div>
       </section>
+
 
       {/* 6. Beyond the Data */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32">
