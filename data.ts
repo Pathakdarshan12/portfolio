@@ -1600,11 +1600,12 @@ export const EXPERTISE_DATA: Expertise[] = [
     gradient: 'from-sky-500 to-blue-700',
     competencies: [
       { emoji: '🏗️', text: 'Building batch and streaming data pipelines' },
+      { emoji: '🔥', text: 'Distributed data processing with PySpark on Databricks' },
       { emoji: '🔄', text: 'ELT workflows with dbt and SQL' },
       { emoji: '☁️', text: 'Working with cloud data warehouses' },
       { emoji: '⚙️', text: 'Pipeline debugging and optimization' }
     ],
-    technologies: ['Python', 'SQL', 'Kafka', 'Airflow', 'dbt', 'Snowflake', 'GitHub']
+    technologies: ['Python', 'SQL', 'Kafka', 'Databricks', 'PySpark', 'dbt', 'Snowflake', 'GitHub']
   },
   {
     title: 'Data Quality',

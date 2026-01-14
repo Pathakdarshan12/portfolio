@@ -8,7 +8,7 @@ import {
 
 const FORM_ENDPOINT = "https://formspree.io/f/mzddpbgd";
 import profile from "@/assets/images/profile.png";
-
+import resume from "@/assets/resume/Darshan_Pathak_Resume.docx";
 
 const ContactCard = ({ icon: Icon, title, subtext, value, link, type }: any) => {
   const [copied, setCopied] = useState(false);
@@ -44,9 +44,9 @@ const ContactCard = ({ icon: Icon, title, subtext, value, link, type }: any) => 
       <div className="mt-4 flex items-center justify-between gap-4">
         {type === 'resume' ? (
           <a
-            href={link}
+            href={resume}
             download="Darshan_Pathak_Resume.docx"
-            className="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-primary-500 dark:hover:text-primary-400 transition-colors truncate max-w-[200px]"
+            className="text-sm font-medium text-slate-60c0 dark:text-slate-300 hover:text-primary-500 dark:hover:text-primary-400 transition-colors truncate max-w-[200px]"
           >
             {value}
           </a>

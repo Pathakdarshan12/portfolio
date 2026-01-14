@@ -14,6 +14,7 @@ import { BLOG_POSTS } from '../blog';
 import profile from "@/assets/images/profile.png";
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
+import resume from "@/assets/resume/Darshan_Pathak_Resume.docx";
 
 const IconMap: Record<string, any> = {
   Database,
@@ -227,6 +228,7 @@ const About: React.FC = () => {
 ];
   return (
     <div className="bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
+
       {/* 1. Hero Section */}
       <section className="relative min-h-[90vh] flex items-center overflow-hidden py-20">
         {/* Animated Particle Background */}
@@ -310,7 +312,7 @@ const About: React.FC = () => {
                   />
                 </Link>
                 <a
-                  href="assets/resume/Darshan_Pathak_Resume.docx"
+                  href= {resume}
                   download="Darshan_Pathak_Resume.docx"
                   className="px-8 py-4 bg-white/5 border border-white/20 hover:bg-white/10 text-white rounded-2xl font-bold transition-all flex items-center group"
                 >
@@ -326,7 +328,7 @@ const About: React.FC = () => {
         </div>
       </section>
 
-      {/* Stats Bar */}
+      {/* 2. Stats Bar */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-12 relative z-20">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 p-8 bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl border border-slate-200 dark:border-slate-800 rounded-[2.5rem] shadow-xl shadow-slate-200/50 dark:shadow-none">
           {[
@@ -369,7 +371,7 @@ const About: React.FC = () => {
         </div>
       </section>
 
-      {/* 2. Lifecycle Journey */}
+      {/* 3. Operational Philosophy */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32">
         <div className="text-center mb-20">
           <h2 className="text-sm font-bold uppercase tracking-[0.3em] text-primary-500 mb-4">
@@ -442,7 +444,7 @@ const About: React.FC = () => {
         </div>
       </section>
 
-      {/* 3. Technical Skills */}   
+      {/* 4. Technical Skills */}   
       <section className="py-32 bg-slate-50 dark:bg-slate-950 relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center mb-24 max-w-4xl mx-auto">
@@ -463,7 +465,7 @@ const About: React.FC = () => {
         </div>
       </section>
 
-      {/* 3. My Philosophy */}
+      {/* 5. Operational Philosophy */}
         <section className="bg-slate-900 text-white py-32 overflow-hidden relative">
           <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
             <div className="absolute top-[-10%] left-[10%] w-[40%] h-[40%] bg-primary-500 blur-[150px] rounded-full"></div>
@@ -514,7 +516,7 @@ const About: React.FC = () => {
         </section>
 
 
-      {/* 5. Professional Journey */}
+      {/* 6. Professional Journey */}
       <section className="bg-slate-100 dark:bg-slate-900/50 py-32 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-20">
@@ -582,7 +584,7 @@ const About: React.FC = () => {
         </div>
       </section>
 
-      {/* SECTION 4: Latest Insights (Blog) */}
+      {/* 7: Latest Insights (Blog) */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32">
         <div className="text-center mb-20">
           <h2 className="text-sm font-bold uppercase tracking-[0.3em] text-primary-500 mb-4">
@@ -617,7 +619,7 @@ const About: React.FC = () => {
         </div>
       </section>
 
-      {/* SECTION 9: Education */}
+      {/* 8: Education */}
       <section className="bg-slate-50 dark:bg-slate-900/30 py-32">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
@@ -681,7 +683,7 @@ const About: React.FC = () => {
       </section>
 
 
-      {/* 6. Beyond the Data */}
+      {/*
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
           <div className="rounded-[3rem] overflow-hidden shadow-2xl relative aspect-square">
@@ -754,8 +756,9 @@ const About: React.FC = () => {
           </div>
         </div>
       </section>
+      */}
 
-      {/* SECTION 10: Final CTA */}
+      {/* 10: Final CTA */}
       <section className="bg-slate-950 text-white py-32 relative overflow-hidden">
         <div className="max-w-4xl mx-auto px-4 text-center">
           <h2 className="text-4xl sm:text-6xl font-extrabold mb-8 tracking-tighter text-center">
@@ -805,6 +808,7 @@ const About: React.FC = () => {
           </Link>
         </div>
       </section>
+      
     </div>
   );
 };
