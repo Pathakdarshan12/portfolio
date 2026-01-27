@@ -8,7 +8,7 @@ import {
 
 const FORM_ENDPOINT = "https://formspree.io/f/mzddpbgd";
 import profile from "@/assets/images/profile.png";
-import resume from "@/assets/resume/Darshan_Pathak_Resume.docx";
+import resume from "@/assets/resume/Darshan_Pathak_Resume.pdf";
 
 const ContactCard = ({ icon: Icon, title, subtext, value, link, type }: any) => {
   const [copied, setCopied] = useState(false);
@@ -45,7 +45,7 @@ const ContactCard = ({ icon: Icon, title, subtext, value, link, type }: any) => 
         {type === 'resume' ? (
           <a
             href={resume}
-            download="Darshan_Pathak_Resume.docx"
+            download="Darshan_Pathak_Resume.pdf"
             className="text-sm font-medium text-slate-60c0 dark:text-slate-300 hover:text-primary-500 dark:hover:text-primary-400 transition-colors truncate max-w-[200px]"
           >
             {value}
@@ -73,7 +73,7 @@ const ContactCard = ({ icon: Icon, title, subtext, value, link, type }: any) => 
           <a
             href={link}
             target={type === 'resume' ? undefined : "_blank"}
-            download={type === 'resume' ? "Darshan_Pathak_Resume.docx" : undefined}
+            download={type === 'resume' ? "Darshan_Pathak_Resume.pdf" : undefined}
             rel={type === 'resume' ? undefined : "noopener noreferrer"}
             className="p-2 bg-slate-100 dark:bg-slate-700/50 hover:bg-primary-500 hover:text-white rounded-lg transition-all text-slate-500 dark:text-slate-400"
           >
@@ -180,7 +180,7 @@ const Connect: React.FC = () => {
                 title="Resume / CV"
                 subtext="Latest technical profile"
                 value="Download Resume (DOCX)"
-                link="assets/resume/Darshan_Pathak_Resume.docx"
+                link="assets/resume/Darshan_Pathak_Resume.pdf"
               />
               <ContactCard
                 type="linkedin"

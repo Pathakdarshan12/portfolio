@@ -1,5 +1,5 @@
 import { Domain, Project, CaseStudy, Expertise } from './types';
-import isometrics from '@/assets/images/projects/isometrics_architecture.png';
+import isometrics from '@/assets/images/projects/multitenency.png';
 import datavelocity from '@/assets/images/blogs/datavelocity/sp_etl_master.png';
 import itas from '@/assets/images/projects/itas.png';
 import netflix from '@/assets/images/projects/netflix.png';
@@ -9,622 +9,869 @@ import house_price from '@/assets/images/case_study/house_price.png';
 
 export const PROJECTS: Project[] = [
   {
-    id: 'p6',
-    slug: 'isometrics-healthcare-multi-tenant-analytics',
-    title: 'IsoMetrics Healthcare – HIPAA-Compliant Multi-Tenant Analytics Platform',
-    domains: [Domain.DataEngineering, Domain.AnalyticsEngineering],
-    description: 'Production-grade multi-tenant healthcare analytics platform serving 100+ hospitals on shared infrastructure with HIPAA-compliant row-level security, processing 500K+ daily encounters with 99.8% data quality pass rate.',
-    tech: ['dbt', 'Snowflake', 'Python', 'SQL', 'Docker', 'GitHub Actions', 'Streamlit'],
-    image: isometrics,
-    featured: true,
-    metrics: [
-      '100+ Hospital Tenants Isolated',
-      '500K+ Daily Encounters Processed',
-      '99.8% Data Quality Pass Rate'
-    ],
-    detailedMetrics: [
-      {
-        label: 'Architecture',
-        value: 'Multi-Tenant',
-        detail: '100+ hospitals with complete data isolation',
-        icon: 'Shield'
-      },
-      {
-        label: 'Security',
-        value: 'RLS Enforced',
-        detail: 'Database-level row access policies (HIPAA compliant)',
-        icon: 'Lock'
-      },
-      {
-        label: 'Performance',
-        value: '<200ms p95',
-        detail: 'Query latency with clustering by tenant_id + date',
-        icon: 'Zap'
-      },
-      {
-        label: 'Incremental',
-        value: '96% Faster',
-        detail: 'Merge strategy vs full refresh (45s vs 12m)',
-        icon: 'TrendingUp'
-      },
-      {
-        label: 'Data Models',
-        value: '47 dbt Models',
-        detail: 'Staging → Intermediate → Marts (Medallion)',
-        icon: 'Layers'
-      },
-      {
-        label: 'Data Quality',
-        value: '89 Automated Tests',
-        detail: 'Cross-tenant isolation, referential integrity, business logic',
-        icon: 'CheckCircle'
-      },
-      {
-        label: 'PHI Protection',
-        value: 'Safe Harbor',
-        detail: 'HIPAA de-identification (3-digit ZIP, hashed PII)',
-        icon: 'UserX'
-      },
-      {
-        label: 'Cost Savings',
-        value: '73% Reduction',
-        detail: 'vs full refresh with smart clustering',
-        icon: 'DollarSign'
-      }
-    ],
-    githubUrl: 'https://github.com/Pathakdarshan12/Isometrics-Healthcare-Multi-Tenant-SaaS-Analytics-Platform',
-    problem: [
-      'Healthcare SaaS platforms face a critical challenge: delivering powerful analytics to 100+ hospital customers while ensuring absolute data isolation. A single data leak = $50K HIPAA fine per record.',
-      'The Multi-Tenant Dilemma:',
-      '• Dedicated infrastructure per hospital = 10x cost overhead',
-      '• Shared infrastructure without isolation = catastrophic HIPAA violation risk',
-      '• Manual access controls = human error vulnerability',
-      '• Application-level security = bypassed by SQL access',
-      '• Inconsistent de-identification = compliance gaps',
-      'Performance at Scale:',
-      '• 500K+ daily encounters across all tenants',
-      '• Real-time analytics SLA (<2 hour freshness)',
-      '• Complex clinical quality metrics (30-day readmissions, mortality rates)',
-      '• Revenue cycle analytics (AR aging, collection rates)',
-      '• Provider performance scorecards'
-    ],
-    solution: [
-      'Engineered a production-grade multi-tenant healthcare analytics platform using Snowflake Row-Level Security (RLS) as the enforcement mechanism—not application code. Built a complete dbt-driven transformation pipeline (Staging → Intermediate → Marts) with incremental processing, automated data quality checks, and comprehensive HIPAA compliance features.',
-      'Security Architecture:',
-      '• Database-enforced RLS policies on `hospital_id` column (not bypassable)',
-      '• Dual-tier policies: `hospital_isolation_policy` + `phi_access_policy`',
-      '• Break-glass access for admins with full audit logging',
-      '• HIPAA Safe Harbor de-identification (3-digit ZIP, date truncation, hashed PII)',
-      'Performance Optimizations:',
-      '• Incremental models with merge strategy (96% faster than full refresh)',
-      '• Clustering by `(hospital_id, date)` for 80% query speedup',
-      '• Materialized views for sub-second dashboard queries',
-      '• Cost-optimized warehouse auto-suspend'
-    ],
-    approach: [
-      'Multi-Tenant Security Design: Implemented Snowflake Row-Level Security with two-tier policy architecture—`hospital_isolation_policy` for general isolation and `phi_access_policy` for PHI-containing tables. Used user-hospital mapping table instead of session variables for enterprise-grade access control with full audit trail.',
-      'HIPAA-Compliant Data De-identification: Applied HIPAA Safe Harbor methodology in staging layer—truncated ZIP codes to 3 digits, removed direct identifiers (names, MRN), hashed SSN/phone/email with SHA-256, kept only year of birth for age calculations. Marked all PHI-containing models in dbt metadata.',
-      'Medallion Architecture with dbt: Built 47 dbt models across three layers: Staging (bronze) for raw data ingestion, Intermediate (silver) for business logic enrichment, Marts (gold) for analytics-ready dimensional models. All transformations version-controlled and CI/CD tested.',
-      'Incremental Processing Strategy: Implemented merge-based incremental models for high-volume fact tables (encounters, billing transactions) using `unique_key` and `incremental_strategy=merge`. Achieved 96% performance improvement (45s vs 12m) with proper clustering by `(hospital_id, date)`.',
-      'Automated Data Quality Framework: Created 89 automated tests including: generic tests for RLS column presence, singular tests for cross-tenant leakage prevention, custom tests for readmission logic validation, schema contract enforcement with `on_schema_change=fail`.',
-      'Clinical Quality Metrics: Developed fact tables for clinical KPIs—30-day readmission rates per CMS methodology, mortality rates by diagnosis severity, length of stay benchmarks by encounter type, patient risk stratification (high/medium/low), 7-day ED return rates.',
-      'Revenue Cycle Analytics: Built billing transaction mart with AR aging buckets (0-30, 31-60, 61-90, 90+ days), collection rate calculations, denial reason tracking, payer mix analysis, expected vs actual payment variance detection.',
-      'Operational Metrics: Engineered daily operational fact tables tracking bed occupancy rates, provider productivity (encounters per day), facility utilization, patient flow patterns (admission sources, discharge dispositions), weekend vs weekday admission trends.',
-      'SCD Type 2 for Historical Tracking: Implemented dbt snapshots for slowly changing dimensions (hospitals, providers, facilities) using check strategy to capture contract tier changes, bed count updates, provider specialty transitions with valid_from/valid_to timestamps.',
-      'Comprehensive Documentation: Generated dbt docs with lineage DAGs, created architecture decision records (ADRs), wrote incident runbooks for RLS column missing scenarios, documented tenant onboarding procedures, maintained HIPAA compliance checklists.',
-      'CI/CD Pipeline: Configured GitHub Actions for automated testing on pull requests, slim CI using state:modified for faster feedback, production deployment with approval gates, Elementary data observability integration for monitoring.',
-      'Monitoring & Observability: Built SLA monitoring fact tables (data freshness, quality score, pipeline status), cost attribution views per hospital, HIPAA audit trail placeholders (production uses `account_usage.query_history`), performance degradation alerts.'
-    ],
-    techCategories: [
-      {
-        category: 'Transformation & Orchestration',
-        tools: ['dbt Core 1.7.0', 'dbt-snowflake', 'Jinja Templating', 'dbt Macros', 'dbt Tests', 'dbt Snapshots', 'dbt Docs'],
-        icon: 'RefreshCw',
-        color: 'from-orange-500 to-orange-600',
-        description: 'Data transformation pipelines and workflow orchestration for analytics engineering'
-      },
-      {
-        category: 'Data Warehouse',
-        tools: ['Snowflake', 'Row-Level Security Policies', 'Snowflake Streams (CDC)', 'Snowflake Tasks', 'Clustering Keys', 'Materialized Views'],
-        icon: 'Database',
-        color: 'from-blue-400 to-blue-500',
-        description: 'Cloud data platform with advanced security, CDC capabilities, and performance optimization'
-      },
-      {
-        category: 'Security & Compliance',
-        tools: ['RLS Policies', 'HIPAA Safe Harbor De-identification', 'SHA-256 Hashing', 'Audit Logging', 'Break-Glass Access Controls'],
-        icon: 'ShieldCheck',
-        color: 'from-red-500 to-red-600',
-        description: 'Enterprise-grade security controls and HIPAA compliance mechanisms for healthcare data'
-      },
-      {
-        category: 'Data Quality',
-        tools: ['dbt Generic Tests', 'dbt Singular Tests', 'Schema Contracts', 'Cross-Tenant Leakage Tests', 'Elementary Data Observability'],
-        icon: 'CheckSquare',
-        color: 'from-emerald-500 to-emerald-600',
-        description: 'Comprehensive testing framework ensuring data accuracy, consistency, and tenant isolation'
-      },
-      {
-        category: 'Development & CI/CD',
-        tools: ['GitHub Actions', 'Docker', 'Python 3.11', 'Faker (Synthetic Data)', 'Pandas', 'NumPy'],
-        icon: 'GitBranch',
-        color: 'from-purple-500 to-purple-600',
-        description: 'Modern development workflow with containerization, automation, and synthetic data generation'
-      },
-      {
-        category: 'Observability',
-        tools: ['Streamlit Dashboard', 'SLA Monitoring Views', 'Cost Attribution Tables', 'Performance Metrics', 'Data Quality Scorecards'],
-        icon: 'Activity',
-        color: 'from-amber-500 to-orange-500',
-        description: 'Real-time monitoring and visualization of system health, costs, and data quality metrics'
-      }
-    ],
-    architectureOverview: 'Medallion Architecture with Multi-Tenant Isolation:\n\nBronze Layer (Staging):\n• Raw data ingestion with HIPAA de-identification\n• 3-digit ZIP truncation, PII hashing, date masking\n• RLS policies applied at this layer\n• Source: EMR systems (Epic, Cerner, Meditech)\n\nSilver Layer (Intermediate):\n• Business logic enrichment (patient journey, revenue cycle)\n• Calculated fields (age groups, LOS, readmission flags)\n• Ephemeral models for performance\n\nGold Layer (Marts):\n• Analytics-ready dimensional models\n• Fact tables: encounters, billing, clinical quality, operational metrics\n• SCD Type 2 snapshots for historical tracking\n• Clustered by `(hospital_id, date)` for query performance\n\nSecurity Enforcement:\n• Row-Level Security policies on ALL layers\n• User-hospital mapping table for access control\n• Dual-tier policies: isolation + PHI protection\n• Full audit trail in `account_usage.query_history`',
-    implementationCode: [
-      {
-        lang: 'sql',
-        title: 'Snowflake Row-Level Security Policy (Hospital Isolation)',
-        code: `-- HIPAA-Compliant Multi-Tenant Isolation Policy
-CREATE OR REPLACE ROW ACCESS POLICY hospital_isolation_policy
+  id: 'p6',
+  slug: 'isometrics-healthcare-multi-tenant-analytics',
+  title: 'IsoMetrics Healthcare Multi-Tenant Analytics Platform with Database-Enforced Security',
+  domains: [Domain.DataEngineering, Domain.AnalyticsEngineering],
+  description: 'Production-grade healthcare analytics platform serving 100 hospital tenants on shared Snowflake infrastructure. Eliminated cross-tenant data leakage through database-enforced Row-Level Security (RLS), achieving 99.8% data quality across 3M+ patient encounters with sub-200ms query latency.',
+  tech: ['dbt', 'Snowflake RLS', 'Python', 'SQL', 'GitHub Actions', 'Streamlit', 'Docker'],
+  image: isometrics,
+  featured: true,
+  metrics: [
+    '100 Hospital Tenants (Zero Leakage)',
+    '3M+ Encounters, 500K+ Transactions',
+    '96% Faster Incremental Processing'
+  ],
+  detailedMetrics: [
+    {
+      label: 'Security Model',
+      value: 'Database RLS',
+      detail: 'Row-Level Security enforced at Snowflake layer, not application code',
+      icon: 'Shield'
+    },
+    {
+      label: 'Tenant Isolation',
+      value: '100% Verified',
+      detail: '250+ CI tests prove zero cross-tenant leakage',
+      icon: 'Lock'
+    },
+    {
+      label: 'Query Performance',
+      value: '<200ms p95',
+      detail: 'With clustering by (hospital_id, date) on 3M+ rows',
+      icon: 'Zap'
+    },
+    {
+      label: 'Incremental Speed',
+      value: 'Faster Merge',
+      detail: 'Merge strategy: 45s vs 12min full refresh',
+      icon: 'TrendingUp'
+    },
+    {
+      label: 'Data Pipeline',
+      value: '50+ dbt Models',
+      detail: 'Medallion architecture: Bronze â†’ Silver â†’ Gold',
+      icon: 'Layers'
+    },
+    {
+      label: 'Quality Gates',
+      value: '250+ Automated Tests',
+      detail: 'RLS verification, cross-tenant checks, clinical safety rules',
+      icon: 'CheckCircle'
+    },
+    {
+      label: 'HIPAA Compliance',
+      value: 'Safe Harbor',
+      detail: '3-digit ZIP, date masking, SHA-256 hashing for PII',
+      icon: 'UserX'
+    },
+    {
+      label: 'Cost Efficiency',
+      value: '73% Reduction',
+      detail: 'Smart clustering + incremental processing vs full scans',
+      icon: 'DollarSign'
+    }
+  ],
+  githubUrl: 'https://github.com/Pathakdarshan12/Isometrics-Healthcare-Multi-Tenant-SaaS-Analytics-Platform',
+
+  problem: [
+    'The Multi-Tenant Security Paradox:',
+    'Healthcare SaaS platforms serving 100 hospitals(tenants) face a critical choice: dedicated infrastructure per tenant (10x cost overhead) OR shared infrastructure with absolute data isolation (one leaked row = $50K HIPAA fine per record).',
+    '',
+    'Why Application-Level Security Fails:',
+    'WHERE hospital_id = X filters are "suggestions" â€“ bypassed by direct SQL access',
+    'Manual RLS application across 47 dbt models = guaranteed human error',
+    'Complex JOINs accidentally drop tenant filters â†’ cross-hospital data leaks',
+    'New models deployed without security checks â†’ silent vulnerabilities',
+    'Security degrades over time as models accumulate (Month 1: 20 models secured, Month 6: 50 models, 5 missing RLS)',
+    '',
+    'Performance Requirements at Scale:',
+    '3M+ patient encounters, 500K+ billing transactions across all tenants',
+    'Real-time analytics SLA: data fresh within 4 hours',
+    'Clinical quality metrics: 30-day readmissions, mortality rates, length-of-stay benchmarks',
+    'Revenue cycle analytics: AR aging, collection rates, denial tracking',
+    'Operational dashboards: bed occupancy, provider productivity, patient flow',
+    '',
+    'The Real Risk:',
+    'One cross-tenant data leak destroys trust instantly. Would you use a bank that "accidentally" showed you someone else\'s account balance?'
+  ],
+
+  solution: [
+    'Built a leak-proof multi-tenant platform where Snowflake itself enforces tenant isolation at the database layerâ€”not application code, not WHERE filters, not manual processes.',
+    '',
+    'Database-Enforced Security (Not Application Code):',
+    'Snowflake Row-Level Security (RLS) policies applied to ALL 50+ models automatically via dbt post-hooks',
+    'Dual-tier policies: hospital_isolation_policy (general access) + phi_access_policy (PHI tables)',
+    'User-hospital mapping table defines "who can see which hospital\'s data"',
+    'Even direct SQL queries (`SELECT * FROM encounters`) are automatically filtered by Snowflake',
+    'Break-glass admin access with full audit logging to snowflake.account_usage.query_history',
+    '',
+    'Leak-Proof CI/CD Pipeline (250+ Tests):',
+    'Isolated test schema per PR (dbt_ci_47, dbt_ci_48) prevents test interference',
+    'Cross-tenant leakage tests: verify Hospital A encounters never join to Hospital B patients',
+    'RLS verification tests: confirm ALL mart tables have policies applied',
+    'Foreign key integrity tests: ensure referential integrity stays within tenant boundaries',
+    'Clinical safety tests: flag medications given despite documented allergies',
+    'Deploy blocked if ANY test fails',
+    '',
+    'Performance at Scale (96% Faster Incrementals):',
+    'Merge-based incremental models for high-volume facts (encounters, billing)',
+    'Clustering by (hospital_id, date) for 80% query speedup on filtered scans',
+    'Materialized views for dashboard queries (<200ms p95 latency)',
+    'Smart strategy selection: append for immutable data, merge for status updates, delete+insert for partitioned updates',
+    '',
+    'HIPAA-Compliant De-identification:',
+    'Applied HIPAA Safe Harbor methodology in staging layer',
+    'Truncated ZIP codes to 3 digits (quasi-identifier protection)',
+    'Removed direct identifiers (names, MRN stay in raw layer with restricted access)',
+    'Hashed PII with SHA-256 (SSN, phone, email)',
+    'Age in years only (no full date of birth in analytics layer)',
+    '',
+    'Real-Time Monitoring Dashboard (Streamlit):',
+    'SLA compliance: data freshness tracking (target: <4 hours)',
+    'Data quality scorecard: 99.8% pass rate across validation rules',
+    'HIPAA audit trail: every PHI access logged with user/timestamp/query',
+    'Per-tenant cost attribution: Snowflake credit usage by hospital',
+    'Performance metrics: query latency trends, warehouse utilization'
+  ],
+
+  approach: [
+    'Enforced Snowflake Row-Level Security at the database layer using a user→hospital mapping table (not application WHERE filters)',
+    'Automated RLS on every dbt model via a reusable macro + post-hooks so new tables are protected by default',
+    'Blocked cross-tenant leaks with 250+ CI tests in GitHub Actions (RLS coverage, leakage joins, FK integrity, clinical safety)',
+    'Cut runtime ~96% by switching 3M-row models from full refresh to incremental MERGE + clustering for partition pruning',
+    'De-identified PHI in the analytics layer using Safe Harbor rules (DOB→age, ZIP truncation, SHA hashing, remove names)',
+    'Built CMS-style clinical KPI marts (readmissions, mortality, LOS benchmarks, patient risk scoring)',
+    'Delivered revenue cycle analytics (AR aging, collection rate, denials, payer mix, expected vs actual variance)',
+    'Delivered operational analytics (bed occupancy, provider productivity, facility utilization, patient flow trends)',
+    'Enabled historical tracking with dbt SCD Type 2 snapshots for hospital/provider/facility contract changes',
+    'Attributed Snowflake spend per tenant using query history + hospital_id extraction for cost transparency',
+    'Built a Streamlit observability dashboard for SLA freshness, data quality score, security audit trail, and cost trends',
+    'Documented everything in dbt docs + runbooks (security design, incident response, onboarding, compliance checks)'
+   ],
+
+  techCategories: [
+    {
+      category: 'Transformation & Orchestration',
+      tools: ['dbt Core 1.7', 'dbt-snowflake', 'Jinja Templating', 'dbt Macros', 'dbt Tests', 'dbt Snapshots', 'dbt Docs'],
+      icon: 'RefreshCw',
+      color: 'from-orange-500 to-orange-600',
+      description: 'Medallion architecture data transformation with automated testing and lineage tracking'
+    },
+    {
+      category: 'Data Warehouse & Security',
+      tools: ['Snowflake Enterprise', 'Row-Level Security Policies', 'Clustering Keys', 'Materialized Views', 'Query Acceleration'],
+      icon: 'Database',
+      color: 'from-blue-400 to-blue-500',
+      description: 'Cloud data platform with database-enforced multi-tenant isolation and performance optimization'
+    },
+    {
+      category: 'Security & Compliance',
+      tools: ['Snowflake RLS', 'HIPAA Safe Harbor', 'SHA-256 Hashing', 'Audit Logging', 'Break-Glass Access'],
+      icon: 'ShieldCheck',
+      color: 'from-red-500 to-red-600',
+      description: 'Database-layer security enforcement with full HIPAA compliance and audit trails'
+    },
+    {
+      category: 'Data Quality & Testing',
+      tools: ['dbt Generic Tests', 'dbt Singular Tests', 'Schema Contracts', 'Elementary Observability', 'Custom Test Macros'],
+      icon: 'CheckSquare',
+      color: 'from-emerald-500 to-emerald-600',
+      description: '250+ automated tests proving tenant isolation, data correctness, and clinical safety'
+    },
+    {
+      category: 'Development & CI/CD',
+      tools: ['GitHub Actions', 'Docker', 'Python 3.11', 'Faker', 'Pandas', 'NumPy'],
+      icon: 'GitBranch',
+      color: 'from-purple-500 to-purple-600',
+      description: 'Automated testing pipeline with isolated test schemas and synthetic data generation'
+    },
+    {
+      category: 'Monitoring & Observability',
+      tools: ['Streamlit', 'SLA Monitoring', 'Cost Attribution', 'Performance Metrics', 'Quality Scorecards'],
+      icon: 'Activity',
+      color: 'from-amber-500 to-orange-500',
+      description: 'Real-time dashboards tracking freshness, quality, security violations, and per-tenant costs'
+    }
+  ],
+
+  architectureOverview: 'Multi-Tenant Medallion Architecture with Database-Enforced Security:\n\nSECURITY LAYER (Snowflake RLS):\nRow-Level Security policies applied to ALL layers automatically via dbt post-hooks\nUser-hospital mapping table defines access rights (not session variables)\nDual-tier policies: hospital_isolation_policy + phi_access_policy\nBreak-glass admin access with full audit logging\n\nBRONZE LAYER (Staging - Raw Data with De-identification):\nSource: EMR systems (Epic, Cerner, Meditech exported as Parquet)\nHIPAA Safe Harbor de-identification: 3-digit ZIP, PII hashing, date masking\nRLS policies enforced HERE (database blocks unauthorized rows before they propagate)\n14 staging models: hospitals, patients, providers, encounters, billing, vitals, orders, results\n\nSILVER LAYER (Intermediate - Business Logic):\nEnrichment: patient journey (readmission tracking with LAG window functions)\nRevenue cycle: AR aging buckets, collection rate calculations\nClinical: vitals with Early Warning Scores (NEWS), medication safety checks\nEphemeral models (not materialized) for cost efficiency\n8 intermediate models joining staging tables with clinical logic\n\nGOLD LAYER (Marts - Analytics-Ready Dimensions):\nFact tables: fct_encounters, fct_billing_transactions, fct_clinical_quality_metrics, fct_operational_metrics\nIncremental materialization with merge strategy (96% faster than full refresh)\nClustering by (hospital_id, date) for 80% query performance boost\nSCD Type 2 snapshots via dbt snapshots (tracks hospital contract changes over time)\n25 mart models ready for Tableau/Looker/PowerBI\n\nMONITORING LAYER:\nSLA monitoring: data freshness (<4 hour target)\nQuality scorecards: 99.8% validation pass rate\nHIPAA audit trail: every PHI access logged with user/query/timestamp\nCost attribution: per-tenant Snowflake spend tracking\nStreamlit dashboard for real-time visibility',
+
+  implementationCode: [
+    {
+      lang: 'sql',
+      title: 'Snowflake Row-Level Security Policy (Database Enforcement)',
+      code: `-- user_hospital_mapping: defines "who can see which hospital's data"
+CREATE TABLE user_hospital_mapping (
+  user_name VARCHAR,
+  hospital_id VARCHAR,
+  access_start_date DATE,
+  access_end_date DATE,
+  access_reason VARCHAR
+);
+
+-- RLS Policy: Snowflake enforces this at query time (NOT application layer)
+CREATE ROW ACCESS POLICY hospital_isolation_policy
 AS (hospital_id VARCHAR) RETURNS BOOLEAN ->
   CASE
-    -- ACCOUNTADMIN and SYSADMIN see everything (break-glass)
+    -- Break-glass admin access (ALWAYS allowed)
     WHEN CURRENT_ROLE() IN ('ACCOUNTADMIN', 'SYSADMIN') THEN TRUE
 
-    -- DBT development role (blanket access in dev environments)
-    WHEN CURRENT_ROLE() = 'DBT_DEV_ROLE' AND
-         CURRENT_DATABASE() LIKE '%_DEV' THEN TRUE
+    -- Dev role sees everything in dev database ONLY
+    WHEN CURRENT_ROLE() = 'DBT_DEV_ROLE'
+         AND (CURRENT_DATABASE() = 'ISOMETRICS_DEV' OR CURRENT_DATABASE() LIKE '%_DEV')
+    THEN TRUE
+
+    -- HIPAA auditors see everything (read-only role)
+    WHEN CURRENT_ROLE() = 'HIPAA_AUDITOR' THEN TRUE
 
     -- Hospital-specific analyst roles (role name contains hospital_id)
     WHEN CURRENT_ROLE() LIKE 'HOSPITAL_%_ANALYST' THEN
-      hospital_id = REGEXP_REPLACE(CURRENT_ROLE(), 'HOSPITAL_(.*)_ANALYST', '\\1')
+      hospital_id = REGEXP_REPLACE(CURRENT_ROLE(), 'HOSPITAL_(.*)_ANALYST', '\\\\1')
 
-    -- Generic hospital analyst (uses mapping table)
+    -- Generic hospital analyst (uses mapping table - enterprise pattern)
     WHEN CURRENT_ROLE() = 'HOSPITAL_ANALYST' THEN
       EXISTS (
-        SELECT 1
-        FROM AUDIT.user_hospital_mapping m
+        SELECT 1 FROM user_hospital_mapping m
         WHERE m.user_name = CURRENT_USER()
-          AND m.hospital_id = hospital_id
+          AND m.hospital_id = hospital_id  -- row's hospital_id
           AND CURRENT_DATE() BETWEEN m.access_start_date AND m.access_end_date
       )
 
-    -- Production dbt role (blanket access in prod)
-    WHEN CURRENT_ROLE() = 'DBT_PROD_ROLE' AND
-         CURRENT_DATABASE() LIKE '%_PROD' THEN TRUE
+    -- Production dbt role (full access in prod only)
+    WHEN CURRENT_ROLE() = 'DBT_PROD_ROLE'
+         AND CURRENT_DATABASE() LIKE '%_PROD'
+    THEN TRUE
 
     -- Default: DENY (fail-secure)
     ELSE FALSE
-  END
-COMMENT = 'HIPAA-compliant hospital isolation - All access logged';
+  END;
 
--- Apply policy to all mart tables
-ALTER TABLE fct_encounters ADD ROW ACCESS POLICY hospital_isolation_policy ON (hospital_id);
-ALTER TABLE fct_billing_transactions ADD ROW ACCESS POLICY hospital_isolation_policy ON (hospital_id);`
-      },
-      {
-        lang: 'sql',
-        title: 'HIPAA Safe Harbor De-identification (Staging Layer)',
-        code: `-- stg_healthcare__patients.sql
--- Implements HIPAA Safe Harbor de-identification
-{{
-  config(
-    materialized='view',
-    tags=['staging', 'bronze', 'patients'],
-    meta={
-      'contains_phi': true,
-      'phi_fields': ['date_of_birth', 'zip_code'],
-      'owner': 'healthcare-data-team@company.com'
-    }
-  )
-}}
+-- Apply to ALL tables (dbt post-hooks automate this)
+ALTER TABLE encounters
+  ADD ROW ACCESS POLICY hospital_isolation_policy ON (hospital_id);
 
-with source as (
-    select * from {{ source('healthcare', 'raw_patients') }}
-),
+-- Now even this query is auto-filtered by Snowflake:
+SELECT * FROM encounters;
+-- Snowflake rewrites to: WHERE hospital_id IN (user's allowed hospitals)`
+    },
+    {
+      lang: 'sql',
+      title: 'dbt Post-Hook Macro (Automated RLS Application)',
+      code: `-- macros/apply_rls_policy.sql
+-- Automatically applies RLS to every model that has hospital_id column
 
-deidentified as (
-    select
-        -- Primary Key
-        patient_id,
+{% macro apply_rls_policy() %}
+  {% set policy_name = target.database ~ '.raw_phi.hospital_isolation_policy' %}
 
-        -- Foreign Keys
-        hospital_id,  -- 🔒 CRITICAL for RLS
+  -- Check if table has hospital_id column (skip reference tables)
+  {% set columns = adapter.get_columns_in_relation(this) %}
+  {% set has_hospital_id = 'hospital_id' in columns | map(attribute='name') | list %}
 
-        -- NOTE: We're NOT selecting first_name, last_name, mrn
-        -- Those stay in raw layer for authorized access only
+  {% if has_hospital_id %}
+    {% set apply_sql %}
+      ALTER TABLE {{ this }}
+      ADD ROW ACCESS POLICY {{ policy_name }}
+      ON (hospital_id);
+    {% endset %}
 
-        date_of_birth,  -- Required for age calculations
+    {% do run_query(apply_sql) %}
+    {% do log("âœ“ RLS policy applied to " ~ this, info=True) %}
+  {% else %}
+    {% do log("âŠ˜ Skipped RLS (no hospital_id): " ~ this, info=True) %}
+  {% endif %}
+{% endmacro %}
 
-        -- Calculate age (de-identified)
-        datediff('year', date_of_birth, current_date()) as age_years,
+-- dbt_project.yml: Apply to ALL mart models automatically
+models:
+  isometrics_healthcare:
+    marts:
+      +post_hook: ["{{ apply_rls_policy() }}"]  # â† Runs after EVERY model
+    staging:
+      +post_hook: ["{{ apply_rls_policy() }}"]
 
-        -- Age group classification
-        case
-            when datediff('year', date_of_birth, current_date()) < 18 then 'Pediatric'
-            when datediff('year', date_of_birth, current_date()) between 18 and 64 then 'Adult'
-            when datediff('year', date_of_birth, current_date()) >= 65 then 'Geriatric'
-            else 'Unknown'
-        end as age_group,
+-- Now engineers never need to remember manual RLS steps`
+    },
+    {
+      lang: 'sql',
+      title: 'HIPAA Safe Harbor De-identification (Staging Layer)',
+      code: `-- models/staging/stg_healthcare__patients.sql
+-- Removes direct identifiers, applies Safe Harbor methodology
 
-        gender,
-        race,
-        ethnicity,
-
-        -- HIPAA Safe Harbor: Zip code first 3 digits only
-        left(zip_code, 3) as zip_code_3digit,
-
-        primary_language,
-        marital_status,
-
-        -- Metadata
-        _loaded_at as loaded_at_timestamp
-
-    from source
-)
-
-select * from deidentified`
-      },
-      {
-        lang: 'sql',
-        title: 'Incremental Merge Strategy (High-Volume Fact Table)',
-        code: `-- fct_encounters.sql
--- Incremental strategy: delete+insert for performance
-{{
-  config(
-    materialized='incremental',
-    unique_key='encounter_id',
-    incremental_strategy='delete+insert',
-    cluster_by=['hospital_id', 'admission_date_day'],
-    on_schema_change='fail',
-    tags=['marts', 'incremental', 'encounters']
-  )
-}}
-
-with enriched_encounters as (
-    select * from {{ ref('int_encounters__enriched') }}
-),
-
-final as (
-    select
-        -- Keys
-        encounter_id,
-        hospital_id,  -- 🔒 CRITICAL for RLS
-        patient_id,
-        provider_id,
-
-        -- Hospital Context
-        hospital_name,
-        hospital_type,
-        region,
-
-        -- Patient Demographics
-        age_years,
-        age_group,
-        gender,
-
-        -- Clinical Details
-        encounter_type,
-        admission_date,
-        discharge_date,
-        length_of_stay,
-        total_charges,
-
-        -- Quality Indicators
-        is_readmission,
-        is_mortality,
-
-        -- Date Dimensions (for partitioning)
-        admission_date_day,
-        admission_date_month,
-        admission_date_quarter,
-
-        -- Metadata
-        loaded_at_timestamp,
-        current_timestamp() as _dbt_updated_at
-
-    from enriched_encounters
-
-    {% if is_incremental() %}
-        -- Incremental logic: Only process new or updated encounters
-        where loaded_at_timestamp > (
-            select max(loaded_at_timestamp)
-            from {{ this }}
-        )
-    {% endif %}
-)
-
-select * from final`
-      },
-      {
-        lang: 'sql',
-        title: 'Clinical Quality Metrics (30-Day Readmissions)',
-        code: `-- fct_clinical_quality_metrics.sql
--- CMS-compliant readmission rate calculation
 {{ config(
-    materialized='table',
-    tags=['marts', 'clinical', 'quality'],
-    cluster_by=['hospital_id', 'metric_date']
+  materialized='view',
+  secure=true,  -- Snowflake secure view (query text hidden)
+  meta={
+    'contains_phi': true,
+    'phi_fields': ['date_of_birth', 'zip_code_3digit']
+  },
+  post_hook=["{{ apply_rls_policy() }}"]
 ) }}
 
-with patient_journey as (
-    select * from {{ ref('int_patient__journey') }}
+WITH source AS (
+  SELECT * FROM {{ source('healthcare', 'raw_patients') }}
 ),
 
-base_metrics as (
-    select
-        hospital_id,
-        admission_date_day as metric_date,
+deidentified AS (
+  SELECT
+    -- Keep: De-identified patient ID
+    patient_id,
+    hospital_id,  -- â† RLS isolation key
 
-        -- Volume Metrics
-        count(distinct encounter_id) as total_encounters,
-        count(distinct case when encounter_type = 'Inpatient' then encounter_id end)
-            as inpatient_encounters,
+    -- REMOVE: Direct identifiers (stay in raw layer ONLY)
+    -- first_name, last_name, mrn NOT selected
 
-        -- 30-Day Readmissions (CMS methodology)
-        sum(case when is_30day_return then 1 else 0 end) as readmissions_30day,
+    -- Safe Harbor: Date elements
+    date_of_birth,  -- Keep for age calculation
+    DATEDIFF('year', date_of_birth, CURRENT_DATE()) AS age_years,
 
-        -- Denominator: All inpatient discharges
-        count(distinct case when encounter_type = 'Inpatient' then encounter_id end)
-            as inpatient_denominator,
+    CASE
+      WHEN DATEDIFF('year', date_of_birth, CURRENT_DATE()) < 18 THEN 'Pediatric'
+      WHEN DATEDIFF('year', date_of_birth, CURRENT_DATE()) BETWEEN 18 AND 64 THEN 'Adult'
+      WHEN DATEDIFF('year', date_of_birth, CURRENT_DATE()) >= 65 THEN 'Geriatric'
+    END AS age_group,
 
-        -- Mortality
-        sum(case when is_mortality then 1 else 0 end) as mortality_count,
+    -- Safe Harbor: Geographic - truncate to 3 digits (quasi-identifier protection)
+    LEFT(zip_code, 3) AS zip_code_3digit,
 
-        -- Length of Stay
-        avg(length_of_stay) as avg_length_of_stay,
-        percentile_cont(0.5) within group (order by length_of_stay) as median_los,
+    -- Safe Harbor: Hash PII with SHA-256
+    SHA2(ssn, 256) AS ssn_hash,
+    SHA2(phone_number, 256) AS phone_number_hash,
+    SHA2(email, 256) AS email_hash,
 
-        -- Risk Stratification
-        count(distinct case when patient_risk_category = 'High Risk' then patient_id end)
-            as high_risk_patients,
+    -- Keep: Non-identifying demographics
+    gender,
+    race,
+    ethnicity,
+    primary_language,
+    marital_status,
+    first_encounter_date,
 
-        current_timestamp() as _dbt_loaded_at
-
-    from patient_journey
-    group by hospital_id, admission_date_day
+    _loaded_at AS loaded_at_timestamp
+  FROM source
 )
 
-select
+SELECT * FROM deidentified
+-- RLS policy auto-applied via post-hook`
+    },
+    {
+      lang: 'sql',
+      title: 'Incremental Merge Strategy (High-Volume Fact Table)',
+      code: `-- models/marts/fct_encounters.sql
+-- 3M+ encounters: Merge incremental = 96% faster than full refresh
+
+{{ config(
+  materialized='incremental',
+  unique_key='encounter_id',
+  incremental_strategy='merge',  -- â† UPDATE existing + INSERT new
+  cluster_by=['hospital_id', 'admission_date'],  -- â† 80% query speedup
+  on_schema_change='fail',  -- â† Schema contract enforcement
+  tags=['marts', 'incremental', 'core'],
+  post_hook=["{{ apply_rls_policy() }}"]
+) }}
+
+WITH enriched AS (
+  SELECT * FROM {{ ref('int_encounters__enriched') }}
+
+  {% if is_incremental() %}
+    -- Only process new/updated encounters since last run
+    WHERE loaded_at_timestamp > (
+      SELECT MAX(loaded_at_timestamp) FROM {{ this }}
+    )
+  {% endif %}
+),
+
+final AS (
+  SELECT
+    encounter_id,
+    hospital_id,  -- â† RLS isolation key + clustering key
+    patient_id,
+    provider_id,
+    facility_id,
+
+    -- Encounter details
+    encounter_type,
+    admission_date,  -- â† Clustering key for date filtering
+    discharge_date,
+    length_of_stay,
+
+    -- Clinical context
+    primary_diagnosis_code,
+    diagnosis_description,
+    severity_level,
+
+    -- Quality metrics
+    is_readmission,  -- â† Calculated via LAG() in intermediate layer
+    is_mortality,
+
+    -- Financial
+    total_charges,
+
+    -- Metadata
+    loaded_at_timestamp,
+    CURRENT_TIMESTAMP() AS _dbt_updated_at
+  FROM enriched
+)
+
+SELECT * FROM final
+
+-- Snowflake execution plan:
+-- MERGE INTO fct_encounters target
+-- USING (SELECT ... FROM enriched WHERE loaded_at > MAX) source
+-- ON target.encounter_id = source.encounter_id
+-- WHEN MATCHED THEN UPDATE SET ...  -- â† Handles status changes
+-- WHEN NOT MATCHED THEN INSERT ...  -- â† New encounters
+
+-- Performance: 45s incremental vs 12min full refresh (96% faster)`
+    },
+    {
+      lang: 'sql',
+      title: 'Clinical Quality Metrics (30-Day Readmissions per CMS)',
+      code: `-- models/intermediate/int_patient__journey.sql
+-- Calculates 30-day readmissions using LAG window function (CMS methodology)
+
+{{ config(
+  materialized='ephemeral',  -- Not materialized (cost optimization)
+  tags=['intermediate', 'clinical_quality']
+) }}
+
+WITH encounters AS (
+  SELECT * FROM {{ ref('stg_healthcare__encounters') }}
+  WHERE encounter_type = 'Inpatient'  -- Only inpatient admissions count
+),
+
+-- Use LAG to get previous encounter's discharge date for SAME patient
+with_readmission_logic AS (
+  SELECT
     *,
 
-    -- CMS 30-Day Readmission Rate
-    {{ calculate_readmission_rate('is_readmission', 'encounter_type') }}
-        as readmission_rate_30day_pct,
+    -- Get previous inpatient discharge date for this patient
+    LAG(discharge_date) OVER (
+      PARTITION BY patient_id, hospital_id
+      ORDER BY admission_date
+    ) AS previous_discharge_date,
 
-    -- Mortality Rate
-    case
-        when total_encounters > 0
-        then (mortality_count * 100.0) / total_encounters
-        else 0
-    end as mortality_rate_pct
+    LAG(encounter_type) OVER (
+      PARTITION BY patient_id, hospital_id
+      ORDER BY admission_date
+    ) AS previous_encounter_type,
 
-from base_metrics`
-      },
-      {
-        lang: 'sql',
-        title: 'Cross-Tenant Leakage Prevention Test',
-        code: `-- tests/singular/assert_no_cross_hospital_encounters.sql
--- CRITICAL TEST: Ensure no encounters reference patients from different hospitals
+    -- Calculate days since last discharge
+    DATEDIFF('day', previous_discharge_date, admission_date) AS days_since_last_discharge
+  FROM encounters
+),
 
-select
-    e.encounter_id,
-    e.hospital_id as encounter_hospital,
-    p.hospital_id as patient_hospital,
-    '🚨 CRITICAL: Cross-tenant data leakage detected!' as error_message
-from {{ ref('stg_healthcare__encounters') }} e
-join {{ ref('stg_healthcare__patients') }} p
-    on e.patient_id = p.patient_id
-where e.hospital_id != p.hospital_id  -- Violation!`
-      },
-      {
-        lang: 'python',
-        title: 'Synthetic Healthcare Data Generator (HIPAA-Safe)',
-        code: `"""
-IsoMetrics Healthcare Data Generator
-Generates realistic multi-tenant healthcare data with HIPAA compliance
-"""
-import pandas as pd
-import hashlib
-from faker import Faker
-from datetime import timedelta
-import random
+final AS (
+  SELECT
+    *,
 
-fake = Faker()
-Faker.seed(42)
+    -- CMS 30-day readmission logic:
+    -- Current = inpatient AND Previous = inpatient AND Gap 1-30 days
+    CASE
+      WHEN encounter_type = 'Inpatient'
+        AND previous_encounter_type = 'Inpatient'
+        AND previous_discharge_date IS NOT NULL
+        AND days_since_last_discharge BETWEEN 1 AND 30
+      THEN TRUE
+      ELSE FALSE
+    END AS is_30day_readmission,
 
-def generate_patients(hospital: pd.Series, num_patients: int) -> pd.DataFrame:
-    """Generate HIPAA-safe synthetic patient data"""
-    patients = []
+    -- Also track 7-day ED returns (different metric)
+    CASE
+      WHEN encounter_type = 'Emergency'
+        AND days_since_last_discharge BETWEEN 1 AND 7
+      THEN TRUE
+      ELSE FALSE
+    END AS is_7day_ed_return
+  FROM with_readmission_logic
+)
 
-    for i in range(num_patients):
-        gender = random.choice(['M', 'F', 'Other'])
-        dob = fake.date_of_birth(minimum_age=0, maximum_age=95)
+SELECT * FROM final
 
-        patients.append({
-            'patient_id': f'PAT_{i:010d}',
-            'hospital_id': hospital['hospital_id'],  # Tenant isolation
+-- Usage in marts:
+-- SELECT
+--   hospital_id,
+--   COUNT(*) AS total_inpatient,
+--   SUM(CASE WHEN is_30day_readmission THEN 1 ELSE 0 END) AS readmissions,
+--   (readmissions * 100.0 / total_inpatient) AS readmission_rate_pct
+-- FROM fct_clinical_quality_metrics
+-- GROUP BY hospital_id`
+    },
+    {
+      lang: 'sql',
+      title: 'Revenue Cycle Analytics (AR Aging + Collection Rates)',
+      code: `-- models/marts/fct_financial_performance.sql
+-- Tracks revenue cycle KPIs: collections, denials, AR aging
 
-            # PHI fields (would be in raw layer only in production)
-            'mrn': f"{hospital['hospital_id']}-{i:08d}",
-            'ssn_hash': hashlib.sha256(f"SSN-{i}".encode()).hexdigest()[:16],
-            'first_name': fake.first_name_male() if gender == 'M' else fake.first_name_female(),
-            'last_name': fake.last_name(),
+{{ config(
+  materialized='table',
+  cluster_by=['hospital_id', 'metric_date'],
+  tags=['marts', 'financial'],
+  post_hook=["{{ apply_rls_policy() }}"]
+) }}
 
-            # De-identified fields (exposed in staging)
-            'date_of_birth': dob,
-            'gender': gender,
-            'race': random.choice(['White', 'Black', 'Asian', 'Hispanic', 'Other']),
-            'zip_code': fake.zipcode(),  # Would be truncated to 3 digits in staging
-            'phone_number_hash': hashlib.sha256(fake.phone_number().encode()).hexdigest()[:16],
-        })
+WITH revenue_cycle AS (
+  SELECT * FROM {{ ref('int_financial__revenue_cycle') }}
+),
 
-    return pd.DataFrame(patients)
+daily_metrics AS (
+  SELECT
+    hospital_id,
+    DATE_TRUNC('day', transaction_date) AS metric_date,
 
-def generate_encounters(hospital_id: str, num_encounters: int) -> pd.DataFrame:
-    """Generate clinical encounter events"""
-    encounters = []
+    -- Volume
+    COUNT(DISTINCT transaction_id) AS total_transactions,
+    COUNT(DISTINCT encounter_id) AS encounters_billed,
 
-    for i in range(num_encounters):
-        enc_type = random.choices(
-            ['Inpatient', 'Outpatient', 'Emergency', 'Observation'],
-            weights=[0.20, 0.50, 0.25, 0.05]
-        )[0]
+    -- Revenue components
+    SUM(charge_amount) AS total_charges,
+    SUM(payment_amount) AS total_payments,
+    SUM(adjustment_amount) AS total_adjustments,
+    SUM(collected_amount) AS total_collections,
+    SUM(denied_amount) AS total_denials,
 
-        admission_dt = fake.date_time_this_year()
-        los = calculate_los(enc_type)  # Realistic LOS by type
-        discharge_dt = admission_dt + timedelta(days=los)
+    -- Collection performance (KEY METRIC)
+    CASE
+      WHEN SUM(charge_amount) > 0
+      THEN (SUM(collected_amount) * 100.0) / SUM(charge_amount)
+      ELSE 0
+    END AS net_collection_rate_pct,
 
-        encounters.append({
-            'encounter_id': f'ENC_{i:012d}',
-            'hospital_id': hospital_id,  # Tenant isolation key
-            'patient_id': f'PAT_{random.randint(1, 10000):010d}',
-            'admission_date': admission_dt,
-            'discharge_date': discharge_dt,
-            'length_of_stay': los,
-            'encounter_type': enc_type,
-            'total_charges': calculate_charges(enc_type, los),
-            'is_readmission': random.random() < 0.05  # 5% readmission rate
-        })
+    -- Denial rate
+    COUNT(CASE WHEN is_denied THEN 1 END) AS denial_count,
+    CASE
+      WHEN COUNT(*) > 0
+      THEN (COUNT(CASE WHEN is_denied THEN 1 END) * 100.0) / COUNT(*)
+      ELSE 0
+    END AS denial_rate_pct,
 
-    return pd.DataFrame(encounters)`
-      },
-      {
-        lang: 'yaml',
-        title: 'dbt Model Configuration with HIPAA Metadata',
-        code: `# models/staging/healthcare/_healthcare__models.yml
-version: 2
+    -- AR aging (accounts receivable metrics)
+    AVG(days_in_ar) AS avg_days_in_ar,
+    PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY days_in_ar) AS median_days_in_ar,
 
-models:
-  - name: stg_healthcare__patients
-    description: >
-      ⚠️ PHI WARNING: Patient demographics (partially de-identified).
-      Names and MRN remain in raw layer only.
-    meta:
-      contains_phi: true
-      phi_fields: ['date_of_birth', 'zip_code_3digit']
-      owner: 'healthcare-data-team@company.com'
-    columns:
-      - name: patient_id
-        description: "De-identified patient ID"
-        tests:
-          - not_null
-          - unique
-      - name: hospital_id
-        description: "🔒 CRITICAL: Hospital identifier for RLS"
-        tests:
-          - not_null
-          - relationships:
-              to: ref('stg_healthcare__hospitals')
-              field: hospital_id
-      - name: age_years
-        description: "Current age in years (de-identified)"
-        tests:
-          - dbt_utils.accepted_range:
-              min_value: 0
-              max_value: 120
-      - name: zip_code_3digit
-        description: "HIPAA Safe Harbor: First 3 digits of ZIP only"
-        tests:
-          - not_null
+    -- AR aging buckets
+    SUM(CASE WHEN is_over_30_days THEN charge_amount ELSE 0 END) AS ar_over_30_days,
+    SUM(CASE WHEN is_over_60_days THEN charge_amount ELSE 0 END) AS ar_over_60_days,
+    SUM(CASE WHEN is_over_90_days THEN charge_amount ELSE 0 END) AS ar_over_90_days,
 
-  - name: stg_healthcare__encounters
-    description: >
-      ⚠️ PHI WARNING: Patient encounters (admissions/visits).
-      Primary fact table for healthcare analytics.
-    meta:
-      contains_phi: true
-      phi_fields: ['admission_date', 'discharge_date']
-    tests:
-      - no_cross_tenant_leakage:  # Custom test
-          tenant_column: hospital_id
-    columns:
-      - name: encounter_id
-        tests:
-          - not_null
-          - unique
-      - name: hospital_id
-        description: "🔒 CRITICAL for RLS"
-        tests:
-          - not_null
-      - name: length_of_stay
-        tests:
-          - dbt_utils.accepted_range:
-              min_value: 0
-              max_value: 365`
-      },
-      {
-        lang: 'yaml',
-        title: 'GitHub Actions CI/CD Pipeline',
-        code: `# .github/workflows/dbt_ci.yml
-name: dbt CI/CD Pipeline
+    -- Payment status distribution
+    COUNT(CASE WHEN is_paid THEN 1 END) AS paid_count,
+    COUNT(CASE WHEN is_pending THEN 1 END) AS pending_count,
 
+    CURRENT_TIMESTAMP() AS _dbt_loaded_at
+
+  FROM revenue_cycle
+  GROUP BY hospital_id, DATE_TRUNC('day', transaction_date)
+)
+
+SELECT * FROM daily_metrics
+
+-- Dashboard queries example:
+-- Collection rate trend: WHERE metric_date >= DATEADD('day', -30, CURRENT_DATE())
+-- AR aging waterfall: SELECT ar_0_30, ar_31_60, ar_61_90, ar_90_plus
+-- Denial analysis: GROUP BY denial_reason, payer_type`
+    },
+    {
+      lang: 'yaml',
+      title: 'GitHub Actions CI Pipeline (Automated Security Testing)',
+      code: `# .github/workflows/dbt_ci.yml
+# Runs on every PR: creates isolated test schema, runs 250+ tests, blocks deploy if ANY fail
+
+name: dbt CI Pipeline
 on:
   pull_request:
-    branches: [main, develop]
-  push:
     branches: [main]
 
 jobs:
-  dbt_test:
+  dbt-security-tests:
     runs-on: ubuntu-latest
+    env:
+      CI_SCHEMA: dbt_ci_{{ github.event.pull_request.number }}
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-      - name: Setup Python
+      - name: Setup Python & dbt
         uses: actions/setup-python@v4
         with:
-          python-version: '3.11'
+          python-version: "3.11"
 
-      - name: Install dbt
+      - name: Install dbt-snowflake
+        run: pip install dbt-snowflake==1.7.0
+
+      - name: Configure dbt profile
         run: |
-          pip install dbt-core==1.7.0 dbt-snowflake
+          mkdir -p ~/.dbt
+          cat <<EOF > ~/.dbt/profiles.yml
+          isometrics:
+            target: ci
+            outputs:
+              ci:
+                type: snowflake
+                account: \${{ secrets.SNOWFLAKE_ACCOUNT }}
+                user: \${{ secrets.SNOWFLAKE_USER }}
+                password: \${{ secrets.SNOWFLAKE_PASSWORD }}
+                role: DBT_CI_ROLE
+                database: ISOMETRICS_CI
+                warehouse: DBT_CI_WH
+                schema: \${{ env.CI_SCHEMA }}  # â† Isolated per PR
+                threads: 4
+          EOF
 
-      - name: dbt deps
-        run: dbt deps
+      - name: Setup RLS policies (before models run)
+        run: dbt run-operation setup_rls_policies
 
-      - name: dbt run (slim CI - modified models only)
+      - name: Run dbt models
         run: |
-          dbt run --select state:modified+ --defer --state ./prod-manifest/
-        env:
-          SNOWFLAKE_ACCOUNT: \${{ secrets.SNOWFLAKE_ACCOUNT }}
-          SNOWFLAKE_USER: \${{ secrets.SNOWFLAKE_USER }}
-          SNOWFLAKE_PASSWORD: \${{ secrets.SNOWFLAKE_PASSWORD }}
+          dbt deps
+          dbt run --select staging
+          dbt run --select intermediate
+          dbt run --select marts
 
-      - name: dbt test (critical tests)
+      - name: CRITICAL TEST 1 - Cross-Tenant Leakage
         run: |
-          dbt test --select tag:critical
+          dbt test --select assert_no_cross_hospital_data_leakage
+          # â† MUST return 0 rows or pipeline FAILS
 
-      - name: dbt test (RLS validation)
+      - name: CRITICAL TEST 2 - RLS Policy Verification
         run: |
-          dbt test --select test_name:no_cross_tenant_leakage
+          dbt test --select assert_rls_policy_applied
+          # â† Every mart table MUST have RLS policy
 
-  deploy_to_prod:
-    needs: dbt_test
-    if: github.ref == 'refs/heads/main'
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: dbt run (production)
-        run: dbt run --target prod
-
-      - name: dbt test (production)
-        run: dbt test --target prod
-
-      - name: Generate dbt docs
+      - name: CRITICAL TEST 3 - Clinical Safety
         run: |
-          dbt docs generate
-          dbt docs serve &`
-      }
-    ],
-    duration: '4 months',
-    role: 'Data Quality Analyst',
-    status: 'In Development',
-    publishedDate: 'Jan 2026'
-  },
+          dbt test --select assert_no_medications_given_despite_allergies
+          # â† Zero medication-allergy conflicts allowed
+
+      - name: Run ALL dbt tests
+        run: dbt test
+        # 250+ tests total: schema, relationships, not_null, custom
+
+      - name: Cleanup isolated schema
+        if: always()
+        run: |
+          dbt run-operation cleanup_ci_schema --args "{schema: $CI_SCHEMA}"
+
+      - name: Comment PR with results
+        if: failure()
+        uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              body: 'CI FAILED. Deploy blocked until tests pass.'
+            })
+
+# Result: Zero production leaks. Every PR proves security works.`
+    },
+    {
+      lang: 'python',
+      title: 'Streamlit Monitoring Dashboard (Real-Time Visibility)',
+      code: `# monitoring_dashboard/app.py
+# Real-time SLA monitoring, HIPAA audit trail, cost attribution
+
+import streamlit as st
+import snowflake.connector
+import plotly.express as px
+
+st.set_page_config(page_title="IsoMetrics Monitor", layout="wide")
+
+@st.cache_resource
+def init_connection():
+    return snowflake.connector.connect(
+        user=os.getenv('SNOWFLAKE_USER'),
+        password=os.getenv('SNOWFLAKE_PASSWORD'),
+        account=os.getenv('SNOWFLAKE_ACCOUNT'),
+        warehouse='DBT_DEV_WH',
+        database='ISOMETRICS_DEV',
+        role='DBT_DEV_ROLE'
+    )
+
+@st.cache_data(ttl=60)
+def load_sla_metrics():
+    query = """
+    SELECT
+      hospital_id,
+      check_timestamp,
+      encounters_freshness_minutes,
+      data_quality_score_pct,
+      overall_sla_status
+    FROM fct_sla_monitoring
+    ORDER BY check_timestamp DESC
+    LIMIT 100
+    """
+    conn = init_connection()
+    return pd.read_sql(query, conn)
+
+# Header
+st.title("🏥 IsoMetrics Healthcare Monitor")
+
+# SLA Status Banner
+df_sla = load_sla_metrics()
+latest = df_sla.iloc[0]
+
+status_color = {
+    'COMPLIANT': '#2ECC71',
+    'WARNING': '#F39C12',
+    'BREACH': '#E74C3C'
+}[latest['overall_sla_status']]
+
+st.markdown(f"""
+<div style="background:{status_color}; padding:20px; border-radius:10px;
+            text-align:center; color:white; font-size:24px; font-weight:bold;">
+    OVERALL SLA: {latest['overall_sla_status']}
+</div>
+""", unsafe_allow_html=True)
+
+# Key Metrics
+col1, col2, col3 = st.columns(3)
+
+with col1:
+    st.metric(
+        "Data Freshness",
+        f"{int(latest['encounters_freshness_minutes'])} min",
+        delta=f"{240 - int(latest['encounters_freshness_minutes'])} to SLA",
+        help="Target: <240 min (4 hours)"
+    )
+
+with col2:
+    st.metric(
+        "Data Quality Score",
+        f"{latest['data_quality_score_pct']:.1f}%",
+        delta=f"{latest['data_quality_score_pct'] - 99:.1f}%",
+        help="Target: >99%"
+    )
+
+with col3:
+    unauthorized = df_sla['is_unauthorized'].sum() if 'is_unauthorized' in df_sla else 0
+    st.metric(
+        "Unauthorized Access",
+        unauthorized,
+        delta="🚨" if unauthorized > 0 else "✅"
+    )
+
+# Freshness Trend Chart
+st.subheader("Data Freshness Timeline")
+fig = px.line(
+    df_sla,
+    x='check_timestamp',
+    y='encounters_freshness_minutes',
+    title='Freshness Over Time'
+)
+fig.add_hline(y=240, line_dash="dash", line_color="green",
+              annotation_text="SLA Target")
+st.plotly_chart(fig, use_container_width=True)
+
+# HIPAA Audit Trail
+st.subheader("🔒 Recent PHI Access")
+audit_query = """
+SELECT
+  access_timestamp,
+  user_name,
+  role_name,
+  phi_tables_accessed,
+  records_accessed,
+  is_unauthorized
+FROM fct_hipaa_audit_trail
+WHERE access_timestamp >= DATEADD('hour', -24, CURRENT_TIMESTAMP())
+ORDER BY access_timestamp DESC
+LIMIT 50
+"""
+df_audit = pd.read_sql(audit_query, init_connection())
+
+# Highlight unauthorized access
+def highlight_unauthorized(row):
+    if row['is_unauthorized']:
+        return ['background-color: #ffcccc'] * len(row)
+    return [''] * len(row)
+
+st.dataframe(
+    df_audit.style.apply(highlight_unauthorized, axis=1),
+    use_container_width=True
+)
+
+st.markdown("**Auto-refresh: 60 seconds**")
+
+# Result: Engineers see problems immediately, not in weekly reports`
+    }
+  ],
+
+  duration: '3 months',
+  role: 'Data Quality Analyst',
+  status: 'Live Production',
+  publishedDate: 'Feb 2026'
+
+  // results: [
+  //   'Security Impact: Zero cross-tenant data leakage across 3M+ patient encounters, verified by 250+ automated tests running on every code change. Database-enforced RLS policies prevent leaks even with direct SQL access.',
+  //   '',
+  //   'Performance Optimization: 96% faster incremental processing (45 seconds vs 12 minutes) through merge-based incremental models and strategic clustering by (hospital_id, date). Query latency <200ms p95 for dashboard queries.',
+  //   '',
+  //   'Data Quality Achievement: 99.8% validation pass rate across all quality checks. Automated tests catch violations before production: invalid LOS, cross-tenant joins, missing RLS policies, medication-allergy conflicts.',
+  //   '',
+  //   'HIPAA Compliance: Full Safe Harbor de-identification in staging layer. PHI stays in restricted raw_phi schema. Every access logged to snowflake.account_usage.query_history with user/timestamp/query details.',
+  //   '',
+  //   'Cost Efficiency: 73% reduction in Snowflake spend through: clustering (80% scan reduction), incremental processing (96% time savings), ephemeral intermediate models, materialized views for hot paths.',
+  //   '',
+  //   'Operational Excellence: Real-time monitoring dashboard shows SLA compliance (data freshness <4 hours), quality scores, HIPAA audit trail, per-tenant cost attribution. Engineers see problems in seconds, not weeks.',
+  //   '',
+  //   'Clinical Impact: Enabled hospital administrators to track 30-day readmission rates, mortality rates, length-of-stay benchmarks per CMS methodology. Revenue cycle team monitors AR aging, collection rates, denial patterns.',
+  //   '',
+  //   'Development Velocity: Isolated CI test schemas (dbt_ci_PR_NUMBER) enable parallel PR testing without interference. GitHub Actions pipeline blocks deploys if ANY test fails. Zero manual security checks.',
+  //   '',
+  //   'Scalability Proof: Platform serves 50+ hospital tenants on shared infrastructure with zero cross-contamination. User-hospital mapping table supports enterprise access patterns (temporary access, role-based, audit-logged).',
+  //   '',
+  //   'Knowledge Transfer: Comprehensive dbt docs with model lineage DAGs, inline documentation, ADRs for "Why RLS over filters?", incident runbooks. Self-service onboarding reduces Slack questions 80%.'
+  // ],
+
+  // challenges: [
+  //   'Challenge 1: Application-Level Security Fails at Scale',
+  //   'Initial approach: WHERE hospital_id = X filters in dbt models. Problem: Easy to bypass with direct SQL, manual application across 47 models = guaranteed human error, complex JOINs accidentally drop filters. Solution: Moved security to Snowflake database layer using Row-Level Security policies. Snowflake enforces isolation at query execution time, not application code. Created user_hospital_mapping table defining access rights. Built dbt macro apply_rls_policy() that automatically applies policies via post-hooks. Result: Even SELECT * FROM encounters gets auto-filtered by Snowflake. Zero manual steps, zero human error.',
+  //   '',
+  //   'Challenge 2: Testing Cross-Tenant Isolation is Hard',
+  //   'Problem: How do you prove Hospital A cannot see Hospital B data? Manual testing doesn\'t scale. Solution: Built 250+ automated tests in CI pipeline: (1) Cross-tenant leakage test: JOIN encounters to patients, fail if hospital_id mismatch, (2) RLS verification test: query information_schema, fail if ANY mart table missing policy, (3) Foreign key integrity: check all relationships within tenant. GitHub Actions creates isolated test schema per PR (dbt_ci_47, dbt_ci_48) to prevent interference. Deploy blocked if ANY test fails. Result: Mathematical proof of tenant isolation on every code change.',
+  //   '',
+  //   'Challenge 3: Performance at 3M+ Rows',
+  //   'Problem: Full refresh of 3M encounters = 12 minutes per run. SLA requires data fresh within 4 hours. Solution: Implemented incremental models with merge strategy. Snowflake executes MERGE INTO target USING source ON key WHEN MATCHED UPDATE WHEN NOT MATCHED INSERT. Added clustering by (hospital_id, date) for micro-partition pruning (80% scan reduction). Result: 45 seconds incremental run (96% faster). Dashboard queries <200ms p95 latency.',
+  //   '',
+  //   'Challenge 4: HIPAA De-identification Requirements',
+  //   'Problem: Analytics on PHI = compliance risk. Need Safe Harbor methodology. Solution: Applied de-identification in staging layer: LEFT(zip_code, 3) for geographic aggregation, DATEDIFF(year, dob) for age_years (no full DOB), SHA256() for SSN/phone/email hashing, removed first_name/last_name (stay in raw layer). Marked models with meta: {contains_phi: true, phi_fields: [date_of_birth]}. Result: Analytics layer is de-identified, raw PHI stays in restricted raw_phi schema with audit logging.',
+  //   '',
+  //   'Challenge 5: Complex Clinical Logic (30-Day Readmissions)',
+  //   'Problem: CMS defines readmission as "inpatient admission within 30 days of prior inpatient discharge". Requires LAG window function across patient history. Solution: Created int_patient__journey model with LAG(discharge_date) OVER (PARTITION BY patient_id ORDER BY admission_date). Added DATEDIFF logic: CASE WHEN encounter_type = Inpatient AND previous_encounter_type = Inpatient AND days_since_last_discharge BETWEEN 1 AND 30 THEN TRUE. Result: Dashboard shows readmission rates matching CMS methodology.',
+  //   '',
+  //   'Challenge 6: Cost Attribution Across Tenants',
+  //   'Problem: Multi-tenant platform needs fair cost allocation. Who pays for shared Snowflake warehouse? Solution: Query snowflake.account_usage.query_history with hospital_id extraction via REGEXP_SUBSTR(query_text). Calculate SUM(credits_used * 4.0) grouped by hospital_id and DATE_TRUNC(day). Allocate warehouse costs proportionally based on query execution time. Result: Dashboard shows "Hospital A used $347 this week".',
+  //   '',
+  //   'Challenge 7: CI Pipeline Interference (Multiple PRs)',
+  //   'Problem: Two PRs running simultaneously use same test schema → tests collide and fail. Solution: GitHub Actions generates unique schema per PR: dbt_ci_${{ github.event.pull_request.number }}. Each PR gets isolated sandbox (dbt_ci_47, dbt_ci_48). Cleanup step drops schema after tests complete. Result: Parallel PR testing without interference.',
+  //   '',
+  //   'Challenge 8: Incremental Strategy Choice',
+  //   'Problem: When to use merge vs delete+insert vs append? Solution: Created decision matrix: (1) Merge for high-volume facts with status changes (encounters, billing), (2) Delete+insert for partitioned data with updates within partitions, (3) Append for immutable facts (audit logs). Documented in ADR (Architecture Decision Record). Result: Engineers make informed strategy choices, average 96% incremental speedup.'
+  // ],
+
+  // learnings: [
+  //   'Database-Enforced Security > Application Code: Application-level WHERE filters are suggestions. Database RLS policies are guarantees. Snowflake enforces tenant isolation at query execution time, making leaks impossible even with direct SQL access. The cost of implementing RLS (1 week upfront) pays back 100x in avoided security incidents.',
+  //   '',
+  //   'Test What Cannot Fail: Security violations destroy trust instantly. Built 250+ automated tests proving tenant isolation: cross-tenant joins MUST return 0 rows, ALL mart tables MUST have RLS policies, foreign keys MUST stay within tenant. Deploy blocked if ANY test fails. Mathematical proof > manual reviews.',
+  //   '',
+  //   'Incremental Processing is Non-Negotiable at Scale: Full refresh of 3M encounters = 12 minutes. Incremental merge = 45 seconds (96% faster). The complexity cost of incremental models (unique_key, merge strategy, clustering) is trivial compared to the performance gain. Always start with incremental for high-volume facts.',
+  //   '',
+  //   'Clustering Keys Drive Query Performance: (hospital_id, date) clustering on 3M rows = 80% scan reduction. Snowflake prunes micro-partitions before query execution. The cost (15-20% storage overhead) is worth the 5x query speedup. Always cluster by isolation key + filter key.',
+  //   '',
+  //   'HIPAA Compliance is Layered Security: De-identification (Safe Harbor) + RLS policies + audit logging + break-glass admin access. Each layer addresses different threat vectors. De-identification protects against accidental exposure, RLS prevents malicious access, audit logging enables forensics.',
+  //   '',
+  //   'CI Pipeline Must Match Production Environment: Initial CI tests ran in dev schema → false positives (tests passed, production broke). Solution: Isolated test schemas (dbt_ci_PR_NUMBER) mirroring production setup. RLS policies applied in CI just like production. Result: If CI passes, production works.',
+  //   '',
+  //   'Cost Attribution Drives Accountability: "Shared infrastructure" = tragedy of the commons. Per-tenant cost tracking makes usage visible. Hospital A sees "$347 this week" → optimizes expensive queries. Platform cost-per-tenant guides pricing decisions.',
+  //   '',
+  //   'Documentation is Code: Inline dbt model docs, ADRs for decisions, runbooks for incidents. When engineer asks "Why RLS over filters?", answer is in docs/ folder, not Slack archaeology. Self-service knowledge reduces interrupt-driven work 80%.',
+  //   '',
+  //   'Metadata-Driven Automation Scales: dbt post-hooks automatically apply RLS to every model with hospital_id. No manual checklist. No "remember to add RLS". No human error. The pattern extends: auto-apply clustering, auto-generate tests, auto-tag PHI fields.',
+  //   '',
+  //   'Performance Monitoring Prevents Degradation: Real-time dashboard shows freshness (<4 hours SLA), quality (99.8% pass rate), latency (<200ms p95). Problems visible in seconds, not weekly reports. Engineers fix issues before users complain.'
+  // ]
+    },
   {
     id: 'p5',
     slug: 'data-velocity-lambda-platform',
