@@ -1,4 +1,3 @@
-
 import React, { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import {
@@ -48,13 +47,19 @@ const Blog: React.FC = () => {
   const categories = useMemo<string[]>(() => ['All', ...Array.from(new Set(BLOG_POSTS.map(p => p.category)))], []);
 
   const filteredPosts = useMemo(() => {
-    return BLOG_POSTS.filter(post => {
+  return BLOG_POSTS
+    .filter(post => {
       const matchesSearch = post.title.toLowerCase().includes(search.toLowerCase()) ||
                            post.excerpt.toLowerCase().includes(search.toLowerCase());
       const matchesCategory = selectedCategory === 'All' || post.category === selectedCategory;
       return matchesSearch && matchesCategory;
+    })
+    .sort((a, b) => {
+      const numA = parseInt(a.id.substring(1));
+      const numB = parseInt(b.id.substring(1));
+      return numB - numA;
     });
-  }, [search, selectedCategory]);
+}, [search, selectedCategory]);
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 pt-20 pb-40 relative overflow-hidden animate-fade-in">

@@ -14,7 +14,7 @@ import { BLOG_POSTS } from '../blog';
 import profile from "@/assets/images/profile.png";
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import resume from "@/assets/resume/Darshan_Pathak_Resume.docx";
+import resume from "@/assets/resume/Darshan_Pathak_Resume.pdf";
 
 const IconMap: Record<string, any> = {
   Database,
@@ -313,7 +313,7 @@ const About: React.FC = () => {
                 </Link>
                 <a
                   href= {resume}
-                  download="Darshan_Pathak_Resume.docx"
+                  download="Darshan_Pathak_Resume.pdf"
                   className="px-8 py-4 bg-white/5 border border-white/20 hover:bg-white/10 text-white rounded-2xl font-bold transition-all flex items-center group"
                 >
                   <Download
